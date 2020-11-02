@@ -29,8 +29,8 @@
     <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queries/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/professor/group.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/panel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604298102589</updated>
-      <workItem from="1604298104223" duration="20343000" />
+      <workItem from="1604298104223" duration="35552000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -134,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604326190141</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Оптимизирован код аутентификации">
+      <created>1604329459697</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1604329459697</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +175,8 @@
     <MESSAGE value="add database and queries folders" />
     <MESSAGE value="replace index and registration" />
     <MESSAGE value="replace list students" />
-    <option name="LAST_COMMIT_MESSAGE" value="replace list students" />
+    <MESSAGE value="Оптимизирован код аутентификации" />
+    <option name="LAST_COMMIT_MESSAGE" value="Оптимизирован код аутентификации" />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -191,45 +199,49 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604328426750" />
-    <state x="385" y="0" key="CommitChangelistDialog2" timestamp="1604326189157">
+    <state x="385" y="0" key="CommitChangelistDialog2" timestamp="1604329456033">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="385" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604326189157" />
+    <state x="385" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604329456033" />
     <state x="548" y="186" key="FileChooserDialogImpl" timestamp="1604301327309">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="186" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1604301327309" />
-    <state width="1493" height="156" key="GridCell.Tab.0.bottom" timestamp="1604329065236">
+    <state width="1493" height="156" key="GridCell.Tab.0.bottom" timestamp="1604350537915">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="156" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604329065236" />
-    <state width="1493" height="156" key="GridCell.Tab.0.center" timestamp="1604329065236">
+    <state width="1493" height="156" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604350537915" />
+    <state width="1493" height="156" key="GridCell.Tab.0.center" timestamp="1604350537915">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="156" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604329065236" />
-    <state width="1493" height="156" key="GridCell.Tab.0.left" timestamp="1604329065235">
+    <state width="1493" height="156" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604350537915" />
+    <state width="1493" height="156" key="GridCell.Tab.0.left" timestamp="1604350537914">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="156" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604329065235" />
-    <state width="1493" height="156" key="GridCell.Tab.0.right" timestamp="1604329065236">
+    <state width="1493" height="156" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604350537914" />
+    <state width="1493" height="156" key="GridCell.Tab.0.right" timestamp="1604350537915">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="156" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604329065236" />
-    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1604310903680">
+    <state width="1493" height="156" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604350537915" />
+    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1604333614666">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1604310903680" />
+    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1604333614666" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1604326538016">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1604326538016" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1604326193308">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1604329461882">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1604326193308" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1604329461882" />
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration" timestamp="1604300926764">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration/0.0.1536.824@0.0.1536.824" timestamp="1604300926764" />
+    <state x="425" y="187" key="run.anything.popup" timestamp="1604331994686">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1604331994686" />
   </component>
 </project>

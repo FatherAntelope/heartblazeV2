@@ -47,7 +47,7 @@
                     <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
                 </a>
                 <div class="content">
-                    <a class="author">Фамилия Имя Отчество</a>
+                    <label class="author" style="color: #db2828">Фамилия Имя Отчество</label>
                     <div class="metadata">
                         <!--Посещаемость-->
                         <div class="date"><i class="calendar outline blue icon"></i>"2 из 5"</div>
@@ -313,6 +313,7 @@
                     <th rowspan="2">Дистанция (м.)</th>
                     <th colspan="4">Время (мин.)</th>
                     <th colspan="5">Пульс</th>
+                    <th rowspan="2">Трекер</th>
                 </tr>
                 <tr>
                     <th>Общее</th>
@@ -340,6 +341,7 @@
                     <td>"58"</td>
                     <td>"58"</td>
                     <td>"58"</td>
+                    <td><a class="ui blue icon button small" href=""><i class="icon linkify"></i></a></td>
                 </tr>
                 </tbody>
             </table>
@@ -379,6 +381,7 @@
                         <th rowspan="2">Дистанция (м.)</th>
                         <th colspan="4">Время (мин.)</th>
                         <th colspan="5">Пульс</th>
+                        <th rowspan="2">Трекер</th>
                     </tr>
                     <tr>
                         <th>Общее</th>
@@ -405,6 +408,7 @@
                         <td>"58"</td>
                         <td>"58"</td>
                         <td>"58"</td>
+                        <td><a class="ui blue icon button small" href=""><i class="icon linkify"></i></a></td>
                     </tr>
                     </tbody>
                 </table>
