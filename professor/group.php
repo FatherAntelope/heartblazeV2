@@ -57,11 +57,10 @@
                     <div class="text">Учится в "Группа студента из группы"</div>
                     <div class="actions">
                         <a class="hide" onclick="openModalWindowForStudentOfGroupRemove()"><i class="user close red icon"></i>Удалить студента</a>
-                        <a onclick="openModalWindowStudentCard()"><i class="id card orange icon""></i> Показать физические параметры </a>
+                        <a onclick="openModalWindowStudentCard()"><i class="id card orange icon"></i> Показать физические параметры </a>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
