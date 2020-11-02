@@ -59,7 +59,7 @@
                 <div class="field">
                     <label>Логин</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Логин" required>
+                        <input type="text" placeholder="Логин" name="user_name" required>
                         <i class="user icon red"></i>
                     </div>
                 </div>

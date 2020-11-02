@@ -40,7 +40,7 @@
                 <!--
                 * Кнопка для перехода в панель управления
                 -->
-                <a href="" class="ui green button fluid">Панель управления</a>
+                <a href="/student/panel.php" class="ui green button fluid">Панель управления</a>
             </div>
             <div class="column twelve wide">
                 <div class="ui segment">
