@@ -1,3 +1,19 @@
+<?php
+	$role = $_COOKIE['role'];
+	if (isset($role)) {
+		if ($role == 0) {
+			header('Location: /student/lk.php');
+		} else {
+			if ($role == 1) {
+				header('Location: /professor/lk.php');
+			} else {
+				header('Location: /administrator/lk.php');
+			}
+		}
+	}
+?>
+
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -59,7 +75,7 @@
                 <div class="field">
                     <label>Логин</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Логин" required>
+                        <input type="text" placeholder="Логин" name="login" required>
                         <i class="user icon red"></i>
                     </div>
                 </div>
@@ -73,7 +89,7 @@
                     </div>
                     <label>Пароль</label>
                     <div class="ui left icon input">
-                        <input type="password" placeholder="Пароль" required>
+                        <input type="password" placeholder="Пароль" name="password" required>
                         <i class="lock icon red"></i>
                     </div>
                 </div>
@@ -287,6 +303,7 @@
 </div>
 
 </body>
+
 <script>
     //скрипт скрытия сообщения об ошибке по нажатию на иконку крестика
     $('.message .close')
@@ -324,10 +341,16 @@
             method: "POST",
             data: $(this).serialize(),
             success: function () {
-
+				if (getCookie('role') == 0) {
+                    $(location).attr('href', '/student/lk.php');
+                } else if(getCookie('role') == 1) {
+                    $(location).attr('href', '/professor/lk.php');
+                } else {
+                    $(location).attr('href', '/administrator/lk.php');
+                }
             },
             error: function () {
-                //запрос вернул ошибку, сменим стиль блока (блока ошибки), то есть отобразим его
+				//запрос вернул ошибку, сменим стиль блока (блока ошибки), то есть отобразим его
                 document.getElementById("errorLogin").style.display = "block";
             }
         });
@@ -359,6 +382,13 @@
     // function openDimmerWindowForShowSuccessRegistration() {
 
     // }
+	
+	function getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([.$?|{}()[]\/+^])/g, '\$1') + "=([^;])"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
 
 </script>
 </html>
