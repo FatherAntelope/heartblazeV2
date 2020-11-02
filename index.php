@@ -307,7 +307,7 @@
      */
     $("#loginPerson").submit(function () {
         $.ajax({
-            url: "/login.php",
+            url: "/queries/login.php",
             method: "POST",
             data: $(this).serialize(),
             success: function () {
