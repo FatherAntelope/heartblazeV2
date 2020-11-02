@@ -38,45 +38,33 @@
         </ul>
     </div>
     <h3 class="ui top attached header center aligned red" style="margin-top: 20px">
-        Таблица студентов
+        Список студентов
     </h3>
-    <table class="ui celled attached table">
-        <thead class="center aligned">
-        <tr>
-            <th>ФИО</th>
-            <th>Группа</th>
-            <th>Посещаемость</th>
-            <th>Балл</th>
-            <th>Физические параметры</th>
-            <th>Удаление</th>
-        </tr>
-        </thead>
-        <tbody class="center aligned">
-        <tr>
-            <td>"Фамилия И. О."</td>
-            <td>"Группа студента"</td>
-            <td>"2/10"</td>
-            <td>"71"</td>
-            <td>
-                <button class="ui orange icon button" onclick="openModalWindowStudentCard()">
-                    <i class="icon id badge" style="color: white"></i>
-                </button>
-            </td>
-            <td>
-                <button class="ui red icon button" onclick="openModalWindowForStudentOfGroupRemove()">
-                    <i class="icon user times" style="color: white"></i>
-                </button>
-            </td>
-        </tr>
-        </tbody>
-        <tfoot class="full-width">
-        <tr>
-            <th colspan="6">
-                <div class="ui orange label"><i class="id badge icon"></i> "1"</div>
-            </th>
-        </tr>
-        </tfoot>
-    </table>
+    <div class="ui segment attached top">
+        <div class="ui comments">
+            <div class="comment">
+                <a class="avatar">
+                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                </a>
+                <div class="content">
+                    <a class="author">Фамилия Имя Отчество</a>
+                    <div class="metadata">
+                        <!--Посещаемость-->
+                        <div class="date"><i class="calendar outline blue icon"></i>"2 из 5"</div>
+                        <!--Балл-->
+                        <div class="rating"><i class="star blue icon"></i>"35"</div>
+                    </div>
+                    <div class="text">Учится в "Группа студента из группы"</div>
+                    <div class="actions">
+                        <a class="hide" onclick="openModalWindowForStudentOfGroupRemove()"><i class="user close red icon"></i>Удалить студента</a>
+                        <a onclick="openModalWindowStudentCard()"><i class="id card orange icon""></i> Показать физические параметры </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
     <div class="ui info message">
         <div class="header">Занятия отсутствуют:</div>
@@ -123,6 +111,7 @@
         </tfoot>
     </table>
 </div>
+
 <div class="ui modal horizontal flip tiny" id="modalStudentOfGroupRemove">
     <h1 class="ui header center aligned">
         Вы уверены, что хотите удалить данного студента из группы?
