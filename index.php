@@ -59,7 +59,7 @@
                 <div class="field">
                     <label>Логин</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Логин" name="user_name" required>
+                        <input type="text" placeholder="Логин" required>
                         <i class="user icon red"></i>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
     <!--
     * Сообщение об ошибке
     -->
-    <div class="ui error message">
+    <div class="ui error message" style="display:none;" id="errorRegistration">
         <i class="close icon"></i>
         <div class="header">Ошибка регистрации</div>
         <ul>
@@ -170,7 +170,7 @@
     <!--
     * Форма регистрации
     -->
-    <form class="ui form">
+    <form class="ui form" id="registrationPerson">
         <h4 class="ui dividing header" style="color: #db2828">Персональные данные</h4>
         <!--
         * В одной строке три поля (имя и фамилия обязательны для ввода)
@@ -178,30 +178,30 @@
         <div class="three fields">
             <div class="required field">
                 <label>Фамилия</label>
-                <input type="text" placeholder="Ваша фамилия" required>
+                <input type="text" placeholder="Ваша фамилия" name="user_last_name" required>
             </div>
             <div class="required field">
                 <label>Имя</label>
-                <input type="text" placeholder="Ваше имя" required>
+                <input type="text" placeholder="Ваше имя" name="user_first_name" required>
             </div>
             <div class="field">
                 <label>Отчество</label>
-                <input type="text" placeholder="Ваше отчество">
+                <input type="text" placeholder="Ваше отчество" name="user_patronymic">
             </div>
         </div>
         <h4 class="ui dividing header" style="color: #db2828">Данные авторизации</h4>
         <div class="three fields">
             <div class="required field">
                 <label>Логин</label>
-                <input type="text" placeholder="Логин для входа" required>
+                <input type="text" placeholder="Логин для входа" name="user_login" required>
             </div>
             <div class="required field">
                 <label>Пароль</label>
-                <input type="password" placeholder="Пароль для входа" required>
+                <input type="password" placeholder="Пароль для входа" name="user_password" required>
             </div>
             <div class="required field">
                 <label>Почта</label>
-                <input type="email" placeholder="Ваша электронная почта" required>
+                <input type="email" placeholder="Ваша электронная почта" name="user_email" required>
             </div>
         </div>
         <!--
@@ -209,11 +209,11 @@
         -->
         <div class="field inline" style="margin-top: 5px">
             <div class="ui slider checkbox">
-                <input type="radio" name="whoAuthorization" value="0" checked="checked">
+                <input type="radio" name="user_role" value="0" checked="checked">
                 <label>Я студент</label>
             </div>
             <div class="ui slider checkbox">
-                <input type="radio" name="whoAuthorization" value="1">
+                <input type="radio" name="user_role" value="1">
                 <label>Я преподаватель</label>
             </div>
         </div>
@@ -223,10 +223,10 @@
                 <label>Я согласен(-на) с обработкой персональных данных</label>
             </div>
         </div>
-    <!--
-    * Кнопка, активирующая отправку POST запроса
-    -->
-    <button class="ui right floated labeled icon button green"><i class="right arrow icon"></i> Создать аккаунт </button>
+        <!--
+        * Кнопка, активирующая отправку POST запроса
+        -->
+        <button class="ui right floated labeled icon button green"><i class="right arrow icon"></i> Создать аккаунт </button>
     </form>
 </div>
 
@@ -270,6 +270,19 @@
             Отправить сообщение
             <i class="mail icon"></i>
         </div>
+    </div>
+</div>
+
+<div class="ui page dimmer" id="dimmerShowSuccessRegistration" >
+    <div class="ui active dimmer">
+        <h2 class="ui icon header" style="color: white;">
+            <i class="user plus icon"></i>
+            <div class="content">
+                Успешная регистрация!
+                <div class="sub header" style="color: #d9d9d9">Вы успешно зарегистрировались и теперь можете войти в свой личный кабинет</div>
+            </div>
+            <button class="ui button blue" onclick="location.reload()" style="margin-top: 15px">Авторизация</button>
+        </h2>
     </div>
 </div>
 
@@ -320,5 +333,32 @@
         });
         return false;
     });
+
+    /**Динамическая отправка запроса (регистрации)
+     * done - есть запрос выполнился успешно
+     * error - если запрос вернулся с ошибкой, ее надо делать в try {} catch() {}
+     */
+    $("#registrationPerson").submit(function () {
+        $.ajax({
+            url: "/queries/registration.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                //openDimmerWindowForShowSuccessRegistration();
+                $('#dimmerShowSuccessRegistration')
+                    .modal('show');
+            },
+            error: function () {
+                //запрос вернул ошибку, сменим стиль блока (блока ошибки), то есть отобразим его
+                document.getElementById("errorRegistration").style.display = "block";
+            }
+        });
+        return false;
+    });
+
+    // function openDimmerWindowForShowSuccessRegistration() {
+
+    // }
+
 </script>
 </html>

@@ -1,9 +1,9 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT']."/frameworks/rb.php";
 $username = 'root';
-$password = 'admin';
+$password = 'root';
 $dbname = 'heartblaze';
-$hostname = '192.168.0.103';
+$hostname = 'localhost';
 R::setup( "mysql:host={$hostname};dbname={$dbname}", $username, $password);
 if ( !R::testConnection() )
 {
