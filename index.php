@@ -59,7 +59,7 @@
                 <div class="field">
                     <label>Логин</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Логин" required>
+                        <input type="text" placeholder="Логин" name="login" required>
                         <i class="user icon red"></i>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                     </div>
                     <label>Пароль</label>
                     <div class="ui left icon input">
-                        <input type="password" placeholder="Пароль" required>
+                        <input type="password" placeholder="Пароль" name="password" required>
                         <i class="lock icon red"></i>
                     </div>
                 </div>
@@ -324,7 +324,8 @@
             method: "POST",
             data: $(this).serialize(),
             success: function () {
-
+				$('#dimmerShowSuccessRegistration')
+                    .modal('show');
             },
             error: function () {
                 //запрос вернул ошибку, сменим стиль блока (блока ошибки), то есть отобразим его
