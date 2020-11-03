@@ -16,14 +16,6 @@ if (!password_verify($_POST['password'], $user->password)) {
 setcookie('userInfo', $user, time() + (86400 * 30), "/");
 setcookie('role', $user->role, time() + (86400 * 30), "/");
 
-if ($user->role == 0) {
-	header('Location: /student/lk.php');
-} else {
-	if ($user -> role == 1) {
-		header('Location: /professor/lk.php');
-	} else {
-		header('Location: /administrator/lk.php');
-	}
-}
+
 
 ?>

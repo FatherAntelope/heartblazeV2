@@ -16,6 +16,9 @@
 * Контейнер - блок с содержимым, имеющий отступы по краям (слева и справа)
 -->
 <div class="ui container">
+        
+        <?php $person = json_decode($_COOKIE['userInfo']); ?>
+        
         <!--
         * Делим контейнер на две колонки
         -->
@@ -28,7 +31,7 @@
                 * Сегмент, в котором располагается аватарка
                 -->
                 <div class="ui segment inverted blue">
-                    <div class="ui red left ribbon label">ЛОГИН</div>
+                    <div class="ui red left ribbon label"><?php echo $person -> login; ?></div>
 
                     <img class="ui image centered" src="/images/user2.jpg" style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                     <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
@@ -50,7 +53,9 @@
                         <tbody class="center aligned">
                         <tr>
                             <td><b>Фио:</b></td>
-                            <td>"Фамилия Имя Отчество"</td>
+                            <td>
+                                <?php echo $person -> surname, " ", $person -> name, " ", $person -> patronymic; ?>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Группа:</b></td>
@@ -70,7 +75,7 @@
                         </tr>
                         <tr>
                             <td><b>Почта:</b></td>
-                            <td>"mail@mail.ru"</td>
+                            <td><?php echo $person -> email; ?></td>
                         </tr>
                         <tr>
                             <td><b>Смена пароля:</b></td>
