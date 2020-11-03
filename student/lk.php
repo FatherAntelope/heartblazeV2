@@ -1,16 +1,20 @@
 <?php
-if($_COOKIE['role'] == 0) {
-    require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
-    $person = R::load('person', $_COOKIE['userID']);
-    print_r($person);
-        if($person['id'] == 0) {
-            setcookie('role',   '', time() - 3600, "/");
-            die(header("HTTP/1.1 401 Unauthorized "));
+function getDataIsAuthAndEmptyPerson($isRole) {
+    if($_COOKIE['role'] === $isRole) {
+        require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+        $person = R::load('person', $_COOKIE['userID']);
+        if(count($person) <= 1) {
+            setcookie('role',   '', time() - (60*60*24*30), "/");
+            setcookie('userID',   '', time() - (60*60*24*30), "/");
+            header("Location: /");
         }
-
-} else {
-    die(header("HTTP/1.1 401 Unauthorized "));
+        return $person;
+    } else {
+        die(header("HTTP/1.1 401 Unauthorized "));
+    }
 }
+
+$person = getDataIsAuthAndEmptyPerson('0');
 
 ?>
 
@@ -33,9 +37,6 @@ if($_COOKIE['role'] == 0) {
 * Контейнер - блок с содержимым, имеющий отступы по краям (слева и справа)
 -->
 <div class="ui container">
-        
-
-        
         <!--
         * Делим контейнер на две колонки
         -->
@@ -50,10 +51,14 @@ if($_COOKIE['role'] == 0) {
                 <div class="ui segment inverted blue">
                     <div class="ui red left ribbon label"><?php echo $person -> login; ?></div>
 
-                    <img class="ui image centered" src="/images/user2.jpg" style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
+                    <img class="ui image centered" src="/images/user2.jpg"
+                         style="object-fit: cover; height: 200px; width: 200px;
+                         border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                     <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
                         <a href="/queries/exit.php" class="ui button"><i class=" sign-out large icon"></i></a>
-                        <button class="ui button"  onclick="openModalWindowForAvatarReplace()" ><i class="file large image icon"></i></button>
+                        <button class="ui button"  onclick="openModalWindowForAvatarReplace()" >
+                            <i class="file large image icon"></i>
+                        </button>
                     </div>
 
                 </div>
