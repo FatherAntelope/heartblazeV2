@@ -1,6 +1,5 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
-R::freeze(true);
 
 $user = R::findOne('person', ' login = ? ', [ $_POST['login'] ]);
 

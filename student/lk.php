@@ -1,10 +1,19 @@
-<?php 
-    
+<?php
+if($_COOKIE['role'] == 0) {
     require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
-    R::freeze(true);
-    
     $person = R::load('person', $_COOKIE['userID']);
+    print_r($person);
+        if($person['id'] == 0) {
+            setcookie('role',   '', time() - 3600, "/");
+            die(header("HTTP/1.1 401 Unauthorized "));
+        }
+
+} else {
+    die(header("HTTP/1.1 401 Unauthorized "));
+}
+
 ?>
+
 
 <!doctype html>
 <html lang="ru">
@@ -24,6 +33,8 @@
 * Контейнер - блок с содержимым, имеющий отступы по краям (слева и справа)
 -->
 <div class="ui container">
+        
+
         
         <!--
         * Делим контейнер на две колонки

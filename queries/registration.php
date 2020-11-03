@@ -1,7 +1,6 @@
 <?php
 
 require $_SERVER['DOCUMENT_ROOT'] . "/db/db.php";
-R::freeze(true);
 
 if (R::count('person', 'login = ? OR email = ?', [$_POST['user_login'], $_POST['user_email']]) == 0) {
 
