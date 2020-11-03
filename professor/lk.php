@@ -1,3 +1,21 @@
+<?php
+
+$teacher = null;
+if($_COOKIE['role'] === '1') {
+    require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+    $teacher = R::load('person', $_COOKIE['userID']);
+        if(count($teacher) <= 1) {
+            setcookie('role',   '', time() - (60602430), "/");
+            setcookie('userID',   '', time() - (60602430), "/");
+            header("Location: /");
+        }
+} else {
+    die(header("HTTP/1.1 401 Unauthorized "));
+}
+
+?>
+
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -28,11 +46,11 @@
             * Сегмент, в котором располагается аватарка
             -->
             <div class="ui segment inverted blue">
-                <div class="ui red left ribbon label">ЛОГИН</div>
+                <div class="ui red left ribbon label"><?php echo $teacher -> login; ?></div>
 
                 <img class="ui image centered" src="/images/user2.jpg" style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                 <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
-                    <a href="" class="ui button"><i class=" sign-out large icon"></i></a>
+                    <a href="/queries/exit.php" class="ui button"><i class=" sign-out large icon"></i></a>
                     <button class="ui button"  onclick="openModalWindowForAvatarReplace()" ><i class="file large image icon"></i></button>
                 </div>
             </div>
@@ -49,7 +67,7 @@
                     <tbody class="center aligned">
                     <tr>
                         <td><b>Фио:</b></td>
-                        <td>"Фамилия Имя Отчество"</td>
+                        <td><?php echo $teacher -> surname, " ", $teacher -> name, " ", $teacher -> patronymic ?></td>
                     </tr>
                     <tr>
                         <td><b>Роль:</b></td>
@@ -61,7 +79,7 @@
                     </tr>
                     <tr>
                         <td><b>Почта:</b></td>
-                        <td>"mail@mail.ru"</td>
+                        <td><?php echo $teacher -> email; ?></td>
                     </tr>
                     <tr>
                         <td><b>Смена пароля:</b></td>
