@@ -340,12 +340,12 @@
             method: "POST",
             data: $(this).serialize(),
             success: function () {
-                let role = getCookie('role');
-                if (role == 0) {
+                let role = getCookie('person_role');
+                if (role === '0') {
                     $(location).attr('href', '/student/lk.php');
-                } else if(role == 1) {
+                } else if(role === '1') {
                     $(location).attr('href', '/professor/lk.php');
-                } else if(role == 2){
+                } else if(role === '2'){
                     $(location).attr('href', '/administrator/lk.php');
                 }
             },
