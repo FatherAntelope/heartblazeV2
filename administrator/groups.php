@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css'>
     <link rel="stylesheet" href="/frameworks/semantic.min.css"/>
+    <link rel="shortcut icon" href="/images/ugatu_logo.png" type="image/x-icon">
     <script src="/frameworks/jquery.min.js"></script>
     <script src="/frameworks/semantic.min.js"></script>
     <title>Группы</title>
