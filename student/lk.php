@@ -1,3 +1,11 @@
+<?php 
+    
+    require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+    R::freeze(true);
+    
+    $person = R::load('person', $_COOKIE['userID']);
+?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -16,8 +24,6 @@
 * Контейнер - блок с содержимым, имеющий отступы по краям (слева и справа)
 -->
 <div class="ui container">
-        
-        <?php $person = json_decode($_COOKIE['userInfo']); ?>
         
         <!--
         * Делим контейнер на две колонки
