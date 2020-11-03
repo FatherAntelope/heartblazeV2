@@ -3,13 +3,11 @@
 	if (isset($role)) {
 		if ($role == 0) {
 			header('Location: /student/lk.php');
-		} else {
-			if ($role == 1) {
+		} else if ($role == 1) {
 				header('Location: /professor/lk.php');
 			} else {
 				header('Location: /administrator/lk.php');
 			}
-		}
 	}
 ?>
 
@@ -341,11 +339,12 @@
             method: "POST",
             data: $(this).serialize(),
             success: function () {
-				if (getCookie('role') == 0) {
+                let role = getCookie('role');
+                if (role == 0) {
                     $(location).attr('href', '/student/lk.php');
-                } else if(getCookie('role') == 1) {
+                } else if(role == 1) {
                     $(location).attr('href', '/professor/lk.php');
-                } else {
+                } else if(role == 2){
                     $(location).attr('href', '/administrator/lk.php');
                 }
             },
@@ -368,8 +367,7 @@
             data: $(this).serialize(),
             success: function () {
                 //openDimmerWindowForShowSuccessRegistration();
-                $('#dimmerShowSuccessRegistration')
-                    .modal('show');
+                $('#dimmerShowSuccessRegistration').modal('show');
             },
             error: function () {
                 //запрос вернул ошибку, сменим стиль блока (блока ошибки), то есть отобразим его
@@ -379,10 +377,6 @@
         return false;
     });
 
-    // function openDimmerWindowForShowSuccessRegistration() {
-
-    // }
-	
 	function getCookie(name) {
         let matches = document.cookie.match(new RegExp(
             "(?:^|; )" + name.replace(/([.$?|{}()[]\/+^])/g, '\$1') + "=([^;])"

@@ -11,36 +11,49 @@
     <script src="/frameworks/semantic.min.js"></script>
     <title>Панель управления</title>
 </head>
+<style>
+    *
+    {
+        scroll-behavior: smooth;
+    }
+</style>
 <body style="background-image: url(/images/bg.jpg)">
 <div class="ui container">
     <div class="field">
         <a href="/student/lk.php" class="ui floated small blue labeled icon button">
             <i class="arrow left icon"></i>Назад
         </a>
-        <button onclick="openModalWindowForAddGroup()" class="ui floated small green labeled icon button">
-            <i class="plus circle icon"></i>Добавить группу
+        <button onclick="openModalWindowNormativeData()" class="ui floated small green labeled icon button">
+            <i class="heartbeat icon"></i>Сданные нормативы
         </button>
+        <button onclick="openModalWindowParticipationData()" class="ui floated small orange labeled icon button">
+            <i class="table icon"></i>Данные занятий
+        </button>
+        <a href="#blockParticipation" class="ui floated small brown labeled icon button">
+            <i class="table icon"></i>К занятиям
+        </a>
+        <a href="#blockCharts" class="ui floated small teal labeled icon button">
+            <i class="chart area icon"></i>К графикам
+        </a>
     </div>
     <div class="ui segment">
-        <h3 class="ui horizontal divider header"><i class="info red icon"></i>Информация о группе</h3>
+        <h3 class="ui horizontal divider header"><i class="info red icon"></i>Преподаватель</h3>
         <div class="ui comments">
-            <label for=""></label>
             <div class="comment">
                 <a class="avatar">
                     <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
                 </a>
                 <div class="content">
-                    <a class="author">Фамилия Имя Отчество</a>
+                    <label class="author" style="color: #db2828">Фамилия Имя Отчество</label>
                     <div class="metadata">
-                        <!--Посещаемость-->
-                        <div class="date"><i class="calendar outline blue icon"></i>"2 из 5"</div>
-                        <!--Балл-->
-                        <div class="rating"><i class="star blue icon"></i>"35"</div>
+                        <div class="date"><i class="user blue icon"></i>"24"</div>
+                        <div class="rating"><i class="mail blue icon"></i>"mail@mail.ru"</div>
                     </div>
-                    <div class="text">Учится в "Группа студента из группы"</div>
+                    <div class="text">"Должность"</div>
                     <div class="actions">
-                        <a class="hide" onclick="openModalWindowForStudentOfGroupRemove()"><i class="user close red icon"></i>Удалить студента</a>
-                        <a onclick="openModalWindowStudentCard()"><i class="id card orange icon"></i> Показать физические параметры </a>
+                        <a class="hide" onclick="openModalWindowForGroupLeaving()">
+                            <i class="user close red icon"></i>Отменить привязку
+                        </a>
                     </div>
                 </div>
             </div>
@@ -54,7 +67,7 @@
             </div>
             <div class="label">Прогресс посещений</div>
         </div>
-        <div class="ui progress indicating" data-value="10">
+        <div class="ui progress indicating" data-value="50">
             <div class="bar">
                 <div class="progress"></div>
             </div>
@@ -73,46 +86,303 @@
     </div>
 
 
-    <h3 class="ui top attached header center aligned red" style="margin-top: 20px">
-        Таблица занятий
-    </h3>
+    <h3 class="ui horizontal top attached divider header" id="blockParticipation"><i class="table red icon"></i>Таблица занятий</h3>
     <table class="ui celled attached table">
         <thead class="center aligned">
         <tr>
             <th>Дата</th>
-            <th>Группа</th>
-            <th>Количество студентов</th>
-            <th>Ключевое слово</th>
-            <th>Удаление</th>
+            <th>Тип занятия</th>
+            <th>Посещение</th>
+            <th>Действие</th>
         </tr>
         </thead>
         <tbody class="center aligned">
-        <tr>
-            <td>"Дата"</td>
-            <td><a href="">"СМГ"</a></td>
-            <td>"10"</td>
+        <tr class="positive">
+            <td>"01.01.2000"</td>
+            <td>Обычное/С нормативом</td>
             <td>
-                <button class="ui brown icon button"><i class="icon clone outline" style="color: white"></i></button>
+                <i class="icon big check circle green"></i>
             </td>
             <td>
-                <button class="ui red icon button" onclick="openModalWindowForGroupRemove()">
-                    <i class="icon trash" style="color: white"></i>
+                <i class="icon big check circle green"></i>
+            </td>
+        </tr>
+        <tr class="warning">
+            <td>"01.01.2000"</td>
+            <td>Обычное/С нормативом</td>
+            <td>
+                <i class="icon big circle warning"></i>/<i class="spinner loading big icon"></i
+            </td>
+            <td>
+                <button class="ui blue icon button" onclick="openModalWindowForSendParticipationData()">
+                    <i class="icon edit"></i>
                 </button>
+            </td>
+        </tr>
+        <tr class="negative">
+            <td>"01.01.2000"</td>
+            <td>Обычное/С нормативом</td>
+            <td>
+                <i class="icon big circle close"></i>
+            </td>
+            <td>
+                <i class="icon big circle close"></i>
             </td>
         </tr>
         </tbody>
         <tfoot class="full-width">
         <tr>
-            <th colspan="5">
-                <div class="ui orange label"><i class="users icon"></i> 1 </div>
-                <div class="ui orange label"><i class="id badge icon"></i> "10" </div>
+            <th colspan="4">
+                <div class="ui orange label"><i class="list icon"></i> 1 </div>
             </th>
         </tr>
         </tfoot>
     </table>
+
+
+    <div class="ui segment" id="blockCharts">
+        <h3 class="ui horizontal divider header"><i class="chart area red icon"></i>Графики</h3>
+    </div>
 </div>
+
+
+
+<div class="ui large modal horizontal flip " id="modalNormativeData">
+    <h1 class="ui header" style="color: #db2828">Сданные нормативы</h1>
+    <div class="content">
+        <table class="ui celled table">
+            <thead class="center aligned">
+            <tr>
+                <th>Дата</th>
+                <th>Название норматива</th>
+                <th>Значение норматива</th>
+                <th>Оценка</th>
+            </tr>
+            </thead>
+            <tbody class="center aligned">
+            <tr>
+                <td>"01.10.2000"</td>
+                <td>"Норматив"</td>
+                <td>"10"</td>
+                <td>"3"</td>
+            </tr>
+            </tbody>
+            <tfoot class="full-width">
+            <tr>
+                <th colspan="5">
+                    <div class="ui orange label"><i class="list icon"></i> 1 </div>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div class="ui large modal horizontal flip" id="modalParticipationData">
+    <h1 class="ui header" style="color: #db2828">Данные занятий</h1>
+    <div class="content">
+        <div style="overflow-x: scroll; margin-top: 15px">
+            <table class="ui sortable  celled table scrolling center aligned">
+                <thead>
+                <tr>
+                    <th rowspan="2">Дата</th>
+                    <th rowspan="2">Дистанция (м.)</th>
+                    <th colspan="4">Время (мин.)</th>
+                    <th colspan="5">Пульс</th>
+                    <th rowspan="2">Трекер</th>
+                </tr>
+                <tr>
+                    <th>Общее</th>
+                    <th>Основное</th>
+                    <th>Разминка</th>
+                    <th>Заминка</th>
+                    <th>До разминки</th>
+                    <th>После разминки</th>
+                    <th>После основной</th>
+                    <th>После заминки</th>
+                    <th>Ч/з 10 мин.</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>"01.10.2000"</td>
+                    <td>"10000"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td>"58"</td>
+                    <td><a class="ui blue icon button small" href=""><i class="icon linkify"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="ui modal horizontal flip tiny" id="modalGroupLeaving">
+    <h1 class="ui header center aligned">
+        Вы уверены, что хотите выйти из группы?
+    </h1>
+    <div class="actions">
+        <button class="ui right labeled icon red button" onclick="hideModalWindowForGroupLeaving()">
+            Отклонить
+            <i class="close icon"></i>
+        </button>
+        <button class="ui right labeled icon green button">
+            Подтвердить
+            <i class="check icon"></i>
+        </button>
+    </div>
+</div>
+
+<div class="ui modal horizontal flip large" id="modalSendParticipationData">
+    <h1 class="ui header" style="color: #db2828">Отправка данных занятия</h1>
+    <div class="content">
+        <form class="ui form">
+                <div class="required field">
+                    <label>Пульс</label>
+                    <div class="five fields">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <input type="number" placeholder="До разминки" required>
+                                <i class="heart icon red"></i>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <input type="number" placeholder="После разминки" required>
+                                <i class="heart icon red"></i>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <input type="number" placeholder="После основной" required>
+                                <i class="heart icon red"></i>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <input type="number" placeholder="После заминки" required>
+                                <i class="heart icon red"></i>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <input type="number" placeholder="Ч/з 10 мин." required>
+                                <i class="heart icon red"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="required field">
+                <label>Время (минуты)</label>
+                <div class="four fields">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input type="number" placeholder="Общее" required>
+                            <i class="clock icon red"></i>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input type="number" placeholder="Основное" required>
+                            <i class="clock icon red"></i>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input type="number" placeholder="Разминка" required>
+                            <i class="clock icon red"></i>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input type="number" placeholder="Заминка" required>
+                            <i class="clock icon red"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="required field three wide">
+                    <label>Дистанция</label>
+                    <div class="ui left icon input">
+                        <input type="number" placeholder="В метрах" required>
+                        <i class="road icon red"></i>
+                    </div>
+                </div>
+                <div class="required field thirteen wide">
+                    <label>Ссылка на данные с трекера</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ссылка на Pacer или другое приложение" required>
+                        <i class="linkify icon red"></i>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui right labeled icon green button">
+            Отправить
+            <i class="check icon"></i>
+        </button>
+    </div>
+</div>
+
 </body>
 <script>
     $('.ui.progress').progress();
+
+    function openModalWindowNormativeData() {
+        $('#modalNormativeData')
+            .modal({
+                inverted: true
+            })
+            .modal('show')
+        ;
+    }
+
+    function openModalWindowParticipationData() {
+        $('#modalParticipationData')
+            .modal({
+                inverted: true
+            })
+            .modal('show')
+        ;
+    }
+
+    function openModalWindowForSendParticipationData() {
+        $('#modalSendParticipationData')
+            .modal({
+                inverted: true
+            })
+            .modal('show')
+        ;
+    }
+
+    function openModalWindowForGroupLeaving() {
+        $('#modalGroupLeaving')
+            .modal({
+                inverted: true
+            })
+            .modal('setting', 'closable', false)
+            .modal('show')
+        ;
+    }
+
+    function hideModalWindowForGroupLeaving() {
+        $('#modalGroupLeaving')
+            .modal('hide')
+        ;
+    }
 </script>
 </html>
