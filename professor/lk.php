@@ -1,22 +1,6 @@
 <?php
-
-function getDataIsAuthAndEmptyPerson($isRole) {
-    if($_COOKIE['role'] === $isRole) {
-        require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
-        $person = R::load('person', $_COOKIE['userID']);
-        if(count($person) <= 1) {
-            setcookie('role',   '', time() - (60*60*24*30), "/");
-            setcookie('userID',   '', time() - (60*60*24*30), "/");
-            header("Location: /");
-        }
-        return $person;
-    } else {
-        die(header("HTTP/1.1 401 Unauthorized "));
-    }
-}
-
+require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('1');
-
 ?>
 
 
@@ -50,7 +34,7 @@ $person = getDataIsAuthAndEmptyPerson('1');
             * Сегмент, в котором располагается аватарка
             -->
             <div class="ui segment inverted blue">
-                <div class="ui red left ribbon label"><?php echo $person -> login; ?></div>
+                <div class="ui red left ribbon label"><?php echo $person->login; ?></div>
 
                 <img class="ui image centered" src="/images/user2.jpg" style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                 <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
@@ -136,7 +120,7 @@ $person = getDataIsAuthAndEmptyPerson('1');
             <i class="close icon"></i>
             <div class="header">Ошибка смены пароля</div>
             <ul>
-                <li>Старый пароль неверен или новые несовпадают</li>
+                <li>Старый пароль неверен или новые не совпадают</li>
                 <li>Повторите ввод</li>
             </ul>
         </div>

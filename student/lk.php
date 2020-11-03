@@ -1,21 +1,6 @@
 <?php
-function getDataIsAuthAndEmptyPerson($isRole) {
-    if($_COOKIE['role'] === $isRole) {
-        require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
-        $person = R::load('person', $_COOKIE['userID']);
-        if(count($person) <= 1) {
-            setcookie('role',   '', time() - (60*60*24*30), "/");
-            setcookie('userID',   '', time() - (60*60*24*30), "/");
-            header("Location: /");
-        }
-        return $person;
-    } else {
-        die(header("HTTP/1.1 401 Unauthorized "));
-    }
-}
-
+require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('0');
-
 ?>
 
 
@@ -70,7 +55,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
             <div class="column twelve wide">
                 <div class="ui segment">
                     <h2 class="ui center aligned header" style="color: #db2828">Портфолио</h2>
-                    <h4 class="ui horizontal divider header"><i class="address book red icon"></i> Учетные данные </h4>
+                    <h4 class="ui horizontal divider header"><i class="address book red icon"></i> Личные данные </h4>
                     <table class="ui very basic table">
                         <tbody class="center aligned">
                         <tr>
@@ -95,6 +80,22 @@ $person = getDataIsAuthAndEmptyPerson('0');
                             <td><b>Возраст:</b></td>
                             <td>"10"</td>
                         </tr>
+                        </tbody>
+                        <tfoot class="full-width">
+                        <tr>
+                            <th></th>
+                            <th>
+                                <div class="ui right floated small green labeled icon button" onclick="openModalForSendPersonalData()">
+                                    <i class="edit icon"></i>
+                                    Изменить
+                                </div>
+                            </th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <h4 class="ui horizontal divider header"><i class="address book red icon"></i> Учетные данные </h4>
+                    <table class="ui very basic table">
+                        <tbody class="center aligned">
                         <tr>
                             <td><b>Почта:</b></td>
                             <td><?php echo $person->email; ?></td>
@@ -104,7 +105,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                             <td><a href="#" onclick="openModalWindowForPassReplace()">Сменить</a></td>
                         </tr>
                         <tr>
-                            <td><b>Учебная группа:</b></td>
+                            <td><b>Группа:</b></td>
                             <td>
                                 <a href="#" onclick="openModalWindowForGroupBinding()">"Привязаться"</a>
                                 /"Группа"
@@ -137,7 +138,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                             <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
                         </tr>
                         <tr>
-                            <td><b>Индекс Руффье:</b></td>
+                            <td><b>Индекс Руфье:</b></td>
                             <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
                         </tr>
                         <tr>
@@ -173,7 +174,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                         <tr>
                             <th></th>
                             <th>
-                                <div class="ui right floated small green labeled icon button" onclick="openModalSendPhysicalParameters()">
+                                <div class="ui right floated small green labeled icon button" onclick="openModalForSendPhysicalParameters()">
                                     <i class="edit icon"></i>
                                     Изменить
                                 </div>
@@ -222,7 +223,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
             <i class="close icon"></i>
             <div class="header">Ошибка смены пароля</div>
             <ul>
-                <li>Старый пароль неверен или новые несовпадают</li>
+                <li>Старый пароль неверен или новые не совпадают</li>
                 <li>Повторите ввод</li>
             </ul>
         </div>
@@ -283,9 +284,71 @@ $person = getDataIsAuthAndEmptyPerson('0');
     </div>
 </div>
 
+
+
+
+<div class="ui modal horizontal flip big" id="modalSendPersonalData">
+    <div class="header" style="color: #db2828">
+        Смена личных данных
+    </div>
+    <div class="content">
+        <form class="ui form">
+            <div class="fields">
+                <div class="required field five wide">
+                    <label>Фамилия</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ваше имя" required>
+                        <i class="font icon red"></i>
+                    </div>
+                </div>
+                <div class="required field five wide">
+                    <label>Имя</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ваша фамилия" required>
+                        <i class="font icon red"></i>
+                    </div>
+                </div>
+                <div class="required field six wide">
+                    <label>Отчество</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ваше отчество" required>
+                        <i class="font icon red"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="required field five wide">
+                    <label>Учебная группа</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Группа направления" required>
+                        <i class="users icon red"></i>
+                    </div>
+                </div>
+                <div class="required field five wide">
+                    <label>Дата рождения</label>
+                    <div class="ui left icon input">
+                        <input type="date" required>
+                        <i class="calendar icon red"></i>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui right labeled icon red button" onclick="hideModalForSendPersonalData()">
+            Отклонить
+            <i class="close icon"></i>
+        </button>
+        <button class="ui right labeled icon green button">
+            Изменить
+            <i class="check icon"></i>
+        </button>
+    </div>
+</div>
+
 <div class="ui modal horizontal flip big" id="modalSendPhysicalParameters">
     <div class="header" style="color: #db2828">
-        Изменить физические параметры
+        Смена физических параметров
     </div>
     <div class="content">
         <form class="ui form">
@@ -322,7 +385,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                     </div>
                 </div>
                 <div class="required field">
-                    <label>Индекс Руффье</label>
+                    <label>Индекс Руфье</label>
                     <div class="ui left icon input">
                         <input type="number" placeholder="Числовое значение" required>
                         <i class="chart line icon red"></i>
@@ -433,7 +496,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
         </form>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon red button" onclick="hideModalSendPhysicalParameters()">
+        <button class="ui right labeled icon red button" onclick="hideModalForSendPhysicalParameters()">
             Отклонить
             <i class="close icon"></i>
         </button>
@@ -444,9 +507,11 @@ $person = getDataIsAuthAndEmptyPerson('0');
     </div>
 </div>
 
+
+
 <div class="ui modal horizontal flip tiny" id="modalAvatarReplace">
     <div class="header" style="color: #db2828">
-        Сменить фотографию
+        Смена фотографии
     </div>
     <div class="content">
         <form class="ui form">
@@ -521,7 +586,24 @@ $person = getDataIsAuthAndEmptyPerson('0');
         ;
     }
 
-    function openModalSendPhysicalParameters() {
+    function openModalForSendPersonalData() {
+        $('#modalSendPersonalData')
+            .modal({
+                inverted: true
+            })
+            .modal('setting', 'closable', false)
+            .modal('show')
+        ;
+    }
+
+    function hideModalForSendPersonalData() {
+        $('#modalSendPersonalData')
+            .modal('hide')
+        ;
+    }
+
+
+    function openModalForSendPhysicalParameters() {
         $('#modalSendPhysicalParameters')
             .modal({
                 inverted: true
@@ -531,7 +613,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
         ;
     }
 
-    function hideModalSendPhysicalParameters() {
+    function hideModalForSendPhysicalParameters() {
         $('#modalSendPhysicalParameters')
             .modal('hide')
         ;

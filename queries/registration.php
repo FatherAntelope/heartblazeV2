@@ -2,22 +2,24 @@
 
 require $_SERVER['DOCUMENT_ROOT'] . "/db/db.php";
 
-if (R::count('person', 'login = ? OR email = ?', [$_POST['user_login'], $_POST['user_email']]) == 0) {
+if (R::count('person', 'login = ? OR email = ?', [$_POST['person_login'], $_POST['person_email']]) == 0) {
 
-    $user = R::dispense('person');
-    $user->name = $_POST['user_first_name'];
-    $user->surname = $_POST['user_last_name'];
-    $user->patronymic = $_POST['user_patronymic'];
-    $user->email = $_POST['user_email'];
+    $person = R::dispense('person');
+    $person->name = $_POST['person_first_name'];
+    $person->surname = $_POST['person_last_name'];
+    $person->patronymic = $_POST['person_patronymic'];
+    $person->email = $_POST['person_email'];
+    $person->password = password_hash($_POST['person_password'], PASSWORD_DEFAULT);
+    $person->login = $_POST['person_login'];
+    $person->role = $_POST['person_role'];
 
-    //password_hash($_POST['UserPassword'], PASSWORD_DEFAULT);
-
-    $user->password = password_hash($_POST['user_password'], PASSWORD_DEFAULT);
-    $user->login = $_POST['user_login'];
-    $user->role = $_POST['user_role'];
-
-    R::store($user);
-
+//    if($person->role == 0) {
+//        $student = R::dispense('student');
+//        R::store($student);
+//    } elseif ($person->role == 1) {
+//        $professor = R::dispense('professor');
+//    }
+    R::store($person);
 } else {
     die(header("HTTP/1.0 400 Bad Request"));
 }
