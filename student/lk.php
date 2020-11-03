@@ -49,7 +49,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                 * Сегмент, в котором располагается аватарка
                 -->
                 <div class="ui segment inverted blue">
-                    <div class="ui red left ribbon label"><?php echo $person -> login; ?></div>
+                    <div class="ui red left ribbon label"><?php echo $person->login; ?></div>
 
                     <img class="ui image centered" src="/images/user2.jpg"
                          style="object-fit: cover; height: 200px; width: 200px;
@@ -76,7 +76,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                         <tr>
                             <td><b>Фио:</b></td>
                             <td>
-                                <?php echo $person -> surname, " ", $person -> name, " ", $person -> patronymic; ?>
+                                <?php echo $person->surname, " ", $person->name, " ", $person->patronymic; ?>
                             </td>
                         </tr>
                         <tr>
@@ -97,7 +97,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                         </tr>
                         <tr>
                             <td><b>Почта:</b></td>
-                            <td><?php echo $person -> email; ?></td>
+                            <td><?php echo $person->email; ?></td>
                         </tr>
                         <tr>
                             <td><b>Смена пароля:</b></td>
