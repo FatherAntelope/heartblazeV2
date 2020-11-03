@@ -59,7 +59,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                     <table class="ui very basic table">
                         <tbody class="center aligned">
                         <tr>
-                            <td><b>Фио:</b></td>
+                            <td><b>ФИО:</b></td>
                             <td>
                                 <?php echo $person->surname, " ", $person->name, " ", $person->patronymic; ?>
                             </td>
@@ -85,7 +85,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                         <tr>
                             <th></th>
                             <th>
-                                <div class="ui right floated small green labeled icon button" onclick="openModalForSendPersonalData()">
+                                <div class="ui right floated small green labeled icon button" onclick="openModalForReplacePersonalData()">
                                     <i class="edit icon"></i>
                                     Изменить
                                 </div>
@@ -287,7 +287,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
 
 
 
-<div class="ui modal horizontal flip big" id="modalSendPersonalData">
+<div class="ui modal horizontal flip big" id="modalReplacePersonalData">
     <div class="header" style="color: #db2828">
         Смена личных данных
     </div>
@@ -297,37 +297,37 @@ $person = getDataIsAuthAndEmptyPerson('0');
                 <div class="required field five wide">
                     <label>Фамилия</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваше имя" required>
+                        <input type="text" placeholder="Ваша фамилия" value="<?php echo $person->surname; ?>" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
                 <div class="required field five wide">
                     <label>Имя</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваша фамилия" required>
+                        <input type="text" placeholder="Ваше имя" value="<?php echo $person->name;?>" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
                 <div class="required field six wide">
                     <label>Отчество</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваше отчество" required>
+                        <input type="text" placeholder="Ваше отчество" value="<?php echo $person->patronymic; ?>" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
             </div>
             <div class="fields">
-                <div class="required field five wide">
+                <div class="field five wide">
                     <label>Учебная группа</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Группа направления" required>
+                        <input type="text" placeholder="Группа направления">
                         <i class="users icon red"></i>
                     </div>
                 </div>
-                <div class="required field five wide">
+                <div class="field five wide">
                     <label>Дата рождения</label>
                     <div class="ui left icon input">
-                        <input type="date" required>
+                        <input type="date">
                         <i class="calendar icon red"></i>
                     </div>
                 </div>
@@ -335,7 +335,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
         </form>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon red button" onclick="hideModalForSendPersonalData()">
+        <button class="ui right labeled icon red button" onclick="hideModalForReplacePersonalData()">
             Отклонить
             <i class="close icon"></i>
         </button>
@@ -586,8 +586,8 @@ $person = getDataIsAuthAndEmptyPerson('0');
         ;
     }
 
-    function openModalForSendPersonalData() {
-        $('#modalSendPersonalData')
+    function openModalForReplacePersonalData() {
+        $('#modalReplacePersonalData')
             .modal({
                 inverted: true
             })
@@ -596,8 +596,8 @@ $person = getDataIsAuthAndEmptyPerson('0');
         ;
     }
 
-    function hideModalForSendPersonalData() {
-        $('#modalSendPersonalData')
+    function hideModalForReplacePersonalData() {
+        $('#modalReplacePersonalData')
             .modal('hide')
         ;
     }

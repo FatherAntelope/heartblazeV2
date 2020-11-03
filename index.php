@@ -1,5 +1,5 @@
 <?php
-	$role = $_COOKIE['role'];
+	$role = $_COOKIE['person_role'];
 	if (isset($role)) {
 		if ($role == 0) {
 			header('Location: /student/lk.php');

@@ -50,11 +50,11 @@ $person = getDataIsAuthAndEmptyPerson('1');
         <div class="column twelve wide">
             <div class="ui segment">
                 <h2 class="ui center aligned header" style="color: #db2828">Портфолио</h2>
-                <h4 class="ui horizontal divider header"><i class="address book red icon"></i> Учетные данные </h4>
+                <h4 class="ui horizontal divider header"><i class="address book red icon"></i> Личные данные </h4>
                 <table class="ui very basic table">
                     <tbody class="center aligned">
                     <tr>
-                        <td><b>Фио:</b></td>
+                        <td><b>ФИО:</b></td>
                         <td><?php echo $person->surname, " ", $person->name, " ", $person->patronymic ?></td>
                     </tr>
                     <tr>
@@ -65,6 +65,22 @@ $person = getDataIsAuthAndEmptyPerson('1');
                         <td><b>Должность:</b></td>
                         <td>"Должность"</td>
                     </tr>
+                    </tbody>
+                    <tfoot class="full-width">
+                    <tr>
+                        <th></th>
+                        <th>
+                            <div class="ui right floated small green labeled icon button" onclick="openModalForReplacePersonalData()">
+                                <i class="edit icon"></i>
+                                Изменить
+                            </div>
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
+                <h4 class="ui horizontal divider header"><i class="address book red icon"></i> Учетные данные </h4>
+                <table class="ui very basic table">
+                    <tbody class="center aligned">
                     <tr>
                         <td><b>Почта:</b></td>
                         <td><?php echo $person->email; ?></td>
@@ -85,7 +101,59 @@ $person = getDataIsAuthAndEmptyPerson('1');
             </div>
         </div>
     </div>
+</div>
 
+
+<div class="ui modal horizontal flip big" id="modalReplacePersonalData">
+    <div class="header" style="color: #db2828">
+        Смена личных данных
+    </div>
+    <div class="content">
+        <form class="ui form">
+            <div class="fields">
+                <div class="required field five wide">
+                    <label>Фамилия</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ваша фамилия" value="<?php echo $person->surname; ?>" required>
+                        <i class="font icon red"></i>
+                    </div>
+                </div>
+                <div class="required field five wide">
+                    <label>Имя</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ваше имя" value="<?php echo $person->name;?>" required>
+                        <i class="font icon red"></i>
+                    </div>
+                </div>
+                <div class="required field six wide">
+                    <label>Отчество</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ваше отчество" value="<?php echo $person->patronymic; ?>" required>
+                        <i class="font icon red"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="field seven wide">
+                    <label>Должность</label>
+                    <div class="ui left icon input">
+                        <input type="text" placeholder="Ученая степень или звание">
+                        <i class="users icon red"></i>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui right labeled icon red button" onclick="hideModalForReplacePersonalData()">
+            Отклонить
+            <i class="close icon"></i>
+        </button>
+        <button class="ui right labeled icon green button">
+            Изменить
+            <i class="check icon"></i>
+        </button>
+    </div>
 </div>
 
 <div class="ui modal horizontal flip tiny" id="modalPassReplace">
@@ -165,7 +233,7 @@ $person = getDataIsAuthAndEmptyPerson('1');
 
 <div class="ui modal horizontal flip tiny" id="modalAvatarReplace">
     <div class="header" style="color: #db2828">
-        Сменить фотографию
+        Смена фотографии
     </div>
     <div class="content">
         <form class="ui form">
@@ -198,6 +266,24 @@ $person = getDataIsAuthAndEmptyPerson('1');
     $('.ui.dropdown')
         .dropdown()
     ;
+
+
+    function openModalForReplacePersonalData() {
+        $('#modalReplacePersonalData')
+            .modal({
+                inverted: true
+            })
+            .modal('setting', 'closable', false)
+            .modal('show')
+        ;
+    }
+
+    function hideModalForReplacePersonalData() {
+        $('#modalReplacePersonalData')
+            .modal('hide')
+        ;
+    }
+
     function openModalWindowForAvatarReplace() {
         $('#modalAvatarReplace')
             .modal({
