@@ -1,6 +1,7 @@
 <?php
     require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
-    $person = getDataIsAuthAndEmptyPerson('1');
+    $person = getDataIsAuthAndEmptyPerson('0');
+    $specializations = R::findAll('specialization', 'ORDER BY name ASC');
 ?>
 <!doctype html>
 <html lang="ru">
@@ -80,26 +81,25 @@
             </tr>
             </thead>
             <tbody>
+            <? foreach ($specializations as $specialization) {?>
             <tr>
-                <td>
-                <!-- <?php $specialization = R::dispense('specialization'); echo $specialization->name;?> -->
-                "Cпециализация"
-                </td>
-                <td><?php echo R::count("group");?></td>
-                <td><?php echo R::count("professor");?></td>
-                <td><?php echo R::count("student");?></td>
+                <td><? echo $specialization->name; ?></td>
+                <td>"2"</td>
+                <td>"2"</td>
+                <td>"2"</td>
                 <td>
                     <button class="ui red icon button" onclick="openModalWindowForRemoveSpecialization()">
                         <i class="icon trash" style="color: white"></i>
                     </button>
                 </td>
             </tr>
+            <? } ?>
             </tbody>
             <tfoot>
             <tr>
                 <th>
                     <div class="ui teal label">
-                        <i class="list icon"></i><?php echo R::count("specialization");?>
+                        <i class="list icon"></i><?php echo count($specializations); ?>
                     </div>
                 </th>
                 <th>
@@ -169,11 +169,11 @@
             </div>
         </form>
         <div class="ui success message" style="display: none" id="msgSuccessAddSpecialization">
-            <div class="header">Специализация успешно добавлена!</div>
+            <div class="header">Специализация успешно добавлена. Обновите страницу!</div>
         </div>
     </div>
     <div class="actions">
-        <button type="submit" class="ui right labeled icon green button" id="btnAddSpecialization">
+        <button type="submit" form="formAddSpecialization" class="ui right labeled icon green button">
             Добавить
             <i class="plus circle icon"></i>
         </button>
@@ -182,17 +182,16 @@
 
 </body>
 <script>
-    $('#btnAddSpecialization').on('click', function() {
+    $("#formAddSpecialization").submit(function () {
         $.ajax({
             url: "/queries/addSpecialization.php",
             method: "POST",
-            data: $('#formAddSpecialization').serialize(),
+            data: $(this).serialize(),
             success: function () {
                 document.getElementById("msgSuccessAddSpecialization").style.display = "block";
                 document.getElementsByName("nameSpecialization")[0].value = "";
             },
             error: function () {
-
             }
         });
         return false;
