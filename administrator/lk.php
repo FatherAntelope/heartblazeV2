@@ -198,6 +198,20 @@
         return false;
     });
 
+    $('#btnRemoveSpecialization').on('click', function() {
+        $.ajax({
+            url: "/queries/addRemoveialization.php",
+            method: "POST",
+            data: $('#formAddRemoveialization').serialize(),
+            success: function () {
+                document.getElementById("msgSuccessAddSpecialization").style.display = "block";
+            },
+            error: function () {
+
+            }
+        });
+        return false;
+    });
 
     function openModalWindowForRemoveSpecialization() {
         $('#modalRemoveSpecialization')
