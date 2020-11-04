@@ -1,9 +1,8 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('1');
+$professor = R::findOne('professor', 'id_person = ?', [$person->id]);
 ?>
-
-
 <!doctype html>
 <html lang="ru">
 <head>
@@ -64,7 +63,7 @@ $person = getDataIsAuthAndEmptyPerson('1');
                     </tr>
                     <tr>
                         <td><b>Должность:</b></td>
-                        <td>"Должность"</td>
+                        <td><? if($professor->job == null) echo "—"; else echo $professor->job; ?></td>
                     </tr>
                     </tbody>
                     <tfoot class="full-width">
@@ -88,7 +87,7 @@ $person = getDataIsAuthAndEmptyPerson('1');
                     </tr>
                     <tr>
                         <td><b>Смена пароля:</b></td>
-                        <td><a href="#" onclick="openModalWindowForPassReplace()">Сменить</a></td>
+                        <td><a href="#" onclick="openModalWindowForPassReplace()">Изменить</a></td>
                     </tr>
                     <tr>
                         <td><b>Статус:</b></td>
@@ -110,26 +109,29 @@ $person = getDataIsAuthAndEmptyPerson('1');
         Смена личных данных
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formReplacePersonalData">
             <div class="fields">
                 <div class="required field five wide">
                     <label>Фамилия</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваша фамилия" value="<?php echo $person->surname; ?>" required>
+                        <input type="text" placeholder="Ваша фамилия"
+                               value="<?php echo $person->surname; ?>" name="professor_surname" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
                 <div class="required field five wide">
                     <label>Имя</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваше имя" value="<?php echo $person->name;?>" required>
+                        <input type="text" placeholder="Ваше имя"
+                               value="<?php echo $person->name;?>" name="professor_name" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
                 <div class="required field six wide">
                     <label>Отчество</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваше отчество" value="<?php echo $person->patronymic; ?>" required>
+                        <input type="text" placeholder="Ваше отчество"
+                               value="<?php echo $person->patronymic; ?>" name="professor_patronymic" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
@@ -138,11 +140,13 @@ $person = getDataIsAuthAndEmptyPerson('1');
                 <div class="field seven wide">
                     <label>Должность</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ученая степень или звание">
+                        <input type="text" placeholder="Ученая степень или звание"
+                               value="<?php echo $professor->job; ?>" name="professor_job">
                         <i class="users icon red"></i>
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="professor_id" value="<? echo $person->id; ?>">
         </form>
     </div>
     <div class="actions">
@@ -150,7 +154,7 @@ $person = getDataIsAuthAndEmptyPerson('1');
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" type="submit" form="formReplacePersonalData">
             Изменить
             <i class="check icon"></i>
         </button>
@@ -162,30 +166,31 @@ $person = getDataIsAuthAndEmptyPerson('1');
         Смена пароля
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formReplacePersonalPassword">
             <div class="required field">
                 <label>Старый пароль</label>
                 <div class="ui left icon input">
-                    <input type="password" placeholder="Введите старый пароль" required>
+                    <input type="password" placeholder="Введите старый пароль" name="person_old_password" required>
                     <i class="lock icon red"></i>
                 </div>
             </div>
             <div class="required field">
                 <label>Новый пароль</label>
                 <div class="ui left icon input">
-                    <input type="password" placeholder="Введите новый пароль" required>
+                    <input type="password" placeholder="Введите новый пароль" name="person_new_password" required>
                     <i class="lock icon red"></i>
                 </div>
             </div>
             <div class="required field">
                 <label>Повтор пароля</label>
                 <div class="ui left icon input">
-                    <input type="password" placeholder="Повторите новый пароль" required>
+                    <input type="password" placeholder="Повторите новый пароль" name="person_repeat_password" required>
                     <i class="lock icon red"></i>
                 </div>
             </div>
+            <input type="hidden" name="person_id" value="<? echo $person->id; ?>">
         </form>
-        <div class="ui error message">
+        <div class="ui error message" id="msgErrorReplacePassword" style="display: none">
             <i class="close icon"></i>
             <div class="header">Ошибка смены пароля</div>
             <ul>
@@ -193,12 +198,16 @@ $person = getDataIsAuthAndEmptyPerson('1');
                 <li>Повторите ввод</li>
             </ul>
         </div>
+        <div class="ui success message" id="msgSuccessReplacePassword" style="display: none">
+            <i class="close icon"></i>
+            <div class="header">Пароль успешно сменился на новый!</div>
+        </div>
     </div>
-    <div class="actions">
-        <div class="ui right labeled icon green button">
+    <div class="actions" id="actionsReplacePassword">
+        <button class="ui right labeled icon green button" type="submit" form="formReplacePersonalPassword">
             Подтвердить
             <i class="check icon"></i>
-        </div>
+        </button>
     </div>
 </div>
 
@@ -229,6 +238,7 @@ $person = getDataIsAuthAndEmptyPerson('1');
         <button class="ui right labeled icon green button">
             Отправить
             <i class="check icon"></i>
+        </button>
     </div>
 </div>
 
@@ -242,18 +252,73 @@ $person = getDataIsAuthAndEmptyPerson('1');
                 <input type="file" accept="image/png,image/jpeg" required>
                 <i class="image icon red"></i>
             </div>
+            <input type="hidden" value="<? echo $person->id; ?>" name="person_id">
         </form>
     </div>
     <div class="actions">
         <button class="ui right labeled icon green button">
             Сменить
             <i class="check icon"></i>
+        </button>
     </div>
 </div>
-
-
-
 </body>
+<script>
+    $("#formReplacePersonalData").submit(function () {
+        $.ajax({
+            url: "/queries/professor/replacePersonalData.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+
+    $("#formReplacePersonalAvatar").submit(function () {
+        $.ajax({
+            url: "/queries/replaceAvatar.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+                location.reload();
+            }
+        });
+        return false;
+    });
+
+    $("#formReplacePersonalPassword").submit(function () {
+        $.ajax({
+            url: "/queries/replacePassword.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                document.getElementById("msgSuccessReplacePassword").style.display = "block";
+                document.getElementById("msgErrorReplacePassword").style.display = "none";
+                document.getElementsByName("person_old_password")[0].value = "";
+                document.getElementsByName("person_new_password")[0].value = "";
+                document.getElementsByName("person_repeat_password")[0].value = "";
+                document.getElementById("actionsReplacePassword").style.display = "none";
+                setTimeout(function(){ location.reload() ;}, 1500);
+
+            },
+            error: function () {
+                document.getElementById("msgSuccessReplacePassword").style.display = "none";
+                document.getElementById("msgErrorReplacePassword").style.display = "block";
+                document.getElementsByName("person_old_password")[0].value = "";
+                document.getElementsByName("person_new_password")[0].value = "";
+                document.getElementsByName("person_repeat_password")[0].value = "";
+            }
+        });
+        return false;
+    });
+</script>
 <script>
     $('.message .close')
         .on('click', function() {

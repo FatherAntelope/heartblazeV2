@@ -2,6 +2,7 @@
 require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('0');
 $student = R::findOne('student', 'id_person = ?', [$person->id]);
+$parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$person->id]);
 ?>
 
 
@@ -67,8 +68,8 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
                             </td>
                         </tr>
                         <tr>
-                            <td><b>Группа:</b></td>
-                            <td><?php if($student->id_group == null) echo "—"; else echo $student->id_group; ?></td>
+                            <td><b>Учебная группа:</b></td>
+                            <td><?php if($student->group_study == null) echo "—"; else echo $student->group_study; ?></td>
                         </tr>
                         <tr>
                             <td><b>Роль:</b></td>
@@ -114,7 +115,7 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
                         </tr>
                         <tr>
                             <td><b>Смена пароля:</b></td>
-                            <td><a href="#" onclick="openModalWindowForPassReplace()">Сменить</a></td>
+                            <td><a href="#" onclick="openModalWindowForPassReplace()">Изменить</a></td>
                         </tr>
                         <tr>
                             <td><b>Группа:</b></td>
@@ -135,60 +136,70 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
                         <tbody class="center aligned">
                         <tr>
                             <td><b>Вес:</b></td>
-                            <td>"10"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->weight;?></td>
                         </tr>
                         <tr>
                             <td><b>Рост:</b></td>
-                            <td>"100"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->height;?></td>
                         </tr>
                         <tr>
                             <td><b>Индекс Кетле:</b></td>
-                            <td>"Истощение/Пониженный/Нормальный/Повышенный/Ожирение"</td>
+                            <td><? if($parameters == null) echo "—"; else echo getIndexQuetelet($parameters->quetelet); ?></td>
                         </tr>
                         <tr>
                             <td><b>Ортостатическая проба:</b></td>
-                            <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                            <td><? if($parameters == null) echo "—"; else echo getOrthostaticProbe($parameters->orthostatic); ?></td>
                         </tr>
                         <tr>
-                            <td><b>Индекс Руфье:</b></td>
-                            <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                            <td><b>Проба Руфье:</b></td>
+                            <td><? if($parameters == null) echo "—"; else echo getRuffierProbe($parameters->ruffier); ?></td>
                         </tr>
                         <tr>
                             <td><b>Проба Штанге:</b></td>
-                            <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                            <td><? if($parameters == null) echo "—"; else echo getStangeProbe($parameters->stange); ?></td>
+                        </tr>
+                        <tr>
+                            <td><b>Теппинг тест:</b></td>
+                            <td><? if($parameters == null) echo "—"; else echo getStangeProbe($parameters->getTappingTest); ?></td>
                         </tr>
                         <tr>
                             <td><b>Жалобы на здоровье:</b></td>
-                            <td>"Отсутствуют/Перечисление"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->complaints;?></td>
                         </tr>
                         <tr>
                             <td><b>Самочувствие:</b></td>
-                            <td>"Хорошее/Удовлетворительное/Плохое"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->state_of_health;?></td>
                         </tr>
                         <tr>
                             <td><b>Настроение:</b></td>
-                            <td>"Хорошее/Удовлетворительное/Плохое"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->mood;?></td>
                         </tr>
                         <tr>
                             <td><b>Сон:</b></td>
-                            <td>"Хороший/Плохой/Бессонница"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->sleep;?></td>
                         </tr>
                         <tr>
                             <td><b>Аппетит:</b></td>
-                            <td>"Повышенный/Нормальный/Пониженный"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->appetite;?></td>
                         </tr>
                         <tr>
                             <td><b>Работоспособность:</b></td>
-                            <td>"Повышенная/Обычная/Пониженная"</td>
+                            <td><? if($parameters == null) echo "—"; else echo $parameters->efficiency;?></td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
                         <tr>
-                            <th></th>
+                            <th class="center aligned">
+                                <p style="color: #2185d0">
+                                    <? if ($parameters != null)
+                                        echo "Последнее добавление: ".date("d.m.Y в H:i", strtotime($parameters->date));
+                                    ?>
+                                </p>
+                            </th>
                             <th>
                                 <div class="ui right floated small green labeled icon button" onclick="openModalForSendPhysicalParameters()">
                                     <i class="edit icon"></i>
-                                    Изменить
+                                    Отправить новые
                                 </div>
                             </th>
                         </tr>
@@ -203,35 +214,39 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
 
 </div>
 
+<!--
+*  Модальное окно смены пароля
+-->
 <div class="ui modal horizontal flip tiny" id="modalPassReplace">
     <div class="header" style="color: #db2828">
         Смена пароля
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formReplacePersonalPassword">
             <div class="required field">
                 <label>Старый пароль</label>
                 <div class="ui left icon input">
-                    <input type="password" placeholder="Введите старый пароль" required>
+                    <input type="password" placeholder="Введите старый пароль" name="person_old_password" required>
                     <i class="lock icon red"></i>
                 </div>
             </div>
             <div class="required field">
                 <label>Новый пароль</label>
                 <div class="ui left icon input">
-                    <input type="password" placeholder="Введите новый пароль" required>
+                    <input type="password" placeholder="Введите новый пароль" name="person_new_password" required>
                     <i class="lock icon red"></i>
                 </div>
             </div>
             <div class="required field">
                 <label>Повтор пароля</label>
                 <div class="ui left icon input">
-                    <input type="password" placeholder="Повторите новый пароль" required>
+                    <input type="password" placeholder="Повторите новый пароль" name="person_repeat_password" required>
                     <i class="lock icon red"></i>
                 </div>
             </div>
+            <input type="hidden" name="person_id" value="<? echo $person->id; ?>">
         </form>
-        <div class="ui error message">
+        <div class="ui error message" id="msgErrorReplacePassword" style="display: none">
             <i class="close icon"></i>
             <div class="header">Ошибка смены пароля</div>
             <ul>
@@ -239,16 +254,22 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
                 <li>Повторите ввод</li>
             </ul>
         </div>
+        <div class="ui success message" id="msgSuccessReplacePassword" style="display: none">
+            <i class="close icon"></i>
+            <div class="header">Пароль успешно сменился на новый!</div>
+        </div>
     </div>
-    <div class="actions">
-        <div class="ui right labeled icon green button">
+    <div class="actions" id="actionsReplacePassword">
+        <button class="ui right labeled icon green button" type="submit" form="formReplacePersonalPassword">
             Подтвердить
             <i class="check icon"></i>
-        </div>
+        </button>
     </div>
 </div>
 
-
+<!--
+*  Модальное окно привязки к группе
+-->
 <div class="ui modal horizontal flip tiny" id="modalGroupBinding">
     <div class="header" style="color: #db2828">
         Привязаться к группе
@@ -280,6 +301,10 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
     </div>
 </div>
 
+
+<!--
+*  Модальное окно выхода из группы
+-->
 <div class="ui modal horizontal flip tiny" id="modalGroupLeaving">
     <h1 class="ui header center aligned">
         Вы уверены, что хотите выйти из группы?
@@ -296,34 +321,37 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
     </div>
 </div>
 
-
-
-
+<!--
+*  Модальное окно смены личных данных
+-->
 <div class="ui modal horizontal flip big" id="modalReplacePersonalData">
     <div class="header" style="color: #db2828">
         Смена личных данных
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formReplacePersonalData">
             <div class="fields">
                 <div class="required field five wide">
                     <label>Фамилия</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваша фамилия" value="<?php echo $person->surname; ?>" required>
+                        <input type="text" placeholder="Ваша фамилия"
+                               value="<?php echo $person->surname; ?>" name="student_surname" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
                 <div class="required field five wide">
                     <label>Имя</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваше имя" value="<?php echo $person->name;?>" required>
+                        <input type="text" placeholder="Ваше имя"
+                               value="<?php echo $person->name;?>" name="student_name" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
                 <div class="required field six wide">
                     <label>Отчество</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ваше отчество" value="<?php echo $person->patronymic; ?>" required>
+                        <input type="text" placeholder="Ваше отчество"
+                               value="<?php echo $person->patronymic; ?>" name="student_patronymic" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
@@ -332,18 +360,20 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
                 <div class="field five wide">
                     <label>Учебная группа</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Группа направления" value="<?php echo $student->patronymic; ?>">
+                        <input type="text" placeholder="Группа направления"
+                               value="<?php echo $student->group_study; ?>" name="student_group_study">
                         <i class="users icon red"></i>
                     </div>
                 </div>
                 <div class="field five wide">
                     <label>Дата рождения</label>
                     <div class="ui left icon input">
-                        <input type="date">
+                        <input type="date" value="<? echo $student->birth_date; ?>" name="student_birth_date">
                         <i class="calendar icon red"></i>
                     </div>
                 </div>
             </div>
+            <input type="hidden" value="<? echo $person->id; ?>" name="student_id">
         </form>
     </div>
     <div class="actions">
@@ -351,7 +381,7 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" type="submit" form="formReplacePersonalData">
             Изменить
             <i class="check icon"></i>
         </button>
@@ -360,22 +390,22 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
 
 <div class="ui modal horizontal flip big" id="modalSendPhysicalParameters">
     <div class="header" style="color: #db2828">
-        Смена физических параметров
+        Отправка физических параметров
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formSendPhysicalParameters">
             <div class="fields">
                 <div class="required field three wide">
                     <label>Вес</label>
                     <div class="ui left icon input">
-                        <input type="number" placeholder="Ваш рост" required>
+                        <input type="number" placeholder="Ваш вес" name="student_weight" required>
                         <i class="weight icon red"></i>
                     </div>
                 </div>
                 <div class="required field three wide">
                     <label>Рост</label>
                     <div class="ui left icon input">
-                        <input type="number" placeholder="Ваш вес" required>
+                        <input type="number" placeholder="Ваш рост" name="student_height" required>
                         <i class="child icon red"></i>
                     </div>
                 </div>
@@ -383,128 +413,107 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
 
             <div class="four fields">
                 <div class="required field">
-                    <label>Индекс Кетле</label>
-                    <div class="ui left icon input">
-                        <input type="number" placeholder="Числовое значение" required>
-                        <i class="chart line icon red"></i>
-                    </div>
-                </div>
-                <div class="required field">
                     <label>Ортостатическая проба</label>
                     <div class="ui left icon input">
-                        <input type="number" placeholder="Числовое значение" required>
+                        <input type="number" placeholder="Числовое" name="student_orthostatic" required>
                         <i class="chart line icon red"></i>
                     </div>
                 </div>
                 <div class="required field">
-                    <label>Индекс Руфье</label>
+                    <label>Проба Руфье</label>
                     <div class="ui left icon input">
-                        <input type="number" placeholder="Числовое значение" required>
+                        <input type="number" placeholder="Числовое" name="student_ruffier" required>
                         <i class="chart line icon red"></i>
                     </div>
                 </div>
                 <div class="required field">
                     <label>Проба Штанге</label>
                     <div class="ui left icon input">
-                        <input type="number" placeholder="Числовое значение" required>
+                        <input type="number" placeholder="Числовое" name="student_stange" required>
+                        <i class="chart line icon red"></i>
+                    </div>
+                </div>
+                <div class="required field">
+                    <label>Теппинг тест</label>
+                    <div class="ui left icon input">
+                        <input type="number" placeholder="Числовое" name="student_tapping_test" required>
                         <i class="chart line icon red"></i>
                     </div>
                 </div>
             </div>
 
-
             <div class="field">
                 <label>Жалобы на здоровье</label>
                 <div class="ui left icon input">
-                    <input type="text" placeholder="Перечислите, если есть">
+                    <input type="text" placeholder="Перечислите, если есть" name="student_complaints">
                     <i class="stethoscope icon red"></i>
                 </div>
             </div>
 
             <div class="fields">
-                <div class="required field">
+                <div class="required four wide field">
                     <label>Самочувствие</label>
-                    <div class="ui left icon input">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="student_state_of_health">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Выберите</div>
-                            <div class="menu">
-                                <div class="item" data-value="2">Хорошее</div>
-                                <div class="item" data-value="1">Удовлетворительное</div>
-                                <div class="item" data-value="0">Плохое</div>
-                            </div>
-                        </div>
+                    <div class="ui input">
+                        <select class="ui fluid dropdown" name="student_state_of_health" required>
+                            <option value="">Выберите</option>
+                            <option value="Хорошее">Хорошее</option>
+                            <option value="Удовлетворительное">Удовлетворительное</option>
+                            <option value="Плохое">Плохое</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="required field">
+                <div class="required four wide field">
                     <label>Настроение</label>
-                    <div class="ui left icon input">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="student_mood">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Выберите</div>
-                            <div class="menu">
-                                <div class="item" data-value="2">Хорошее</div>
-                                <div class="item" data-value="1">Удовлетворительное</div>
-                                <div class="item" data-value="0">Плохое</div>
-                            </div>
-                        </div>
+                    <div class="ui input">
+                        <select class="ui fluid dropdown" name="student_mood" required>
+                            <option value="">Выберите</option>
+                            <option value="Хорошее">Хорошее</option>
+                            <option value="Плохое">Плохое</option>
+                            <option value="Удовлетворительное">Удовлетворительное</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="required field">
+                <div class="required four wide field">
                     <label>Сон</label>
-                    <div class="ui left icon input">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="student_sleep">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Выберите</div>
-                            <div class="menu">
-                                <div class="item" data-value="2">Хороший</div>
-                                <div class="item" data-value="1">Плохой</div>
-                                <div class="item" data-value="0">Бессонница</div>
-                            </div>
-                        </div>
+                    <div class="ui input">
+                        <select class="ui fluid dropdown" name="student_sleep" required>
+                            <option value="">Выберите</option>
+                            <option value="Хороший">Хороший</option>
+                            <option value="Плохой">Плохой</option>
+                            <option value="Бессонница">Бессонница</option>
+                        </select>
                     </div>
                 </div>
             </div>
-
 
             <div class="fields">
-                <div class="required field">
+                <div class="required four wide field">
                     <label>Аппетит</label>
-                    <div class="ui left icon input">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="student_appetite">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Выберите</div>
-                            <div class="menu">
-                                <div class="item" data-value="2">Повышенный</div>
-                                <div class="item" data-value="1">Нормальный</div>
-                                <div class="item" data-value="0">Пониженный</div>
-                            </div>
-                        </div>
+                    <div class="ui input">
+                        <select class="ui fluid dropdown" name="student_appetite" required>
+                            <option value="">Выберите</option>
+                            <option value="Повышенный">Повышенный</option>
+                            <option value="Нормальный">Нормальный</option>
+                            <option value="Пониженный">Пониженный</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="required field">
+                <div class="required four wide field">
                     <label>Работоспособность</label>
-                    <div class="ui left icon input">
-                        <div class="ui selection dropdown">
-                            <input type="hidden" name="student_efficiency">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Выберите</div>
-                            <div class="menu">
-                                <div class="item" data-value="2">Повышенная</div>
-                                <div class="item" data-value="1">Обычная</div>
-                                <div class="item" data-value="0">Пониженная</div>
-                            </div>
-                        </div>
+                    <div class="ui input">
+                        <select class="ui fluid dropdown" name="student_efficiency" required>
+                            <option value="">Выберите</option>
+                            <option value="Повышенная">Повышенная</option>
+                            <option value="Обычная">Обычная</option>
+                            <option value="Пониженная">Пониженная</option>
+                        </select>
                     </div>
                 </div>
             </div>
+            <input type="hidden" value="<? echo $person->id; ?>" name="person_id">
         </form>
     </div>
     <div class="actions">
@@ -512,7 +521,7 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" type="submit" form="formSendPhysicalParameters">
             Изменить
             <i class="check icon"></i>
         </button>
@@ -526,21 +535,94 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
         Смена фотографии
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formReplacePersonalAvatar">
             <div class="ui left icon input fluid">
-                <input type="file" accept="image/png,image/jpeg" required>
+                <input type="file" accept="image/png,image/jpeg" name="person_photo" required>
                 <i class="image icon red"></i>
             </div>
+            <input type="hidden" value="<? echo $person->id; ?>" name="person_id">
         </form>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" type="submit" name="formReplacePersonalAvatar">
             Сменить
             <i class="check icon"></i>
+        </button>
     </div>
 </div>
 
 </body>
+<script>
+    $("#formSendPhysicalParameters").submit(function () {
+        $.ajax({
+            url: "/queries/student/sendPhysicalParameters.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+
+
+    $("#formReplacePersonalData").submit(function () {
+        $.ajax({
+            url: "/queries/student/replacePersonalData.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+
+    $("#formReplacePersonalAvatar").submit(function () {
+        $.ajax({
+            url: "/queries/replaceAvatar.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+                location.reload();
+            }
+        });
+        return false;
+    });
+
+    $("#formReplacePersonalPassword").submit(function () {
+        $.ajax({
+            url: "/queries/replacePassword.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                document.getElementById("msgSuccessReplacePassword").style.display = "block";
+                document.getElementById("msgErrorReplacePassword").style.display = "none";
+                document.getElementsByName("person_old_password")[0].value = "";
+                document.getElementsByName("person_new_password")[0].value = "";
+                document.getElementsByName("person_repeat_password")[0].value = "";
+                document.getElementById("actionsReplacePassword").style.display = "none";
+                setTimeout(function(){ location.reload() ;}, 1500);
+            },
+            error: function () {
+                document.getElementById("msgSuccessReplacePassword").style.display = "none";
+                document.getElementById("msgErrorReplacePassword").style.display = "block";
+                document.getElementsByName("person_old_password")[0].value = "";
+                document.getElementsByName("person_new_password")[0].value = "";
+                document.getElementsByName("person_repeat_password")[0].value = "";
+            }
+        });
+        return false;
+    });
+</script>
+
 <script>
     $('.message .close')
         .on('click', function() {

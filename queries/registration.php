@@ -22,6 +22,8 @@ if (R::count('person', 'login = ? OR email = ?', [$_POST['person_login'], $_POST
     } elseif ($person->role == 1) {
         $professor = R::dispense('professor');
         $professor->id_person = R::getInsertID();
+        $professor->status = false;
+        R::store($professor);
     }
 
 } else {

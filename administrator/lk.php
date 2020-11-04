@@ -184,7 +184,7 @@
 <script>
     $("#formAddSpecialization").submit(function () {
         $.ajax({
-            url: "/queries/addSpecialization.php",
+            url: "/queries/administrator/addSpecialization.php",
             method: "POST",
             data: $(this).serialize(),
             success: function () {
