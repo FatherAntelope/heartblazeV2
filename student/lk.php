@@ -1,6 +1,7 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('0');
+$student = R::findOne('student', 'id_person = ?', [$person->id]);
 ?>
 
 
@@ -67,7 +68,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                         </tr>
                         <tr>
                             <td><b>Группа:</b></td>
-                            <td>"Группа студента"</td>
+                            <td><?php if($student->id_group == null) echo "—"; else echo $student->id_group; ?></td>
                         </tr>
                         <tr>
                             <td><b>Роль:</b></td>
@@ -75,11 +76,21 @@ $person = getDataIsAuthAndEmptyPerson('0');
                         </tr>
                         <tr>
                             <td><b>Дата рождения:</b></td>
-                            <td>"01.01.1000"</td>
+                            <td>
+                                <?php
+                                if($student->birth_date == null) echo "—";
+                                else echo date("d.m.Y", strtotime($student->birth_date));
+                                ?>
+                            </td>
                         </tr>
                         <tr>
                             <td><b>Возраст:</b></td>
-                            <td>"10"</td>
+                            <td>
+                                <?php
+                                if($student->birth_date == null) echo "—";
+                                else echo floor( (time() - strtotime($student->birth_date)) /(60 * 60 * 24 * 365.25));
+                                ?>
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot class="full-width">
@@ -321,7 +332,7 @@ $person = getDataIsAuthAndEmptyPerson('0');
                 <div class="field five wide">
                     <label>Учебная группа</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Группа направления">
+                        <input type="text" placeholder="Группа направления" value="<?php echo $student->patronymic; ?>">
                         <i class="users icon red"></i>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "/db/db.php";
+require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+
 
 if (R::count('person', 'login = ? OR email = ?', [$_POST['person_login'], $_POST['person_email']]) == 0) {
 
@@ -14,13 +15,14 @@ if (R::count('person', 'login = ? OR email = ?', [$_POST['person_login'], $_POST
     $person->role = $_POST['person_role'];
     R::store($person);
 
-//    if($person->role == 0) {
-//        $student = R::dispense('student');
-//        $student->id_person =
-//        R::store($student);
-//    } elseif ($person->role == 1) {
-//        $professor = R::dispense('professor');
-//    }
+    if($person->role == 0) {
+        $student = R::dispense('student');
+        $student->id_person = R::getInsertID();
+        R::store($student);
+    } elseif ($person->role == 1) {
+        $professor = R::dispense('professor');
+        $professor->id_person = R::getInsertID();
+    }
 
 } else {
     die(header("HTTP/1.0 400 Bad Request"));
