@@ -27,18 +27,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="User сменен на Person&#10;Добавлено редактирование личных данных у студента и преподавателя">
+      <change afterPath="$PROJECT_DIR$/queries/addSpecialization.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/administrator/groups.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/groups.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/administrator/add.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/administrator/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/lk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/administrator/professors.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/professors.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/administrator/students.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/students.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/administrator/remove.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/professor/group.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/group.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/professor/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/lk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/professor/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/panel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/lk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/panel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/registration.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +81,9 @@
       <updated>1604298102589</updated>
       <workItem from="1604298104223" duration="35552000" />
       <workItem from="1604350556969" duration="99000" />
-      <workItem from="1604395752510" duration="17315000" />
+      <workItem from="1604395752510" duration="18238000" />
+      <workItem from="1604417685884" duration="2379000" />
+      <workItem from="1604476050816" duration="1730000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -200,7 +197,21 @@
       <option name="project" value="LOCAL" />
       <updated>1604413913658</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Названы вкладки сайта и заданы иконки">
+      <created>1604414207444</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1604414207444</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Исправлен баг с перенаправлением по личному кабинету">
+      <created>1604414346325</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1604414346325</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,7 +253,9 @@
     <MESSAGE value="freeze перемещен" />
     <MESSAGE value="User сменен на Person&#10;Добавлено редактирование личных данных у студента и преподавателя&#10;Добавлен файл с функциями" />
     <MESSAGE value="User сменен на Person&#10;Добавлено редактирование личных данных у студента и преподавателя" />
-    <option name="LAST_COMMIT_MESSAGE" value="User сменен на Person&#10;Добавлено редактирование личных данных у студента и преподавателя" />
+    <MESSAGE value="Названы вкладки сайта и заданы иконки" />
+    <MESSAGE value="Исправлен баг с перенаправлением по личному кабинету" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправлен баг с перенаправлением по личному кабинету" />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -265,10 +278,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604328426750" />
-    <state x="325" y="0" key="CommitChangelistDialog2" timestamp="1604413910249">
+    <state x="325" y="0" key="CommitChangelistDialog2" timestamp="1604414343184">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="325" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604413910249" />
+    <state x="325" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604414343184" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1604396444575">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -297,10 +310,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="147" y="65" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1604400804005" />
-    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1604408606237">
+    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1604476609432">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1604408606237" />
+    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1604476609432" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1604326538016">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -309,14 +322,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="326" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1604400872492" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1604413919132">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1604414349887">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1604413919132" />
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604401367947">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1604414349887" />
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604476156942">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1604401367947" />
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1604476156942" />
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration" timestamp="1604300926764">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -325,9 +338,9 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1604404766881" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604402448736">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604476479816">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1604402448736" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1604476479816" />
   </component>
 </project>

@@ -12,14 +12,16 @@ if (R::count('person', 'login = ? OR email = ?', [$_POST['person_login'], $_POST
     $person->password = password_hash($_POST['person_password'], PASSWORD_DEFAULT);
     $person->login = $_POST['person_login'];
     $person->role = $_POST['person_role'];
+    R::store($person);
 
 //    if($person->role == 0) {
 //        $student = R::dispense('student');
+//        $student->id_person =
 //        R::store($student);
 //    } elseif ($person->role == 1) {
 //        $professor = R::dispense('professor');
 //    }
-    R::store($person);
+
 } else {
     die(header("HTTP/1.0 400 Bad Request"));
 }

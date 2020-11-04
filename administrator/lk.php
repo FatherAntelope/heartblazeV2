@@ -1,6 +1,6 @@
 <?php
     require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
-    $person = getDataIsAuthAndEmptyPerson('2');
+    $person = getDataIsAuthAndEmptyPerson('1');
 ?>
 <!doctype html>
 <html lang="ru">
@@ -25,7 +25,7 @@
         <a href="/queries/exit.php" class="ui button red">
             <i class="sign-out icon"></i>
             Выйти
-        </button>
+        </a>
         <a href="/administrator/professors.php" class="ui button green">
             <i class="user icon"></i>
             Преподаватели
@@ -82,7 +82,7 @@
             <tbody>
             <tr>
                 <td>
-                <!-- <?php $specialization = R::dispense('specialization');echo $specialization->name;?> -->
+                <!-- <?php $specialization = R::dispense('specialization'); echo $specialization->name;?> -->
                 "Cпециализация"
                 </td>
                 <td><?php echo R::count("group");?></td>
@@ -152,15 +152,6 @@
         Добавить специализацию
     </h1>
     <div class="content">
-        <form class="ui form"  method="get">
-            <div class="field required">
-                <label>Название специализации</label>
-                <div class="ui left icon input">
-                    <input type="text" name = "spec" placeholder="С заглавной буквы" required>
-                    <i class="font alternate red icon"></i>
-                </div>
-            </div>
-        </form>
         <div class="ui info message">
             <div class="header">Примечание:</div>
             <ul>
@@ -168,19 +159,46 @@
                 <li>Например: аэробика, бег, плавание, футбол и т.д.</li>
             </ul>
         </div>
+        <form class="ui form" id="formAddSpecialization">
+            <div class="field required">
+                <label>Название специализации</label>
+                <div class="ui left icon input">
+                    <input type="text" name="nameSpecialization" placeholder="С заглавной буквы" required>
+                    <i class="font alternate red icon"></i>
+                </div>
+            </div>
+        </form>
+        <div class="ui success message" style="display: none" id="msgSuccessAddSpecialization">
+            <div class="header">Специализация успешно добавлена!</div>
+        </div>
     </div>
     <div class="actions">
-        <a href="/administrator/add.php">
-        <button type="submit" class="ui right labeled icon green button">
+        <button type="submit" class="ui right labeled icon green button" id="btnAddSpecialization">
             Добавить
             <i class="plus circle icon"></i>
-            
         </button>
     </div>
 </div>
 
 </body>
 <script>
+    $('#btnAddSpecialization').on('click', function() {
+        $.ajax({
+            url: "/queries/addSpecialization.php",
+            method: "POST",
+            data: $('#formAddSpecialization').serialize(),
+            success: function () {
+                document.getElementById("msgSuccessAddSpecialization").style.display = "block";
+                document.getElementsByName("nameSpecialization")[0].value = "";
+            },
+            error: function () {
+
+            }
+        });
+        return false;
+    });
+
+
     function openModalWindowForRemoveSpecialization() {
         $('#modalRemoveSpecialization')
             .modal({
