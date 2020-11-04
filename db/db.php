@@ -1,5 +1,5 @@
 <?php
-mail('gorbunov.vladlen2014@gmail.com', 'My Subject', "http://heartblaze.ru/?email_key=fsddfhfdjjfd");
+//mail('gorbunov.vladlen2014@gmail.com', 'My Subject', "http://heartblaze.ru/?email_key=fsddfhfdjjfd");
 require $_SERVER['DOCUMENT_ROOT']."/frameworks/rb.php";
 $username = 'root';
 $password = 'root';

@@ -1,3 +1,7 @@
+<?php
+    require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
+    $person = getDataIsAuthAndEmptyPerson('2');
+?>
 <!doctype html>
 <html lang="ru">
 <head>
@@ -18,7 +22,7 @@
 -->
 <div class="ui container">
     <div class="ui labeled icon buttons">
-        <button class="ui button red">
+        <a href="/queries/exit.php" class="ui button red">
             <i class="sign-out icon"></i>
             Выйти
         </button>
@@ -43,7 +47,7 @@
             <tbody class="center aligned">
             <tr>
                 <td><b>Логин:</b></td>
-                <td>"Логин"</td>
+                <td><?php echo $person->login; ?></td>
             </tr>
             <tr>
                 <td><b>Роль:</b></td>
@@ -51,7 +55,7 @@
             </tr>
             <tr>
                 <td><b>Почта:</b></td>
-                <td>"mail@mail.ru"</td>
+                <td><?php echo $person->email; ?></td>
             </tr>
             </tbody>
         </table>
@@ -77,10 +81,13 @@
             </thead>
             <tbody>
             <tr>
-                <td>"Специализация"</td>
-                <td>"15"</td>
-                <td>"7"</td>
-                <td>"720"</td>
+                <td>
+                <!-- <?php $specialization = R::dispense('specialization');echo $specialization->name;?> -->
+                "Cпециализация"
+                </td>
+                <td><?php echo R::count("group");?></td>
+                <td><?php echo R::count("professor");?></td>
+                <td><?php echo R::count("student");?></td>
                 <td>
                     <button class="ui red icon button" onclick="openModalWindowForRemoveSpecialization()">
                         <i class="icon trash" style="color: white"></i>
@@ -92,7 +99,7 @@
             <tr>
                 <th>
                     <div class="ui teal label">
-                        <i class="list icon"></i>"22"
+                        <i class="list icon"></i><?php echo R::count("specialization");?>
                     </div>
                 </th>
                 <th>
@@ -145,11 +152,11 @@
         Добавить специализацию
     </h1>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form"  method="get">
             <div class="field required">
                 <label>Название специализации</label>
                 <div class="ui left icon input">
-                    <input type="text" placeholder="С заглавной буквы" required>
+                    <input type="text" name = "spec" placeholder="С заглавной буквы" required>
                     <i class="font alternate red icon"></i>
                 </div>
             </div>
@@ -163,9 +170,11 @@
         </div>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+        <a href="/administrator/add.php">
+        <button type="submit" class="ui right labeled icon green button">
             Добавить
             <i class="plus circle icon"></i>
+            
         </button>
     </div>
 </div>
