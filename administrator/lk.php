@@ -197,7 +197,7 @@
         });
         return false;
     });
-
+2
     $('#btnRemoveSpecialization').on('click', function() {
         $.ajax({
             url: "/queries/addRemoveialization.php",
