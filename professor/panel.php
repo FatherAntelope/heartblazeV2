@@ -1,3 +1,10 @@
+<?php
+require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
+$person = getDataIsAuthAndEmptyPerson('1');
+$specializations = R::findAll('specialization', 'ORDER BY name ASC');
+$groups = R::findAll('group', 'ORDER BY name ASC');
+?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -22,11 +29,11 @@
             <i class="plus circle icon"></i>Добавить группу
         </button>
     </div>
-    <div class="ui warning message">
-        <div class="header">Группы отсутствуют:</div>
+    <div class="ui info message">
+        <div class="header">Примечание:</div>
         <ul>
             <li>Создавайте группы только с уникальными именами</li>
-            <li>Называйте группы так: <b>Аббревиатура_Курс_Пол(если нужен)</b></li>
+            <li>Называйте группы так: <b>Аббревиатура_Курс_Пол (если нужен)</b></li>
             <li>Пример: <b>СМГ_3_М</b></li>
             <li>После создания группы вы получите ключевое слово привязки, которое необходимо передать студентам</li>
         </ul>
@@ -45,12 +52,16 @@
         </tr>
         </thead>
         <tbody class="center aligned">
+        <? foreach ($groups as $group) { ?>
         <tr>
-            <td>"Специализация"</td>
-            <td><a href="">"СМГ"</a></td>
+            <td><? echo $specializations[$group->id_specialization]->name; ?></td>
+            <td><a href=""><? echo $group->name; ?></a></td>
             <td>"10"</td>
             <td>
-                <button class="ui brown icon button"><i class="icon clone outline" style="color: white"></i></button>
+                <div id="<? echo $group->name;?>" hidden><?echo $group->code_word; ?></div>
+                <button class="ui brown icon button" onclick="copyKeyWord('#<? echo $group->name;?>')" data-content="Скопировано">
+                    <i class="icon clone outline" style="color: white"></i>
+                </button>
             </td>
             <td>
                 <button class="ui red icon button" onclick="openModalWindowForGroupRemove()">
@@ -58,11 +69,12 @@
                 </button>
             </td>
         </tr>
+        <? } ?>
         </tbody>
         <tfoot class="full-width">
         <tr>
             <th colspan="5">
-                <div class="ui orange label"><i class="users icon"></i> 1 </div>
+                <div class="ui orange label"><i class="users icon"></i> <? echo count($groups); ?> </div>
                 <div class="ui orange label"><i class="id badge icon"></i> "10" </div>
             </th>
         </tr>
@@ -76,43 +88,55 @@
         Добавить группу
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formAddGroup">
             <div class="required field">
                 <label>Специализация</label>
-                <div class="ui left icon input">
-                    <div class="ui fluid selection dropdown">
-                        <input type="hidden" name="specialization">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">Выберите</div>
-                        <div class="menu">
-                            <div class="item" data-value="Spec1">Специализация1</div>
-                            <div class="item" data-value="Spec2">Специализация2</div>
-                        </div>
-                    </div>
+                <div class="ui input">
+                    <select class="ui fluid dropdown" name="id_specialization" required>
+                        <option value="">Выберите</option>
+                        <? foreach ($specializations as $specialization) { ?>
+                            <option value="<? echo $specialization->id; ?>">
+                                <? echo $specialization->name; ?>
+                            </option>
+                        <? } ?>
+                    </select>
                 </div>
             </div>
             <div class="required field">
                 <label>Название группы</label>
                 <div class="ui left icon input">
-                    <input type="text">
+                    <input type="text" name="name_group" required>
                     <i class="font icon red"></i>
                 </div>
             </div>
+            <input type="hidden" value=" <? echo $person->id; ?>" name="id_professor">
         </form>
+        <? if(count($specializations) == null) { ?>
         <div class="ui warning message">
             <div class="header">Специализации отсутствуют:</div>
             <ul>
                 <li>Вы не можете создать группу, пока нет специализаций</li>
             </ul>
         </div>
-        <div class="ui success message">
-            <div class="header">Группа успешно создана!</div>
+        <? } ?>
+        <div class="ui success message" id="msgSuccessAddGroup" style="display: none;">
+            <div class="header">Группа успешно создана! Добавьте еще или перезагрузите страницу</div>
         </div>
+        <div class="ui error message" id="msgErrorAddGroup" style="display: none;">
+            <div class="header">Ошибка создания группы:</div>
+            <ul>
+                <li>Группа с данным названием существует</li>
+                <li>Создавайте группы только с уникальными названиями!</li>
+            </ul>
+        </div>
+
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button <? if(count($specializations) == null) echo "disabled"; ?>"
+        form="formAddGroup">
             Добавить
             <i class="plus circle icon"></i>
+        </button>
     </div>
 </div>
 
@@ -135,9 +159,41 @@
 
 </body>
 <script>
-    $('.ui.dropdown')
-        .dropdown()
-    ;
+    $("#formAddGroup").submit(function () {
+        $.ajax({
+            url: "/queries/professor/addGroup.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                document.getElementById("msgErrorAddGroup").style.display = "none";
+                document.getElementById("msgSuccessAddGroup").style.display = "block";
+                document.getElementsByName("id_specialization")[0].selectedIndex = -1;
+                document.getElementsByName("name_group")[0].value = "";
+            },
+            error: function () {
+                document.getElementById("msgErrorAddGroup").style.display = "block";
+                document.getElementById("msgSuccessAddGroup").style.display = "none";
+            }
+        });
+        return false;
+    });
+</script>
+
+<script>
+
+    $('.ui.brown.icon.button').popup();
+
+    function copyKeyWord(keyWord) {
+        var $tmp = $("<input>");
+        $("body").append($tmp);
+        $tmp.val($(keyWord).text()).select();
+        document.execCommand("copy");
+        $tmp.remove();
+
+
+    }
+
+    $('.ui.dropdown').dropdown();
 
     function openModalWindowForAddGroup() {
         $('#modalAddGroup')

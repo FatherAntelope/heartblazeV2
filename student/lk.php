@@ -5,7 +5,6 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
 $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$person->id]);
 ?>
 
-
 <!doctype html>
 <html lang="ru">
 <head>
@@ -544,7 +543,7 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$pe
         </form>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button" type="submit" name="formReplacePersonalAvatar">
+        <button class="ui right labeled icon green button" type="submit" form="formReplacePersonalAvatar">
             Сменить
             <i class="check icon"></i>
         </button>
@@ -591,7 +590,7 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$pe
                 location.reload();
             },
             error: function () {
-                location.reload();
+                //location.reload();
             }
         });
         return false;

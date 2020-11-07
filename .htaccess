@@ -1,0 +1,81 @@
+Options -Indexes
+
+ErrorDocument 404 /error/404.php
+ErrorDocument 403 /error/403.php
+ErrorDocument 401 /error/401.php
+
+<Files db.php>
+deny from all
+</Files>
+<Files jquery.min.js>
+deny from all
+</Files>
+<Files rb.php>
+deny from all
+</Files>
+<Files semantic.min.css>
+deny from all  
+</Files>
+<Files semantic.min.js>
+deny from all  
+</Files>
+<Files bg.jpg>
+deny from all  
+</Files>
+<Files logo1.png>
+deny from all  
+</Files>
+<Files ugatu_logo.png>
+deny from all  
+</Files>
+<Files ugatulogoerror401.png>
+deny from all  
+</Files>
+<Files ugatulogoerror403.png>
+deny from all  
+</Files>
+<Files ugatulogoerror404.png>
+deny from all  
+</Files>
+<Files addSpecialization.php>
+deny from all  
+</Files>
+<Files replacePersonalData.php>
+deny from all  
+</Files>
+<Files replacePersonalData.php>
+deny from all  
+</Files>
+<Files sendPhysicalParameters.php>
+deny from all  
+</Files>
+<Files exit.php>
+deny from all  
+</Files>
+<Files functions.php>
+deny from all  
+</Files>
+<Files login.php>
+deny from all  
+</Files>
+<Files registration.php>
+deny from all  
+</Files>
+<Files replaceAvatar.php>
+deny from all  
+</Files>
+<Files replacePassword.php>
+deny from all  
+</Files>
+<Files .gitattributes>
+deny from all  
+</Files>
+<Files .gitignore>
+deny from all  
+</Files>
+<Files LICENSE>
+deny from all  
+</Files>
+<Files sql.sql>
+deny from all  
+</Files>

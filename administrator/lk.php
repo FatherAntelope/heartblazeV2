@@ -171,6 +171,13 @@
         <div class="ui success message" style="display: none" id="msgSuccessAddSpecialization">
             <div class="header">Специализация успешно добавлена. Обновите страницу!</div>
         </div>
+        <div class="ui error message" id="msgErrorAddSpecialization" style="display: none;">
+            <div class="header">Ошибка создания специализации:</div>
+            <ul>
+                <li>Специализация с данным названием существует</li>
+                <li>Создавайте специализации только с уникальными названиями!</li>
+            </ul>
+        </div>
     </div>
     <div class="actions">
         <button type="submit" form="formAddSpecialization" class="ui right labeled icon green button">
@@ -188,10 +195,14 @@
             method: "POST",
             data: $(this).serialize(),
             success: function () {
+                document.getElementById("msgErrorAddSpecialization").style.display = "none";
                 document.getElementById("msgSuccessAddSpecialization").style.display = "block";
                 document.getElementsByName("nameSpecialization")[0].value = "";
             },
             error: function () {
+                document.getElementById("msgErrorAddSpecialization").style.display = "block";
+                document.getElementById("msgSuccessAddSpecialization").style.display = "none";
+                document.getElementsByName("nameSpecialization")[0].value = "";
             }
         });
         return false;
