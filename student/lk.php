@@ -22,7 +22,13 @@ if($student->id_group !== null) {
     <script src="/frameworks/semantic.min.js"></script>
     <title>Личный кабинет</title>
 </head>
-<body style="background-image: url(/images/bg.jpg)">
+<style>
+    *
+    {
+        scroll-behavior: smooth;
+    }
+</style>
+<body style="background-image: url(/images/bg.jpg);">
 <!--
 * Контейнер - блок с содержимым, имеющий отступы по краям (слева и справа)
 -->
@@ -54,7 +60,20 @@ if($student->id_group !== null) {
                 <!--
                 * Кнопка для перехода в панель управления
                 -->
-                <a href="/student/panel.php" class="ui green button fluid">Панель управления</a>
+                <? if($student->id_group === null) { ?>
+                <div class="ui info message">
+                    Привяжитесь к группе вашего преподавателя для получения доступа к панели управления
+                </div>
+                <? } ?>
+
+
+                <a href="/student/panel.php"
+                   class="ui green button fluid <? if($student->id_group === null) echo "disabled";?>">
+                    Панель управления
+                </a>
+                <a href="#segmentCharts" class="ui teal button fluid" style="margin-top: 10px">
+                    К графикам
+                </a>
             </div>
             <div class="column twelve wide">
                 <div class="ui segment">
@@ -123,7 +142,8 @@ if($student->id_group !== null) {
                             <td>
                                 <? if ($group == null) {?>
                                 <a href="#" onclick="openModalWindowForGroupBinding()">"Привязаться"</a>
-                                <? echo $group->name; } else {  ?>
+                                <? } else { ?>
+                                    <label style="color: #db2828"> <? echo $group->name;  ?> </label>
                                     <a href="#" onclick="openModalWindowForGroupLeaving()">(Выйти)</a>
                                 <? } ?>
                             </td>
@@ -205,12 +225,11 @@ if($student->id_group !== null) {
                         </tfoot>
                     </table>
                 </div>
-                <div class="ui segment">
+                <div class="ui segment" id="segmentCharts">
                     <h2 class="ui center aligned header" style="color: #db2828">Графики</h2>
                 </div>
             </div>
         </div>
-
 </div>
 
 <!--
@@ -254,7 +273,6 @@ if($student->id_group !== null) {
             </ul>
         </div>
         <div class="ui success message" id="msgSuccessReplacePassword" style="display: none">
-            <i class="close icon"></i>
             <div class="header">Пароль успешно сменился на новый!</div>
         </div>
     </div>
@@ -304,7 +322,6 @@ if($student->id_group !== null) {
         </div>
 
         <div class="ui success message" id="msgSuccessReferenceGroup" style="display: none">
-            <i class="close icon"></i>
             <div class="header">Успешная привязка к группе!</div>
         </div>
 
@@ -328,11 +345,14 @@ if($student->id_group !== null) {
         Вы уверены, что хотите выйти из группы?
     </h1>
     <div class="actions">
+        <form class="ui form" id="formLeaveGroup">
+            <input type="hidden" value="<? echo $person->id; ?>" name="student_id">
+        </form>
         <button class="ui right labeled icon red button" onclick="hideModalWindowForGroupLeaving()">
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" form="formLeaveGroup">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -594,7 +614,7 @@ if($student->id_group !== null) {
                 document.getElementById("msgSuccessReferenceGroup").style.display = "block";
                 document.getElementById("msgErrorReferenceGroup").style.display = "none";
                 document.getElementsByName("code_word")[0].value = "";
-                setTimeout(function(){ location.reload() ;}, 1500);
+                setTimeout(function(){ location.reload() ;}, 1100);
             },
             error: function () {
                 document.getElementById("msgSuccessReferenceGroup").style.display = "none";
@@ -605,6 +625,19 @@ if($student->id_group !== null) {
         return false;
     });
 
+    $("#formLeaveGroup").submit(function () {
+        $.ajax({
+            url: "/queries/student/leaveGroup.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
 
     $("#formReplacePersonalData").submit(function () {
         $.ajax({
@@ -647,7 +680,7 @@ if($student->id_group !== null) {
                 document.getElementsByName("person_new_password")[0].value = "";
                 document.getElementsByName("person_repeat_password")[0].value = "";
                 document.getElementById("actionsReplacePassword").style.display = "none";
-                setTimeout(function(){ location.reload() ;}, 1500);
+                setTimeout(function(){ location.reload() ;}, 1100);
             },
             error: function () {
                 document.getElementById("msgSuccessReplacePassword").style.display = "none";

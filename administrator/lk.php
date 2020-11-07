@@ -1,6 +1,6 @@
 <?php
     require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
-    $person = getDataIsAuthAndEmptyPerson('0');
+    $person = getDataIsAuthAndEmptyPerson('2');
     $specializations = R::findAll('specialization', 'ORDER BY name ASC');
 ?>
 <!doctype html>

@@ -1,3 +1,16 @@
+<?php
+require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
+$person = getDataIsAuthAndEmptyPerson('0');
+$student = R::findOne('student', 'id_person = ?', [$person->id]);
+if($student->id_group !== null) {
+    $group = R::findOne('group', 'id = ?', [$student->id_group]);
+} else {
+    die(header("HTTP/1.0 403 Forbidden"));
+}
+
+$professorInfo = R::findOne('professor', 'id = ?', [$group->id_professor]);
+$professor =  R::findOne('person', 'id = ?', [$professorInfo->id_person]);
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -45,12 +58,14 @@
                     <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
                 </a>
                 <div class="content">
-                    <label class="author" style="color: #db2828">Фамилия Имя Отчество</label>
+                    <label class="author" style="color: #db2828">
+                        <? echo $professor->surname." ".$professor->name." ".$professor->patronymic; ?>
+                    </label>
                     <div class="metadata">
                         <div class="date"><i class="user blue icon"></i>"24"</div>
-                        <div class="rating"><i class="mail blue icon"></i>"mail@mail.ru"</div>
+                        <div class="rating"><i class="mail blue icon"></i><? echo $professor->email; ?></div>
                     </div>
-                    <div class="text">"Должность"</div>
+                    <div class="text"><? echo $professorInfo->job; ?></div>
                     <div class="actions">
                         <a class="hide" onclick="openModalWindowForGroupLeaving()">
                             <i class="user close red icon"></i>Отменить привязку
@@ -230,12 +245,15 @@
     <h1 class="ui header center aligned">
         Вы уверены, что хотите выйти из группы?
     </h1>
+    <form class="ui form" id="formLeaveGroup">
+        <input type="hidden" value="<? echo $person->id; ?>" name="student_id">
+    </form>
     <div class="actions">
         <button class="ui right labeled icon red button" onclick="hideModalWindowForGroupLeaving()">
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" form="formLeaveGroup">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -338,8 +356,26 @@
         </button>
     </div>
 </div>
-
 </body>
+
+
+<script>
+    $("#formLeaveGroup").submit(function () {
+        $.ajax({
+            url: "/queries/student/leaveGroup.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                location.reload();
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+</script>
+
+
 <script>
     $('.ui.progress').progress();
 
