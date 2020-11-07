@@ -217,7 +217,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
         Подтвердить личность преподавателя
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" <?if($professor->job === null) echo "hidden"?>>
             <div class="required field">
                 <label>Ваше удостоверение</label>
                 <div class="ui left icon input">
@@ -226,12 +226,15 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                 </div>
             </div>
         </form>
+        <?if($professor->job === null) {?>
         <div class="ui error message">
             <div class="header">Нет доступа:</div>
             <ul>
                 <li>Вы не можете подать заявку, заполните все данные</li>
             </ul>
         </div>
+        <? } ?>
+
         <div class="ui warning message">
             <div class="header">Вы уже отправили свои данные на проверку</div>
             <ul>
@@ -239,9 +242,10 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                 <li>Если администратор отклонит запрос, то ваш личный кабинет будет удален</li>
             </ul>
         </div>
+
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button <?if($professor->job === null) echo "disabled"?>">
             Отправить
             <i class="check icon"></i>
         </button>

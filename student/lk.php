@@ -141,7 +141,7 @@ if($student->id_group !== null) {
                             <td><b>Группа:</b></td>
                             <td>
                                 <? if ($group == null) {?>
-                                <a href="#" onclick="openModalWindowForGroupBinding()">"Привязаться"</a>
+                                <a href="#" onclick="openModalWindowForGroupBinding()">Привязаться</a>
                                 <? } else { ?>
                                     <label style="color: #db2828"> <? echo $group->name;  ?> </label>
                                     <a href="#" onclick="openModalWindowForGroupLeaving()">(Выйти)</a>
