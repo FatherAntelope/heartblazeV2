@@ -42,10 +42,19 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     <button class="ui button"  onclick="openModalWindowForAvatarReplace()" ><i class="file large image icon"></i></button>
                 </div>
             </div>
+            <? if($professor->status == false) { ?>
+                <div class="ui info message">
+                    Привяжитесь к группе вашего преподавателя для получения доступа к панели управления
+                </div>
+            <? } ?>
+
             <!--
             * Кнопка для перехода в панель управления
             -->
-            <a href="/professor/panel.php" class="ui green button fluid">Панель управления</a>
+            <a href="/professor/panel.php"
+               class="ui green button fluid <?if($professor->status == true) echo "disabled"?>">
+                Панель управления
+            </a>
         </div>
         <div class="column twelve wide">
             <div class="ui segment">

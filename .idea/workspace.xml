@@ -30,7 +30,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/professor/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/lk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/lk.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +93,7 @@
       <workItem from="1604417685884" duration="2379000" />
       <workItem from="1604476050816" duration="36268000" />
       <workItem from="1604656985996" duration="135000" />
-      <workItem from="1604745762947" duration="29810000" />
+      <workItem from="1604745762947" duration="30515000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -271,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604777299529</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Добавлена проверка заполнения данных, прежде чем подать заявку у преподавателя">
+      <created>1604780432495</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1604780432495</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +338,8 @@
     <MESSAGE value="Добавлена привязка по ключевому слову к группе" />
     <MESSAGE value="Добавлена привязка по ключевому слову к группе. На время выключен htaccess" />
     <MESSAGE value="Добавлен выход из группы. Исправлены небольшие ошибки в доступах к ЛК." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлен выход из группы. Исправлены небольшие ошибки в доступах к ЛК." />
+    <MESSAGE value="Добавлена проверка заполнения данных, прежде чем подать заявку у преподавателя" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена проверка заполнения данных, прежде чем подать заявку у преподавателя" />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -359,10 +366,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604328426750" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1604777298382">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1604780431551">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604777298382" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604780431551" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1604396444575">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
