@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . "/db/db.php";
 $person = R::load('person', $_POST['student_id']);
-$student = R::findOne('student', 'id_student',  [$_POST['student_id']]);
+$student = R::findOne('student', 'id_person',  [$_POST['student_id']]);
 
 $person->name = $_POST['student_name'];
 $person->surname = $_POST['student_surname'];

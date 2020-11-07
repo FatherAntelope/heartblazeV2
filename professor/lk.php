@@ -127,21 +127,21 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                         <i class="font icon red"></i>
                     </div>
                 </div>
-                <div class="required field six wide">
+                <div class="field six wide">
                     <label>Отчество</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ваше отчество"
-                               value="<?php echo $person->patronymic; ?>" name="professor_patronymic" required>
+                               value="<?php echo $person->patronymic; ?>" name="professor_patronymic">
                         <i class="font icon red"></i>
                     </div>
                 </div>
             </div>
             <div class="fields">
-                <div class="field seven wide">
+                <div class="required field seven wide">
                     <label>Должность</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ученая степень или звание"
-                               value="<?php echo $professor->job; ?>" name="professor_job">
+                               value="<?php echo $professor->job; ?>" name="professor_job" required>
                         <i class="users icon red"></i>
                     </div>
                 </div>
@@ -226,6 +226,12 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                 </div>
             </div>
         </form>
+        <div class="ui error message">
+            <div class="header">Нет доступа:</div>
+            <ul>
+                <li>Вы не можете подать заявку, заполните все данные</li>
+            </ul>
+        </div>
         <div class="ui warning message">
             <div class="header">Вы уже отправили свои данные на проверку</div>
             <ul>

@@ -3,6 +3,9 @@ require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('0');
 $student = R::findOne('student', 'id_person = ?', [$person->id]);
 $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$person->id]);
+if($student->id_group !== null) {
+    $group = R::findOne('group', 'id = ?', [$student->id_group]);
+}
 ?>
 
 <!doctype html>
@@ -42,12 +45,11 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$pe
                          style="object-fit: cover; height: 200px; width: 200px;
                          border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                     <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
-                        <a href="/queries/exit.php" class="ui button"><i class=" sign-out large icon"></i></a>
+                        <a href="/queries/exit.php" class="ui button"><i class="sign-out large icon"></i></a>
                         <button class="ui button"  onclick="openModalWindowForAvatarReplace()" >
                             <i class="file large image icon"></i>
                         </button>
                     </div>
-
                 </div>
                 <!--
                 * Кнопка для перехода в панель управления
@@ -119,14 +121,12 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$pe
                         <tr>
                             <td><b>Группа:</b></td>
                             <td>
+                                <? if ($group == null) {?>
                                 <a href="#" onclick="openModalWindowForGroupBinding()">"Привязаться"</a>
-                                /"Группа"
-                                <a href="#" onclick="openModalWindowForGroupLeaving()">(Выйти)</a>
+                                <? echo $group->name; } else {  ?>
+                                    <a href="#" onclick="openModalWindowForGroupLeaving()">(Выйти)</a>
+                                <? } ?>
                             </td>
-                        </tr>
-                        <tr>
-                            <td><b>Преподаватель:</b></td>
-                            <td>"Фамилия И. О."</td>
                         </tr>
                         </tbody>
                     </table>
@@ -274,26 +274,45 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$pe
         Привязаться к группе
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formReferenceGroup"
+            <?if($student->group_study === null || $student->birth_date === null ) echo "hidden"?>>
             <div class="required field">
                 <label>Ключевое слово</label>
                 <div class="ui left icon input">
-                    <input type="text" placeholder="Введите ключевое слово привязки" required>
+                    <input type="text" placeholder="Введите ключевое слово привязки" name="code_word" required>
                     <i class="key icon red"></i>
                 </div>
             </div>
+            <input type="hidden" value="<? echo $person->id; ?>" name="student_id">
         </form>
+        <? if($student->group_study === null || $student->birth_date === null ) { ?>
         <div class="ui error message">
+            <div class="header">Нет доступа:</div>
+            <ul>
+                <li>Вы не можете подать заявку, заполните все данные</li>
+            </ul>
+        </div>
+        <? } ?>
+
+        <div class="ui error message" id="msgErrorReferenceGroup" style="display: none">
             <i class="close icon"></i>
             <div class="header">Ошибка привязки к группе</div>
             <ul>
-                <li>Используемое ключевое слово неактивно</li>
+                <li>Введенное ключевое слово неактивно</li>
                 <li>Обратитесь к старосте или к преподавателю для получения валидного ключевого слова</li>
             </ul>
         </div>
+
+        <div class="ui success message" id="msgSuccessReferenceGroup" style="display: none">
+            <i class="close icon"></i>
+            <div class="header">Успешная привязка к группе!</div>
+        </div>
+
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button
+        <?if($student->group_study === null || $student->birth_date === null ) echo "disabled"?>"
+        form="formReferenceGroup">
             Подтвердить
             <i class="check icon"></i>
         </div>
@@ -346,28 +365,28 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$pe
                         <i class="font icon red"></i>
                     </div>
                 </div>
-                <div class="required field six wide">
+                <div class="field six wide">
                     <label>Отчество</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ваше отчество"
-                               value="<?php echo $person->patronymic; ?>" name="student_patronymic" required>
+                               value="<?php echo $person->patronymic; ?>" name="student_patronymic">
                         <i class="font icon red"></i>
                     </div>
                 </div>
             </div>
             <div class="fields">
-                <div class="field five wide">
+                <div class="required field five wide">
                     <label>Учебная группа</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Группа направления"
-                               value="<?php echo $student->group_study; ?>" name="student_group_study">
+                               value="<?php echo $student->group_study; ?>" name="student_group_study" required>
                         <i class="users icon red"></i>
                     </div>
                 </div>
-                <div class="field five wide">
+                <div class="required field five wide">
                     <label>Дата рождения</label>
                     <div class="ui left icon input">
-                        <input type="date" value="<? echo $student->birth_date; ?>" name="student_birth_date">
+                        <input type="date" value="<? echo $student->birth_date; ?>" name="student_birth_date" required>
                         <i class="calendar icon red"></i>
                     </div>
                 </div>
@@ -561,6 +580,26 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$pe
                 location.reload();
             },
             error: function () {
+            }
+        });
+        return false;
+    });
+
+    $("#formReferenceGroup").submit(function () {
+        $.ajax({
+            url: "/queries/student/referenceGroup.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                document.getElementById("msgSuccessReferenceGroup").style.display = "block";
+                document.getElementById("msgErrorReferenceGroup").style.display = "none";
+                document.getElementsByName("code_word")[0].value = "";
+                setTimeout(function(){ location.reload() ;}, 1500);
+            },
+            error: function () {
+                document.getElementById("msgSuccessReferenceGroup").style.display = "none";
+                document.getElementById("msgErrorReferenceGroup").style.display = "block";
+                document.getElementsByName("code_word")[0].value = "";
             }
         });
         return false;

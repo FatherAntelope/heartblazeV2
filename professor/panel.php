@@ -88,7 +88,7 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
         Добавить группу
     </div>
     <div class="content">
-        <form class="ui form" id="formAddGroup">
+        <form class="ui form" id="formAddGroup" <? if(count($specializations) == null) echo "hidden"; ?>>
             <div class="required field">
                 <label>Специализация</label>
                 <div class="ui input">
