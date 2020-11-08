@@ -26,18 +26,10 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="">
+    <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="Исправлены баги в базе данных. Соответственно, был исправлен код">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/administrator/groups.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/groups.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/administrator/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/lk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/administrator/professors.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/professors.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/administrator/students.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/students.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/professor/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/panel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queries/student/sendPhysicalParameters.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/student/sendPhysicalParameters.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/lk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/panel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +96,7 @@
       <workItem from="1604745762947" duration="32046000" />
       <workItem from="1604828333754" duration="11019000" />
       <workItem from="1604839904079" duration="61000" />
-      <workItem from="1604839978189" duration="8483000" />
+      <workItem from="1604839978189" duration="9864000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -302,7 +294,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604834280385</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Исправлены баги в базе данных. Соответственно, был исправлен код">
+      <created>1604848632676</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1604848632676</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +365,8 @@
     <MESSAGE value="Добавлена проверка заполнения данных, прежде чем подать заявку у преподавателя" />
     <MESSAGE value="Добавлено сообщение о том, что надо подать заявку" />
     <MESSAGE value="Исправлены баги с редактированием персональных данных, а также выгрузки прочих данных у преподавателя. Теперь у преподавателя отображается список групп с количеством студентов" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправлены баги с редактированием персональных данных, а также выгрузки прочих данных у преподавателя. Теперь у преподавателя отображается список групп с количеством студентов" />
+    <MESSAGE value="Исправлены баги в базе данных. Соответственно, был исправлен код" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправлены баги в базе данных. Соответственно, был исправлен код" />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -393,10 +393,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604782508080" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1604834277351">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1604848631312">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604834277351" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1604848631312" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1604396444575">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -441,10 +441,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="326" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1604400872492" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1604834284477">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1604848637676">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1604834284477" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1604848637676" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1604751261984">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
