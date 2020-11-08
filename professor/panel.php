@@ -2,7 +2,8 @@
 require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('1');
 $specializations = R::findAll('specialization', 'ORDER BY name ASC');
-$groups = R::findAll('group', 'ORDER BY name ASC');
+$groups = R::find('group', "id_professor = ?", [$person->id]);
+$countStudentsOfAllGroups = null;
 ?>
 
 <!doctype html>
@@ -52,11 +53,13 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
         </tr>
         </thead>
         <tbody class="center aligned">
-        <? foreach ($groups as $group) { ?>
+        <? foreach ($groups as $group) {
+            $countStudentsOfAllGroups += $countStudentsOfGroup = R::count('student', 'id_group = ?', [$group->id]);
+            ?>
         <tr>
             <td><? echo $specializations[$group->id_specialization]->name; ?></td>
             <td><a href=""><? echo $group->name; ?></a></td>
-            <td>"10"</td>
+            <td><? echo $countStudentsOfGroup; ?></td>
             <td>
                 <div id="<? echo $group->name;?>" hidden><?echo $group->code_word; ?></div>
                 <button class="ui brown icon button" onclick="copyKeyWord('#<? echo $group->name;?>')" data-content="Скопировано">
@@ -75,7 +78,7 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
         <tr>
             <th colspan="5">
                 <div class="ui orange label"><i class="users icon"></i> <? echo count($groups); ?> </div>
-                <div class="ui orange label"><i class="id badge icon"></i> "10" </div>
+                <div class="ui orange label"><i class="id badge icon"></i> <? echo $countStudentsOfAllGroups; ?> </div>
             </th>
         </tr>
         </tfoot>
@@ -173,6 +176,7 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
             error: function () {
                 document.getElementById("msgErrorAddGroup").style.display = "block";
                 document.getElementById("msgSuccessAddGroup").style.display = "none";
+                document.getElementsByName("name_group")[0].value = "";
             }
         });
         return false;

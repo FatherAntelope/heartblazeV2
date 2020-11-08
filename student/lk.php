@@ -60,11 +60,7 @@ if($student->id_group !== null) {
                 <!--
                 * Кнопка для перехода в панель управления
                 -->
-                <? if($student->id_group === null) { ?>
-                <div class="ui info message">
-                    Привяжитесь к группе вашего преподавателя для получения доступа к панели управления
-                </div>
-                <? } ?>
+
 
 
                 <a href="/student/panel.php"

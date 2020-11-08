@@ -5,7 +5,7 @@ R::ext('xdispense', function($table_name){
 });
 
 $parameters = R::xdispense('student_data');
-$parameters->id_student = 1;
+$parameters->id_student = $_POST['person_id'];
 $parameters->date = date("Y-m-d H:i:s");
 $parameters->weight = $_POST['student_weight'];
 $parameters->height = $_POST['student_height'];

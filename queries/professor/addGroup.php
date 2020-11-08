@@ -1,6 +1,6 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . "/db/db.php";
-if (R::count('group', 'name = ?', [$_POST['name_group']]) == 0) {
+if (R::count('group', 'name = ? AND id_professor = ?', [$_POST['name_group'], $_POST['id_professor']]) == 0) {
     $group = R::dispense('group');
     $group->name = $_POST['name_group'];
     $group->id_specialization = $_POST['id_specialization'];

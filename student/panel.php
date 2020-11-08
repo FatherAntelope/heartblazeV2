@@ -5,11 +5,13 @@ $student = R::findOne('student', 'id_person = ?', [$person->id]);
 if($student->id_group !== null) {
     $group = R::findOne('group', 'id = ?', [$student->id_group]);
 } else {
-    die(header("HTTP/1.0 403 Forbidden"));
+    header("Location: /student/lk.php   ");
 }
 
-$professorInfo = R::findOne('professor', 'id = ?', [$group->id_professor]);
+
+$professorInfo = R::findOne('professor', 'id_person = ?', [$group->id_professor]);
 $professor =  R::findOne('person', 'id = ?', [$professorInfo->id_person]);
+
 ?>
 <!doctype html>
 <html lang="en">

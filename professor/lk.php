@@ -1,5 +1,5 @@
 <?php
-require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('1');
 $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
 ?>
@@ -10,7 +10,8 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css'>
+    <link rel='stylesheet prefetch'
+          href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css'>
     <link rel="stylesheet" href="/frameworks/semantic.min.css"/>
     <link rel="shortcut icon" href="/images/ugatu_logo.png" type="image/x-icon">
     <script src="/frameworks/jquery.min.js"></script>
@@ -36,15 +37,18 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             <div class="ui segment inverted blue">
                 <div class="ui red left ribbon label"><?php echo $person->login; ?></div>
 
-                <img class="ui image centered" src="/images/user2.jpg" style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
+                <img class="ui image centered" src="/images/user2.jpg"
+                     style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                 <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
                     <a href="/queries/exit.php" class="ui button"><i class=" sign-out large icon"></i></a>
-                    <button class="ui button"  onclick="openModalWindowForAvatarReplace()" ><i class="file large image icon"></i></button>
+                    <button class="ui button" onclick="openModalWindowForAvatarReplace()">
+                        <i class="file large image icon"></i>
+                    </button>
                 </div>
             </div>
-            <? if($professor->status == false) { ?>
+            <? if ($professor->status == false) { ?>
                 <div class="ui info message">
-                    Привяжитесь к группе вашего преподавателя для получения доступа к панели управления
+                    Для доступа к панели управления подтвердите личность преподавателя с помощью удостоверения
                 </div>
             <? } ?>
 
@@ -52,7 +56,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             * Кнопка для перехода в панель управления
             -->
             <a href="/professor/panel.php"
-               class="ui green button fluid <?if($professor->status == true) echo "disabled"?>">
+               class="ui green button fluid <? if ($professor->status == true) echo "disabled" ?>">
                 Панель управления
             </a>
         </div>
@@ -72,14 +76,15 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     </tr>
                     <tr>
                         <td><b>Должность:</b></td>
-                        <td><? if($professor->job == null) echo "—"; else echo $professor->job; ?></td>
+                        <td><? if ($professor->job == null) echo "—"; else echo $professor->job; ?></td>
                     </tr>
                     </tbody>
                     <tfoot class="full-width">
                     <tr>
                         <th></th>
                         <th>
-                            <div class="ui right floated small green labeled icon button" onclick="openModalForReplacePersonalData()">
+                            <div class="ui right floated small green labeled icon button"
+                                 onclick="openModalForReplacePersonalData()">
                                 <i class="edit icon"></i>
                                 Изменить
                             </div>
@@ -100,7 +105,8 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     </tr>
                     <tr>
                         <td><b>Статус:</b></td>
-                        <td><a href="#" style="color: #db2828" onclick="openModalCheckProfessor()">Подтвердить</a> / <p style="color: green">Подтвержден</p></td>
+                        <td><a href="#" style="color: #db2828" onclick="openModalCheckProfessor()">Подтвердить</a> / <p
+                                    style="color: green">Подтвержден</p></td>
                     </tr>
                     </tbody>
                 </table>
@@ -132,7 +138,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     <label>Имя</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ваше имя"
-                               value="<?php echo $person->name;?>" name="professor_name" required>
+                               value="<?php echo $person->name; ?>" name="professor_name" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
@@ -226,7 +232,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
         Подтвердить личность преподавателя
     </div>
     <div class="content">
-        <form class="ui form" <?if($professor->job === null) echo "hidden"?>>
+        <form class="ui form" <? if ($professor->job === null) echo "hidden" ?>>
             <div class="required field">
                 <label>Ваше удостоверение</label>
                 <div class="ui left icon input">
@@ -235,13 +241,13 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                 </div>
             </div>
         </form>
-        <?if($professor->job === null) {?>
-        <div class="ui error message">
-            <div class="header">Нет доступа:</div>
-            <ul>
-                <li>Вы не можете подать заявку, заполните все данные</li>
-            </ul>
-        </div>
+        <? if ($professor->job === null) { ?>
+            <div class="ui error message">
+                <div class="header">Нет доступа:</div>
+                <ul>
+                    <li>Вы не можете подать заявку, заполните все данные</li>
+                </ul>
+            </div>
         <? } ?>
 
         <div class="ui warning message">
@@ -254,7 +260,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
 
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button <?if($professor->job === null) echo "disabled"?>">
+        <button class="ui right labeled icon green button <? if ($professor->job === null) echo "disabled" ?>">
             Отправить
             <i class="check icon"></i>
         </button>
@@ -324,7 +330,9 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                 document.getElementsByName("person_new_password")[0].value = "";
                 document.getElementsByName("person_repeat_password")[0].value = "";
                 document.getElementById("actionsReplacePassword").style.display = "none";
-                setTimeout(function(){ location.reload() ;}, 1500);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 
             },
             error: function () {
@@ -340,7 +348,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
 </script>
 <script>
     $('.message .close')
-        .on('click', function() {
+        .on('click', function () {
             $(this)
                 .closest('.message')
                 .transition('fade')
