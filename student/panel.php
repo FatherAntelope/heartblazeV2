@@ -8,9 +8,8 @@ if($student->id_group !== null) {
     header("Location: /student/lk.php   ");
 }
 
-
-$professorInfo = R::findOne('professor', 'id_person = ?', [$group->id_professor]);
-$professor =  R::findOne('person', 'id = ?', [$professorInfo->id_person]);
+$professorInfo = R::load('professor', $group->id_professor);
+$professor =  R::load('person', $professorInfo->id_person);
 
 ?>
 <!doctype html>

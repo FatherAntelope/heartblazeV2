@@ -2,6 +2,9 @@
     require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
     $person = getDataIsAuthAndEmptyPerson('2');
     $specializations = R::findAll('specialization', 'ORDER BY name ASC');
+    $countAllGroups = null;
+    $countAllStudents = null;
+    $countAllProfessors = null;
 ?>
 <!doctype html>
 <html lang="ru">
@@ -81,10 +84,14 @@
             </tr>
             </thead>
             <tbody>
-            <? foreach ($specializations as $specialization) {?>
+            <? foreach ($specializations as $specialization) {
+                $countAllGroups += $countGroups = R::count('group', 'id_specialization = ?', [$specialization->id]);
+                //$countAllProfessors += $countProfessors = R::count('group', 'id_specialization = ?', [$specialization->id]);
+                //$countAllStudents += $countAllStudents = R::count('student', )
+                ?>
             <tr>
                 <td><? echo $specialization->name; ?></td>
-                <td>"2"</td>
+                <td><? echo $countGroups; ?></td>
                 <td>"2"</td>
                 <td>"2"</td>
                 <td>
@@ -104,7 +111,7 @@
                 </th>
                 <th>
                     <div class="ui brown label">
-                        <i class="users icon"></i>"15"
+                        <i class="users icon"></i> <? echo $countAllGroups;?>
                     </div>
                 </th>
                 <th>

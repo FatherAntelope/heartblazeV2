@@ -49,7 +49,7 @@ CREATE TABLE `Group`
     id INT NOT NULL AUTO_INCREMENT,
     id_professor INT NOT NULL,
     id_specialization INT NOT NULL,
-    FOREIGN KEY (id_professor) REFERENCES Professor(id_person) ON DELETE CASCADE,
+    FOREIGN KEY (id_professor) REFERENCES Professor(id) ON DELETE CASCADE,
     FOREIGN KEY (id_specialization) REFERENCES specialization(id) ON DELETE CASCADE,
     name VARCHAR(50) NOT NULL,
     code_word VARCHAR(50) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE student_data
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_student INT NOT NULL,
-    FOREIGN KEY (id_student) REFERENCES Student(id_person) ON DELETE CASCADE,
+    FOREIGN KEY (id_student) REFERENCES Student(id) ON DELETE CASCADE,
     `date` DATETIME NULL,
     weight INT NULL,
     height INT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE Normative_test
     id_normative INT NOT NULL,
     FOREIGN KEY (id_normative) REFERENCES normative(id) ON DELETE CASCADE,
     id_student INT NOT NULL,
-    FOREIGN KEY (id_student) REFERENCES student(id_person) ON DELETE CASCADE,
+    FOREIGN KEY (id_student) REFERENCES student(id) ON DELETE CASCADE,
     score INT NOT NULL,
     grade INT NOT NULL,
     PRIMARY KEY (id)
@@ -131,7 +131,7 @@ CREATE TABLE Lesson_participation
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_student INT NOT NULL,
-    FOREIGN KEY (id_student) REFERENCES student(id_person) ON DELETE CASCADE,
+    FOREIGN KEY (id_student) REFERENCES student(id) ON DELETE CASCADE,
     id_lesson INT NOT NULL,
     FOREIGN KEY (id_lesson) REFERENCES lesson(id) ON DELETE CASCADE,
     grade INT NULL,

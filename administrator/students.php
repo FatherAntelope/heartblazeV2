@@ -1,3 +1,9 @@
+<?php
+require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
+$person = getDataIsAuthAndEmptyPerson('2');
+$students = R::findAll('student');
+
+?>
 <!doctype html>
 <html lang="ru">
 <head>
@@ -20,7 +26,6 @@
         </a>
     </div>
 
-
     <div class="ui search fluid" style="margin-top: 20px">
         <div class="ui icon input fluid">
             <input class="prompt" type="text" placeholder="Введите ФИО студента">
@@ -34,6 +39,7 @@
     <table class="ui attached top sortable celled table scrolling center aligned">
         <thead>
         <tr>
+            <th>Аватар</th>
             <th>Студент</th>
             <th>Учебная группа</th>
             <th>Группа</th>
@@ -42,23 +48,45 @@
         </tr>
         </thead>
         <tbody>
+        <? foreach ($students as $student) {
+            $personStudent = R::load('person', $student->id_person);
+            if ($student->id_group !== null) {
+                $group = R::load('group', $student->id_group);
+                $personProfessor = R::load('person', (R::load('professor', $group->id_professor)->id_person));
+            } else {
+                $group = "Не привязан";
+                $personProfessor = "Не привязан";
+            }
+            ?>
         <tr>
-            <td>"Фамилия Имя Отчество"</td>
-            <td>"Группа"</td>
-            <td>"Группа"/Не привязан</td>
-            <td>"Фамилия Имя Отчество"/Не привязан</td>
+            <td>
+                <div class="avatar circle">
+                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                </div>
+            </td>
+            <td><? echo $personStudent->surname." ".$personStudent->name." ".$personStudent->patronymic; ?></td>
+            <td><? echo $student->group_study; ?></td>
+            <td> <? if ($student->id_group !== null) echo $group->name; else echo $group; ?> </td>
+            <td> <?
+                if ($student->id_group !== null)
+                    echo $personProfessor->surname." ".$personProfessor->name." ".$personProfessor->patronymic;
+                else
+                    echo $personProfessor;
+                ?>
+            </td>
             <td>
                 <button class="ui red icon button" onclick="openModalWindowForRemoveStudent()">
-                    <i class="icon trash" style="color: white"></i>
+                    <i class="icon user close" style="color: white"></i>
                 </button>
             </td>
         </tr>
+        <? } ?>
         </tbody>
         <tfoot>
         <tr>
-            <th colspan="5">
+            <th colspan="6">
                 <div class="ui teal label">
-                    <i class="list icon"></i>"22"
+                    <i class="list icon"></i><? echo count($students); ?>
                 </div>
             </th>
         </tr>

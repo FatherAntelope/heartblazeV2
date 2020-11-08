@@ -2,7 +2,7 @@
 require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('0');
 $student = R::findOne('student', 'id_person = ?', [$person->id]);
-$parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$person->id]);
+$parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$student->id]);
 if($student->id_group !== null) {
     $group = R::findOne('group', 'id = ?', [$student->id_group]);
 }
@@ -547,7 +547,7 @@ if($student->id_group !== null) {
                     </div>
                 </div>
             </div>
-            <input type="hidden" value="<? echo $person->id; ?>" name="person_id">
+            <input type="hidden" value="<? echo $student->id; ?>" name="student_id">
         </form>
     </div>
     <div class="actions">

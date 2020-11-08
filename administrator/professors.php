@@ -1,3 +1,8 @@
+<?php
+require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
+$person = getDataIsAuthAndEmptyPerson('2');
+
+?>
 <!doctype html>
 <html lang="ru">
 <head>
@@ -34,6 +39,7 @@
     <table class="ui attached top sortable celled table scrolling center aligned">
         <thead>
         <tr>
+            <th>Аватар</th>
             <th>Преподаватель</th>
             <th>Почта</th>
             <th>Количество групп</th>
@@ -44,6 +50,11 @@
         </thead>
         <tbody>
         <tr class="positive">
+            <td>
+                <div class="avatar circle">
+                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                </div>
+            </td>
             <td>"Фамилия Имя Отчество"</td>
             <td>"mail@mail.ru"</td>
             <td>"1"</td>
@@ -53,43 +64,53 @@
             </td>
             <td>
                 <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
-                    <i class="icon trash" style="color: white"></i>
+                    <i class="icon user close" style="color: white"></i>
                 </button>
             </td>
         </tr>
         <tr class="negative">
+            <td>
+                <div class="avatar circle">
+                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                </div>
+            </td>
             <td>"Фамилия Имя Отчество"</td>
             <td>"mail@mail.ru"</td>
             <td>-</td>
             <td>-</td>
             <td>
-                <a href="#" onclick="openModalWindowForCheckProfessor()">Не подтвержден</a>
+                <a href="#" onclick="openModalWindowForCheckProfessor()">Ожидает</a>
 
             </td>
             <td>
                 <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
-                    <i class="icon trash" style="color: white"></i>
+                    <i class="icon user close" style="color: white"></i>
                 </button>
             </td>
         </tr>
         <tr class="warning">
+            <td>
+                <div class="avatar circle">
+                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                </div>
+            </td>
             <td>"Фамилия Имя Отчество"</td>
             <td>"mail@mail.ru"</td>
             <td>-</td>
             <td>-</td>
             <td>
-                Нет удостоверения
+                Не подтвержден
             </td>
             <td>
                 <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
-                    <i class="icon trash" style="color: white"></i>
+                    <i class="icon user close" style="color: white"></i>
                 </button>
             </td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
-            <th colspan="6">
+            <th colspan="7">
                 <div class="ui teal label">
                     <i class="list icon"></i>"22"
                 </div>

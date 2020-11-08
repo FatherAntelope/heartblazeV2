@@ -1,9 +1,10 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
 $person = getDataIsAuthAndEmptyPerson('1');
+$professor = R::findOne('professor', 'id_person = ?', [$person->id]);
+$groups = R::find('group', "id_professor = ?", [$professor->id]);
 $specializations = R::findAll('specialization', 'ORDER BY name ASC');
-$groups = R::find('group', "id_professor = ?", [$person->id]);
-$countStudentsOfAllGroups = null;
+$countStudentsOfAllGroups = 0;
 ?>
 
 <!doctype html>
@@ -112,7 +113,7 @@ $countStudentsOfAllGroups = null;
                     <i class="font icon red"></i>
                 </div>
             </div>
-            <input type="hidden" value=" <? echo $person->id; ?>" name="id_professor">
+            <input type="hidden" value=" <? echo $professor->id; ?>" name="id_professor">
         </form>
         <? if(count($specializations) == null) { ?>
         <div class="ui warning message">

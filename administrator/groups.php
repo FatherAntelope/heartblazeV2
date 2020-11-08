@@ -1,3 +1,9 @@
+<?php
+require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
+$person = getDataIsAuthAndEmptyPerson('2');
+$groups = R::findAll('group', 'ORDER BY name ASC');
+?>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -42,10 +48,15 @@
         </tr>
         </thead>
         <tbody>
+        <? foreach ($groups as $group) {
+            $professor = R::load('person',
+                R::load('professor', $group->id_professor)->id_person
+            );
+            ?>
         <tr>
-            <td>"Группа"</td>
-            <td>"Специализация"</td>
-            <td>"Фамилия Имя Отчество"</td>
+            <td><? echo $group->name; ?></td>
+            <td><? echo R::findOne('specialization', 'id = ?', [$group->id_specialization])->name; ?></td>
+            <td><? echo $professor->surname." ".$professor->name." ".$professor->patronymic; ?></td>
             <td>"720"</td>
             <td>
                 <button class="ui red icon button" onclick="openModalWindowForRemoveGroup()">
@@ -53,12 +64,13 @@
                 </button>
             </td>
         </tr>
+        <? } ?>
         </tbody>
         <tfoot>
         <tr>
             <th colspan="5">
                 <div class="ui teal label">
-                    <i class="list icon"></i>"22"
+                    <i class="list icon"></i><? echo count($groups); ?>
                 </div>
             </th>
         </tr>
