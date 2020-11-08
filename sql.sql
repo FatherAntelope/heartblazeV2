@@ -21,7 +21,7 @@ CREATE TABLE Professor
 	id INT NOT NULL AUTO_INCREMENT,
     id_person INT NOT NULL,
     job VARCHAR(50) NULL,
-    status BOOLEAN NOT NULL,
+    status TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_person) REFERENCES Person(id) ON DELETE CASCADE
 );

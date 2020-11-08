@@ -65,30 +65,32 @@
         </table>
     </div>
 
+    <? if(count($specializations) == 0) { ?>
     <div class="ui info message">
         <div class="header">Специализации отсутствуют:</div>
         <ul>
             <li>Добавьте специализации, чтобы преподаватели могли создавать группы</li>
         </ul>
     </div>
+    <? } ?>
 
     <h2 class="ui header attached top red center aligned">Специализации</h2>
     <table class="ui attached top sortable celled table scrolling center aligned">
-            <thead>
-            <tr>
-                <th>Название</th>
-                <th>Количество групп</th>
-                <th>Количество преподавателей</th>
-                <th>Количество студентов</th>
-                <th>Удаление</th>
-            </tr>
-            </thead>
-            <tbody>
-            <? foreach ($specializations as $specialization) {
-                $countAllGroups += $countGroups = R::count('group', 'id_specialization = ?', [$specialization->id]);
-                //$countAllProfessors += $countProfessors = R::count('group', 'id_specialization = ?', [$specialization->id]);
-                //$countAllStudents += $countAllStudents = R::count('student', )
-                ?>
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Количество групп</th>
+            <th>Количество преподавателей</th>
+            <th>Количество студентов</th>
+            <th>Удаление</th>
+        </tr>
+        </thead>
+        <tbody>
+        <? foreach ($specializations as $specialization) {
+            $countAllGroups += $countGroups = R::count('group', 'id_specialization = ?', [$specialization->id]);
+            //$countAllProfessors += $countProfessors = R::count('group', 'id_specialization = ?', [$specialization->id]);
+            //$countAllStudents += $countAllStudents = R::count('student', )
+            ?>
             <tr>
                 <td><? echo $specialization->name; ?></td>
                 <td><? echo $countGroups; ?></td>
@@ -100,41 +102,41 @@
                     </button>
                 </td>
             </tr>
-            <? } ?>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>
-                    <div class="ui teal label">
-                        <i class="list icon"></i><?php echo count($specializations); ?>
-                    </div>
-                </th>
-                <th>
-                    <div class="ui brown label">
-                        <i class="users icon"></i> <? echo $countAllGroups;?>
-                    </div>
-                </th>
-                <th>
-                    <div class="ui blue label">
-                        <i class="user icon"></i>"15"
-                    </div>
-                </th>
-                <th>
-                    <div class="ui blue label">
-                        <i class="user icon"></i>"15"
-                    </div>
-                </th>
-                <th></th>
-            </tr>
-            <tr>
-                <th colspan="5">
-                    <button onclick="openModalWindowForAddSpecialization()" class="ui floated small green labeled icon button">
-                        <i class="plus circle icon"></i>Добавить
-                    </button>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+        <? } ?>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>
+                <div class="ui teal label">
+                    <i class="list icon"></i><?php echo count($specializations); ?>
+                </div>
+            </th>
+            <th>
+                <div class="ui brown label">
+                    <i class="users icon"></i> <? echo $countAllGroups;?>
+                </div>
+            </th>
+            <th>
+                <div class="ui blue label">
+                    <i class="user icon"></i>"15"
+                </div>
+            </th>
+            <th>
+                <div class="ui blue label">
+                    <i class="user icon"></i>"15"
+                </div>
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th colspan="5">
+                <button onclick="openModalWindowForAddSpecialization()" class="ui floated small green labeled icon button">
+                    <i class="plus circle icon"></i>Добавить
+                </button>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
 </div>
 
 <div class="ui modal horizontal flip tiny" id="modalRemoveSpecialization">

@@ -46,7 +46,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     </button>
                 </div>
             </div>
-            <? if ($professor->status == false) { ?>
+            <? if ($professor->status == 0) { ?>
                 <div class="ui info message">
                     Для доступа к панели управления подтвердите личность преподавателя с помощью удостоверения
                 </div>
@@ -56,7 +56,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             * Кнопка для перехода в панель управления
             -->
             <a href="/professor/panel.php"
-               class="ui green button fluid <? if ($professor->status == true) echo "disabled" ?>">
+               class="ui green button fluid <? if ($professor->status == 1/*потом сделать 0*/) echo "disabled" ?>">
                 Панель управления
             </a>
         </div>
