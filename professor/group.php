@@ -1,3 +1,7 @@
+<? 
+    require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+    $students = R::find('student', ' id_group = ? ', [$_GET['id']]);
+?>
 <!doctype html>
 <html lang="ru">
 <head>
@@ -31,39 +35,46 @@
             <i class="excel file icon"></i>Экспортировать данные
         </button>
     </div>
-    <div class="ui info message">
+
+    <? if (count($students) === 0) { ?>
+        <div class="ui info message">
         <div class="header">Студенты отсутствуют:</div>
         <ul>
             <li>Отправьте ключевое слово студентам, чтобы они могли привязаться к вашей группе</li>
             <li>Ключевые слова для каждых ваших групп находятся в панели управления в таблице групп</li>
         </ul>
-    </div>
-    <h3 class="ui top attached header center aligned red" style="margin-top: 20px">
+    </div>    
+    <?} else {?>
+        <h3 class="ui top attached header center aligned red" style="margin-top: 20px">
         Список студентов
-    </h3>
-    <div class="ui segment attached top">
-        <div class="ui comments">
-            <div class="comment">
-                <a class="avatar">
-                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
-                </a>
-                <div class="content">
-                    <label class="author" style="color: #db2828">Фамилия Имя Отчество</label>
-                    <div class="metadata">
-                        <!--Посещаемость-->
-                        <div class="date"><i class="calendar outline blue icon"></i>"2 из 5"</div>
-                        <!--Балл-->
-                        <div class="rating"><i class="star blue icon"></i>"35"</div>
+        </h3>
+        <div class="ui segment attached top">
+            <div class="ui comments">
+                <? foreach ($students as $student) {?>
+                    <? $person = R::findOne('person', ' id = ? ', [$student->idPerson]); ?>
+                    <div class="comment" id="<?echo 'row_student_id-' . $student->id; ?>">
+                        <a class="avatar">
+                            <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                        </a>
+                        <div class="content">
+                            <label class="author" style="color: #db2828"><? echo $person->surname . " " . $person->name . " " . $person->patronymic; ?></label>
+                            <div class="metadata">
+                                <!--Посещаемость-->
+                                <div class="date"><i class="calendar outline blue icon"></i>"2 из 5"</div>
+                                <!--Балл-->
+                                <div class="rating"><i class="star blue icon"></i>"35"</div>
+                            </div>
+                            <div class="text">Учится в <? echo $student->groupStudy; ?></div>
+                            <div class="actions">
+                                <a class="hide" id="<?echo 'link_student_id-' . $student->id; ?>" onclick="openModalWindowForStudentOfGroupRemove(this)"><i class="user close red icon"></i>Удалить студента</a>
+                                <a onclick="openModalWindowStudentCard()"><i class="id card orange icon"></i> Показать физические параметры </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text">Учится в "Группа студента из группы"</div>
-                    <div class="actions">
-                        <a class="hide" onclick="openModalWindowForStudentOfGroupRemove()"><i class="user close red icon"></i>Удалить студента</a>
-                        <a onclick="openModalWindowStudentCard()"><i class="id card orange icon"></i> Показать физические параметры </a>
-                    </div>
-                </div>
+                <?}?>
             </div>
         </div>
-    </div>
+    <?}?>
 
 
     <div class="ui info message">
@@ -121,7 +132,7 @@
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="removeAndHideStudentFromGroup()">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -476,8 +487,9 @@
         .dropdown()
     ;
 
-    function openModalWindowForStudentOfGroupRemove() {
+    function openModalWindowForStudentOfGroupRemove(a) {
         $('#modalStudentOfGroupRemove')
+            .data('student_id', a.id)
             .modal({
                 inverted: true
             })
@@ -490,6 +502,23 @@
         $('#modalStudentOfGroupRemove')
             .modal('hide')
         ;
+    }
+
+    function removeAndHideStudentFromGroup() {
+        var id = $('#modalStudentOfGroupRemove').data('student_id').split('-')[1];
+        $.ajax({
+            url: "/queries/professor/removeStudent.php",
+            method: "POST",
+            data: {'id': id},
+            success: function () {
+                hideModalWindowForStudentOfGroupRemove();
+                var rowId = 'row_student_id-' + id;
+                $('#' + rowId).remove();
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
     }
 
     function openModalWindowForRemoveLesson() {
