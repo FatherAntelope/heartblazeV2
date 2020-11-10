@@ -57,7 +57,7 @@ $countStudentsOfAllGroups = 0;
         <? foreach ($groups as $group) {
             $countStudentsOfAllGroups += $countStudentsOfGroup = R::count('student', 'id_group = ?', [$group->id]);
             ?>
-        <tr>
+        <tr id = "<? echo 'gr_row_id-' . $group->id;?>">
             <td><? echo $specializations[$group->id_specialization]->name; ?></td>
             <td><a href=""><? echo $group->name; ?></a></td>
             <td><? echo $countStudentsOfGroup; ?></td>
@@ -68,7 +68,7 @@ $countStudentsOfAllGroups = 0;
                 </button>
             </td>
             <td>
-                <button class="ui red icon button" onclick="openModalWindowForGroupRemove()">
+                <button id = "<? echo 'gr_btn_id-' . $group->id;?>" class="ui red icon button" onclick="openModalWindowForGroupRemove(this)">
                     <i class="icon trash" style="color: white"></i>
                 </button>
             </td>
@@ -153,7 +153,7 @@ $countStudentsOfAllGroups = 0;
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="removeAndHideModalFormFormGroup()">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -209,8 +209,9 @@ $countStudentsOfAllGroups = 0;
         ;
     }
 
-    function openModalWindowForGroupRemove() {
+    function openModalWindowForGroupRemove(btn) {
         $('#modalGroupRemove')
+            .data('groupId', btn.id)
             .modal({
                 inverted: true
             })
@@ -224,5 +225,27 @@ $countStudentsOfAllGroups = 0;
             .modal('hide')
         ;
     }
+
+    function removeAndHideModalFormFormGroup() {
+        var groupId = $('#modalGroupRemove').data('groupId').split('-')[1];
+        console.log(groupId);
+        var d = JSON.stringify({id: groupId});
+        console.log(d);
+        $.ajax({
+            url: "/queries/professor/removeGroup.php",
+            method: "POST",
+            data: {'id': groupId},
+            success: function () {
+                hideModalWindowForGroupRemove();
+                var rowId = 'gr_row_id-' + groupId;
+                $('#' + rowId).remove();
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
+
+    }
+
 </script>
 </html>
