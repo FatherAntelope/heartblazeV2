@@ -58,7 +58,7 @@ $students = R::findAll('student');
                 $personProfessor = "Не привязан";
             }
             ?>
-        <tr>
+        <tr id="<? echo 'row_student_id-' . $student->id; ?>">
             <td>
                 <div class="avatar circle">
                     <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
@@ -75,7 +75,7 @@ $students = R::findAll('student');
                 ?>
             </td>
             <td>
-                <button class="ui red icon button" onclick="openModalWindowForRemoveStudent()">
+                <button  id="<? echo 'btn_student_id-' . $student->id; ?>" class="ui red icon button" onclick="openModalWindowForRemoveStudent(this)">
                     <i class="icon user close" style="color: white"></i>
                 </button>
             </td>
@@ -103,7 +103,7 @@ $students = R::findAll('student');
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="removeAndHide()" >
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -111,8 +111,9 @@ $students = R::findAll('student');
 </div>
 
 <script>
-    function openModalWindowForRemoveStudent() {
+    function openModalWindowForRemoveStudent(btn) {
         $('#modalRemoveStudent')
+            .data('student_id', btn.id)
             .modal({
                 inverted: true
             })
@@ -126,6 +127,24 @@ $students = R::findAll('student');
             .modal('hide')
         ;
     }
+
+    function removeAndHide() {
+        var id = $('#modalRemoveStudent').data('student_id').split('-')[1];
+        $.ajax({
+            url: "/queries/administrator/removeStudent.php",
+            method: "POST",
+            data: {'id': id},
+            success: function () {
+                hideModalWindowForRemoveStudent();
+                var rowId = 'row_student_id-' + id;
+                $('#' + rowId).remove();
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
