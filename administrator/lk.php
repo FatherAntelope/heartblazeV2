@@ -91,13 +91,13 @@
             //$countAllProfessors += $countProfessors = R::count('group', 'id_specialization = ?', [$specialization->id]);
             //$countAllStudents += $countAllStudents = R::count('student', )
             ?>
-            <tr>
+            <tr id="<? echo 'sp_row_id-' . $specialization->id; ?>">
                 <td><? echo $specialization->name; ?></td>
                 <td><? echo $countGroups; ?></td>
                 <td>"2"</td>
                 <td>"2"</td>
                 <td>
-                    <button class="ui red icon button" onclick="openModalWindowForRemoveSpecialization()">
+                    <button id="<? echo 'sp_btn_id-' . $specialization->id; ?>" class="ui red icon button" onclick="openModalWindowForRemoveSpecialization(this)">
                         <i class="icon trash" style="color: white"></i>
                     </button>
                 </td>
@@ -149,7 +149,7 @@
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="removeSpecializationAndHideForm()">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -218,8 +218,9 @@
     });
 
 
-    function openModalWindowForRemoveSpecialization() {
+    function openModalWindowForRemoveSpecialization(btn) {
         $('#modalRemoveSpecialization')
+            .data('sp_id', btn.id)
             .modal({
                 inverted: true
             })
@@ -233,6 +234,25 @@
             .modal('hide')
         ;
     }
+
+    function removeSpecializationAndHideForm() {
+        var id = $('#modalRemoveSpecialization').data('sp_id').split('-')[1];
+        console.log(id);
+        $.ajax({
+            url: "/queries/administrator/removeSpecialization.php",
+            method: "POST",
+            data: {'id': id},
+            success: function () {
+                hideModalWindowForRemoveSpecialization();
+                var rowId = 'sp_row_id-' + id;
+                $('#' + rowId).remove();
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
+    }
+
     function openModalWindowForAddSpecialization() {
         $('#modalAddSpecialization')
             .modal({

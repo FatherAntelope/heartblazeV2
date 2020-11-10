@@ -59,7 +59,7 @@ $countStudentsOfAllGroups = 0;
             ?>
         <tr id = "<? echo 'gr_row_id-' . $group->id;?>">
             <td><? echo $specializations[$group->id_specialization]->name; ?></td>
-            <td><a href=""><? echo $group->name; ?></a></td>
+            <td><a href="<? echo '/professor/group.php?id=' . $group->id;?>"><? echo $group->name; ?></a></td>
             <td><? echo $countStudentsOfGroup; ?></td>
             <td>
                 <div id="<? echo $group->name;?>" hidden><?echo $group->code_word; ?></div>
@@ -228,9 +228,6 @@ $countStudentsOfAllGroups = 0;
 
     function removeAndHideModalFormFormGroup() {
         var groupId = $('#modalGroupRemove').data('groupId').split('-')[1];
-        console.log(groupId);
-        var d = JSON.stringify({id: groupId});
-        console.log(d);
         $.ajax({
             url: "/queries/professor/removeGroup.php",
             method: "POST",
