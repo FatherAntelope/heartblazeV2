@@ -66,7 +66,7 @@ CREATE TABLE Student
     group_study VARCHAR(10) NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_person) REFERENCES Person(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_group) REFERENCES `group`(id) ON DELETE CASCADE
+    FOREIGN KEY (id_group) REFERENCES `group`(id) ON DELETE SET NULL
 );
 
 
@@ -98,6 +98,7 @@ CREATE TABLE Lesson
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_group INT NOT NULL,
+    checked TINYINT(1) NOT NULL,
     FOREIGN KEY (id_group) REFERENCES `group`(id) ON DELETE CASCADE,
     `date` DATE NOT NULL,
     PRIMARY KEY (id)
@@ -121,8 +122,8 @@ CREATE TABLE Normative_test
     FOREIGN KEY (id_normative) REFERENCES normative(id) ON DELETE CASCADE,
     id_student INT NOT NULL,
     FOREIGN KEY (id_student) REFERENCES student(id) ON DELETE CASCADE,
-    score INT NOT NULL,
-    grade INT NOT NULL,
+    score INT NULL,
+    grade INT NULL,
     PRIMARY KEY (id)
 );
 

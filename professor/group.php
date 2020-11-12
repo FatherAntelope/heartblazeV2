@@ -1,6 +1,13 @@
 <? 
-    require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
-    $students = R::find('student', ' id_group = ? ', [$_GET['id']]);
+require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+$group_id = $_GET['id'];
+$students = R::findAll('student', ' id_group = ? ', [$group_id]);
+$students_id = array();
+foreach ($students as $student) {
+    $students_id[] = $student->id;
+}
+$lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
+
 ?>
 <!doctype html>
 <html lang="ru">
@@ -36,14 +43,14 @@
         </button>
     </div>
 
-    <? if (count($students) === 0) { ?>
+    <? if (count($students) == 0) { ?>
         <div class="ui info message">
         <div class="header">Студенты отсутствуют:</div>
         <ul>
             <li>Отправьте ключевое слово студентам, чтобы они могли привязаться к вашей группе</li>
             <li>Ключевые слова для каждых ваших групп находятся в панели управления в таблице групп</li>
         </ul>
-    </div>    
+        </div>
     <?} else {?>
         <h3 class="ui top attached header center aligned red" style="margin-top: 20px">
         Список студентов
@@ -51,7 +58,7 @@
         <div class="ui segment attached top">
             <div class="ui comments">
                 <? foreach ($students as $student) {?>
-                    <? $person = R::findOne('person', ' id = ? ', [$student->idPerson]); ?>
+                    <? $person = R::findOne('person', ' id = ? ', [$student->id_person]); ?>
                     <div class="comment" id="<?echo 'row_student_id-' . $student->id; ?>">
                         <a class="avatar">
                             <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
@@ -64,7 +71,7 @@
                                 <!--Балл-->
                                 <div class="rating"><i class="star blue icon"></i>"35"</div>
                             </div>
-                            <div class="text">Учится в <? echo $student->groupStudy; ?></div>
+                            <div class="text">Учится в <? echo $student->group_study; ?></div>
                             <div class="actions">
                                 <a class="hide" id="<?echo 'link_student_id-' . $student->id; ?>" onclick="openModalWindowForStudentOfGroupRemove(this)"><i class="user close red icon"></i>Удалить студента</a>
                                 <a onclick="openModalWindowStudentCard()"><i class="id card orange icon"></i> Показать физические параметры </a>
@@ -76,13 +83,14 @@
         </div>
     <?}?>
 
-
+    <? if (count($lessons) == 0) { ?>
     <div class="ui info message">
         <div class="header">Занятия отсутствуют:</div>
         <ul>
             <li>Добавьте занятие, чтобы начать получать данные от студентов</li>
         </ul>
     </div>
+    <? } ?>
 
     <h3 class="ui top attached header center aligned red" style="margin-top: 20px">
         Таблица занятий
@@ -96,14 +104,17 @@
         </tr>
         </thead>
         <tbody class="center aligned">
+        <? foreach ($lessons as $lesson) { ?>
         <tr>
-            <td>"01.01.2000"</td>
+            <td><? echo date("d.m.Y", strtotime($lesson->date)); ?></td>
             <td>
+                <? if($lesson->checked == false) {?>
                 <button class="ui orange icon button" onclick="openModalWindowForCheckDataStudents()">
                     <i class="icon checked calendar" style="color: white"></i>
                 </button>
-                /
+                <? } else { ?>
                 <i class="green check circle icon"></i>
+                <? } ?>
             </td>
 
             <td>
@@ -112,11 +123,12 @@
                 </button>
             </td>
         </tr>
+        <? } ?>
         </tbody>
         <tfoot class="full-width">
         <tr>
             <th colspan="4">
-                <div class="ui orange label"><i class="calendar icon"></i> "1"</div>
+                <div class="ui orange label"><i class="calendar icon"></i> <? echo count($lessons); ?></div>
             </th>
         </tr>
         </tfoot>
@@ -160,11 +172,11 @@
         Добавить занятие
     </h1>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formAddLesson" <? if(count($students) == 0) echo "hidden"; ?> >
             <div class="field required">
                 <label>Дата занятия</label>
                 <div class="ui left icon input">
-                    <input type="date" required>
+                    <input type="date" name="lesson_date" required>
                     <i class="calendar alternate red icon"></i>
                 </div>
             </div>
@@ -172,31 +184,40 @@
                 <label>Нормативы</label>
                 <div class="ui left icon input">
                     <div class="ui fluid search multiple selection dropdown">
-                        <input type="hidden" name="normative">
+                        <input type="hidden" name="lesson_normative">
                         <i class="dropdown icon"></i>
                         <div class="default text">Отсутствуют</div>
                         <div class="menu">
-                            <div class="item" data-value="1">Подтягивание на перекладине</div>
-                            <div class="item" data-value="2">Прыжок в длину</div>
-                            <div class="item" data-value="3">Бег 3 км.</div>
-                            <div class="item" data-value="4">Бег 12 мин.</div>
-                            <div class="item" data-value="5">Подъем туловища лежа</div>
-                            <div class="item" data-value="6">Подъем туловища и ног</div>
-                            <div class="item" data-value="7">Сгибание и разгибание рук в упоре лежа</div>
+                            <div class="item" data-value="Подтягивание на перекладине">Подтягивание на перекладине</div>
+                            <div class="item" data-value="Прыжок в длину">Прыжок в длину</div>
+                            <div class="item" data-value="Бег 3 км.">Бег 3 км.</div>
+                            <div class="item" data-value="Бег 12 мин.">Бег 12 мин.</div>
+                            <div class="item" data-value="Подъем туловища лежа">Подъем туловища лежа</div>
+                            <div class="item" data-value="Подъем туловища и ног">Подъем туловища и ног</div>
+                            <div class="item" data-value="Сгибание и разгибание рук в упоре лежа">Сгибание и разгибание рук в упоре лежа</div>
                         </div>
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="group_id" value="<? echo $group_id; ?>">
+            <? foreach ($students_id as $student_id) { ?>
+            <input type="hidden" name="students_id[]" value="<? echo $student_id; ?>">
+            <? } ?>
         </form>
+        <? if(count($students) == 0) {?>
         <div class="ui warning message">
             <div class="header">Студенты отсутствуют:</div>
             <ul>
                 <li>Вы не можете создавать занятия, пока нет студентов</li>
             </ul>
         </div>
+        <? } ?>
+        <div class="ui success message" id="msgSuccessAddLesson" style="display: none">
+            <div class="header">Занятие успено добавлено!</div>
+        </div>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button <? if(count($students) == 0) echo "disabled"; ?>" form="formAddLesson">
             Добавить
             <i class="plus circle icon"></i>
         </button>
@@ -480,8 +501,28 @@
     </div>
 </div>
 
-
 </body>
+<script>
+    $("#formAddLesson").submit(function () {
+        $.ajax({
+            url: "/queries/professor/addLesson.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                document.getElementById("msgSuccessAddLesson").style.display = "block";
+                document.getElementById("formAddLesson").hidden = true;
+                setTimeout(function () {
+                     location.reload();
+                 }, 1100);
+            },
+            error: function () {
+            }
+        });
+        return false;
+    });
+</script>
+
+
 <script>
     $('.ui.dropdown')
         .dropdown()
