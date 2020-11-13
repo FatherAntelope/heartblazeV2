@@ -13,6 +13,9 @@ $professor =  R::load('person', $professorInfo->id_person);
 
 $lessonsParticipation = R::findAll('lesson_participation', 'id_student = ?', [$student->id]);
 $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
+
+$studentVisitsPercent = getStudentVisitsPercent($lessonsParticipation);
+$studentScore = getStudentScore($normativesTest);
 ?>
 <!doctype html>
 <html lang="en">
@@ -37,18 +40,18 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
 <body style="background-image: url(/images/bg.jpg)">
 <div class="ui container">
     <div class="field">
-        <a href="/student/lk.php" class="ui floated small blue labeled icon button">
+        <a href="/student/lk.php" class="ui floated small blue labeled icon button" style="margin-bottom: 10px">
             <i class="arrow left icon"></i>Назад
         </a>
-        <button onclick="openModalWindowNormativeData()"
+        <button onclick="openModalWindowNormativeData()" style="margin-bottom: 10px"
                 class="ui floated small green labeled icon button <? if(count($normativesTest) == 0) echo "disabled"; ?>">
             <i class="heartbeat icon"></i>Сданные нормативы
         </button>
-        <button onclick="openModalWindowParticipationData()"
+        <button onclick="openModalWindowParticipationData()" style="margin-bottom: 10px"
                 class="ui floated small orange labeled icon button <? if(count($lessonsParticipation) == 0) echo "disabled"; ?>">
             <i class="table icon"></i>Данные занятий
         </button>
-        <a href="#blockParticipation" class="ui floated small brown labeled icon button">
+        <a href="#blockParticipation" class="ui floated small brown labeled icon button" style="margin-bottom: 10px">
             <i class="table icon"></i>К занятиям
         </a>
         <a href="#blockCharts" class="ui floated small teal labeled icon button">
@@ -67,7 +70,7 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
                         <? echo $professor->surname." ".$professor->name." ".$professor->patronymic; ?>
                     </label>
                     <div class="metadata">
-                        <div class="date"><i class="user blue icon"></i>"24"</div>
+                        <div class="date"><i class="user blue icon"></i><? echo R::count('student', 'id_group = ?', [$student->id_group]); ?></div>
                         <div class="rating"><i class="mail blue icon"></i><? echo $professor->email; ?></div>
                     </div>
                     <div class="text"><? echo $professorInfo->job; ?></div>
@@ -82,28 +85,17 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
 
 
         <h3 class="ui horizontal divider header"><i class="bar chart red icon"></i>Прогресс</h3>
-        <div class="ui progress indicating" data-value="100">
+        <div class="ui progress indicating" data-value="<? echo $studentVisitsPercent; ?>">
             <div class="bar">
                 <div class="progress"></div>
             </div>
             <div class="label">Прогресс посещений</div>
         </div>
-        <div class="ui progress indicating" data-value="50">
-            <div class="bar">
-                <div class="progress"></div>
-            </div>
-            <div class="label">Балл за занятия</div>
+        <div class="ui progress indicating" data-percent="<? echo $studentScore;?>">
+            <div class="bar"></div>
+            <div class="label"><? echo "Ваш балл ща нормативы - ".$studentScore; ?></div>
         </div>
         <br>
-        <h3 class="ui horizontal divider header"><i class="calendar check red icon"></i>Даты занятий</h3>
-        <div class="field" style="margin-bottom: 20px">
-            <h4 class="ui dividing header">Все даты</h4>
-            <div class="ui blue label" style="margin-bottom: 10px">"01.10.2000"</div>
-        </div>
-        <div class="field" style="margin-bottom: 20px">
-            <h4 class="ui dividing header">Посещенные даты</h4>
-            <div class="ui green label" style="margin-bottom: 10px">"01.10.2000"</div>
-        </div>
     </div>
 
     <? if(count($lessonsParticipation) == 0) {?>

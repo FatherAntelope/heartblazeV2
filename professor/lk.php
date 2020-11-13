@@ -214,7 +214,6 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             </ul>
         </div>
         <div class="ui success message" id="msgSuccessReplacePassword" style="display: none">
-            <i class="close icon"></i>
             <div class="header">Пароль успешно сменился на новый!</div>
         </div>
     </div>
@@ -326,13 +325,11 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             success: function () {
                 document.getElementById("msgSuccessReplacePassword").style.display = "block";
                 document.getElementById("msgErrorReplacePassword").style.display = "none";
-                document.getElementsByName("person_old_password")[0].value = "";
-                document.getElementsByName("person_new_password")[0].value = "";
-                document.getElementsByName("person_repeat_password")[0].value = "";
                 document.getElementById("actionsReplacePassword").style.display = "none";
+                document.getElementById("formReplacePersonalPassword").hidden = true;
                 setTimeout(function () {
                     location.reload();
-                }, 1500);
+                }, 1100);
 
             },
             error: function () {

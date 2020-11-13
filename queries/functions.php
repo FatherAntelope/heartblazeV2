@@ -77,4 +77,23 @@ function getTappingTest($countTapping) {
         return "Неудовлетворительно";
 }
 
+function getStudentVisitsPercent($lessonsParticipation) {
+    $studentVisitsPercent = 0;
+    foreach ($lessonsParticipation as $lessonParticipation) {
+        if($lessonParticipation->status == 1)
+            $studentVisitsPercent++;
+    }
+    $studentVisitsPercent = (100 * $studentVisitsPercent)/count($lessonsParticipation);
+    return $studentVisitsPercent;
+}
+
+
+function getStudentScore($normativesTest) {
+    $studentScore = 0;
+    foreach ($normativesTest as $normativeTest) {
+        $studentScore += $normativeTest->score;
+    }
+    $studentScore = (100 * ($studentScore / count($normativesTest))) / 5;
+    return $studentScore;
+}
 ?>

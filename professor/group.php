@@ -1,12 +1,21 @@
-<? 
-require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+<?
+require $_SERVER['DOCUMENT_ROOT'] . "/queries/functions.php";
+$person = getDataIsAuthAndEmptyPerson('1');
 $group_id = $_GET['id'];
+$group = R::load('group', $group_id);
+if($group->id_professor != (R::findOne('professor', 'id_person = ?', [$person->id])->id)) {
+    die(header("HTTP/1.0 403 Forbidden "));
+}
+
 $students = R::findAll('student', ' id_group = ? ', [$group_id]);
 $students_id = array();
 foreach ($students as $student) {
     $students_id[] = $student->id;
 }
-$lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
+$lessons = R::findAll('lesson', ' id_group = ?', [$group_id]);
+
+$lessonsParticipation = R::findAll('lesson_participation', 'id_student = ?', [$student->id]);
+$normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
 
 ?>
 <!doctype html>
@@ -21,7 +30,7 @@ $lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
     <link rel="shortcut icon" href="/images/ugatu_logo.png" type="image/x-icon">
     <script src="/frameworks/jquery.min.js"></script>
     <script src="/frameworks/semantic.min.js"></script>
-    <title>Группа - "Группа"</title>
+    <title>Группа - <? echo $group->name; ?></title>
 </head>
 <body style="background-image: url(/images/bg.jpg)">
 <div class="ui container">
@@ -58,13 +67,13 @@ $lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
         <div class="ui segment attached top">
             <div class="ui comments">
                 <? foreach ($students as $student) {?>
-                    <? $person = R::findOne('person', ' id = ? ', [$student->id_person]); ?>
+                    <? $personStudent = R::load('person', $student->id_person); ?>
                     <div class="comment" id="<?echo 'row_student_id-' . $student->id; ?>">
                         <a class="avatar">
                             <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
                         </a>
                         <div class="content">
-                            <label class="author" style="color: #db2828"><? echo $person->surname . " " . $person->name . " " . $person->patronymic; ?></label>
+                            <label class="author" style="color: #db2828"><? echo $personStudent->surname . " " . $personStudent->name . " " . $personStudent->patronymic; ?></label>
                             <div class="metadata">
                                 <!--Посещаемость-->
                                 <div class="date"><i class="calendar outline blue icon"></i>"2 из 5"</div>
@@ -105,7 +114,7 @@ $lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
         </thead>
         <tbody class="center aligned">
         <? foreach ($lessons as $lesson) { ?>
-        <tr>
+        <tr class="<? if($lesson->checked == false) echo "warning"; else echo "success";?>">
             <td><? echo date("d.m.Y", strtotime($lesson->date)); ?></td>
             <td>
                 <? if($lesson->checked == false) {?>
@@ -297,19 +306,29 @@ $lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
                 <thead>
                 <tr>
                     <th>Студент</th>
-                    <th>"Дата"</th>
+                    <?
+                    foreach ($lessons as $lesson) { ?>
+                        <th> <? echo date("d.m.Y", strtotime($lesson->date)) ?></th>
+                    <? } ?>
                 </tr>
                 </thead>
                 <tbody>
+                <? foreach ($students as $student) {
+                    $personStudent = R::load('person', $student->id_person);
+                    ?>
                 <tr>
-                    <td>"Фамилия И. О. (группа)"</td>
-                    <td><i class="green plus circle icon"></i>
+                    <td><? echo $personStudent->surname . " " . substr($personStudent->name, 0, 2) . ". " . substr($personStudent->patronymic, 0, 2).". (".$student->group_study.")"; ?></td>
+                    <?  foreach ($lessons as $lesson) {?>
+                    <td>
+                        <i class="green plus circle icon"></i>
                         /
                         <i class="red minus circle icon"></i>
                         /
                         <i class="brown question circle icon"></i>
                     </td>
+                    <? } ?>
                 </tr>
+                <? } ?>
                 </tbody>
                 <tfoot>
                 <tr>
@@ -361,21 +380,32 @@ $lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
                 </tr>
                 </thead>
                 <tbody>
+                <?
+                foreach ($lessonsParticipation as $lessonParticipation) {
+                    if ($lessonParticipation->status == 1) {
+                        $personStudent = R::load('person', $students[$lessonParticipation->id_student]->id_person);?>
                 <tr>
-                    <td>"10.10.2000"</td>
-                    <td>"Фамилия И. О."</td>
-                    <td>"10000"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td>"58"</td>
-                    <td><a class="ui blue icon button small" href=""><i class="icon linkify"></i></a></td>
+                    <td><? echo date("d.m.Y", strtotime($lessons[$lessonParticipation->id_lesson]->date)); ?></td>
+                    <td><? echo $personStudent->surname . " " . substr($personStudent->name, 0, 2) . ". " . substr($personStudent->patronymic, 0, 2)."."; ?></td>
+                    <td><? echo $lessonParticipation->distance; ?></td>
+                    <td><? echo $lessonParticipation->time_overall; ?></td>
+                    <td><? echo $lessonParticipation->time_main; ?></td>
+                    <td><? echo $lessonParticipation->time_warmup; ?></td>
+                    <td><? echo $lessonParticipation->time_final; ?></td>
+                    <td><? echo $lessonParticipation->pulse_before_warmup; ?></td>
+                    <td><? echo $lessonParticipation->pulse_after_warmup; ?></td>
+                    <td><? echo $lessonParticipation->pulse_after_main; ?></td>
+                    <td><? echo $lessonParticipation->pulse_after_final; ?></td>
+                    <td><? echo $lessonParticipation->pulse_after_rest; ?></td>
+                    <td>
+                        <a class="ui blue icon button small" target="_blank"
+                           href="<? echo $lessonParticipation->tracker_link; ?>">
+                            <i class="icon linkify"></i>
+                        </a>
+                    </td>
                 </tr>
+                    <? }
+                } ?>
                 </tbody>
             </table>
         </div>
@@ -383,17 +413,30 @@ $lessons = R::findAll('lesson', ' id_group = ? AND checked = 0', [$group_id]);
         <table class="ui sortable celled table scrolling center aligned">
             <thead>
             <tr>
+                <th>Дата</th>
+                <th>Студент</th>
                 <th>Норматив</th>
                 <th>Значение</th>
                 <th>Оценка</th>
             </tr>
             </thead>
             <tbody>
+            <?
+            $countNormTest = 0;
+            foreach ($normativesTest as $normativeTest) {
+                if($normativeTest->score !== null) {
+                    $personStudent = R::load('person', $students[$normativeTest->id_student]->id_person);?>
             <tr>
-                <td>"Название норматива"</td>
-                <td>"214"</td>
-                <td>"1/2/3/4/5"</td>
+                <td>
+                    <? echo date("d.m.Y", strtotime($lessons[ R::load('normative', $normativeTest->id_normative)->id_lesson]->date)); ?>
+                </td>
+                <td><? echo $personStudent->surname . " " . substr($personStudent->name, 0, 2) . ". " . substr($personStudent->patronymic, 0, 2)."."; ?></td>
+                <td><? echo R::load('normative', $normativeTest->id_normative)->text; ?></td>
+                <td><? echo $normativeTest->grade; ?></td>
+                <td><? echo $normativeTest->score; ?></td>
             </tr>
+            <? }
+            } ?>
             </tbody>
         </table>
     </div>
