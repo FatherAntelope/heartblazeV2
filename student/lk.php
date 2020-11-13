@@ -6,6 +6,169 @@ $parameters = R::findOne('student_data', 'id_student = ? ORDER BY id DESC', [$st
 if($student->id_group !== null) {
     $group = R::findOne('group', 'id = ?', [$student->id_group]);
 }
+$allParameters = R::findAll('student_data', 'id_student = ? ORDER BY date ASC', [$student->id]);
+
+$chartsDate = array();
+$chartsWeight = array();
+$chartsHeight = array();
+
+$chartsStateHealth = array();
+$chartsStateMood = array();
+$chartsStateAppetite = array();
+$chartsStateSleep = array();
+$chartsStateEfficiency = array();
+
+foreach($allParameters as $parameter){
+
+    $chartsDate[] = date("d.m.Y", strtotime($parameter->date));
+    $chartsWeight[] = intval($parameter->weight);
+    $chartsHeight[] = intval($parameter->height);
+
+    switch ($parameter->state_of_health){
+        case "Хорошее":
+            $chartsStateHealth[] = 3;
+            break;
+        case "Удовлетворительное":
+            $chartsStateHealth[] = 2;
+            break;
+        case "Плохое":
+            $chartsStateHealth[] = 1;
+            break;
+    }
+    switch ($parameter->mood){
+        case "Хорошее":
+            $chartsStateMood[] = 3;
+            break;
+        case "Удовлетворительное":
+            $chartsStateMood[] = 2;
+            break;
+        case "Плохое":
+            $chartsStateMood[] = 1;
+            break;
+    }
+    switch ($parameter->appetite){
+        case "Повышенный":
+            $chartsStateAppetite[] = 3;
+            break;
+        case "Нормальный":
+            $chartsStateAppetite[] = 2;
+            break;
+        case "Пониженный":
+            $chartsStateAppetite[] = 1;
+            break;
+    }
+    switch ($parameter->sleep){
+        case "Хороший":
+            $chartsStateSleep[] = 3;
+            break;
+        case "Плохой":
+            $chartsStateSleep[] = 2;
+            break;
+        case "Бессонница":
+            $chartsStateSleep[] = 1;
+            break;
+    }
+    switch ($parameter->efficiency){
+        case "Повышенная":
+            $chartsStateEfficiency[] = 3;
+            break;
+        case "Обычная":
+            $chartsStateEfficiency[] = 2;
+            break;
+        case "Пониженная":
+            $chartsStateEfficiency[] = 1;
+            break;
+    }
+
+    switch (getIndexQuetelet(intval($parameter->weight) / pow(intval($parameter->height) / 100, 2))){
+        case "Ожирение":
+            $chartsQuetelet[] = 2;
+            break;
+        case "Повышенный":
+            $chartsQuetelet[] = 1;
+            break;
+        case "Нормальный":
+            $chartsQuetelet[] = 0;
+            break;
+        case "Пониженный":
+            $chartsQuetelet[] = -1;
+            break;
+        case "Истощение":
+            $chartsQuetelet[] = -2;
+            break;
+    }
+    switch (getOrthostaticProbe(intval($parameter->orthostatic))){
+        case "Заболевание":
+            $chartsOrthostatic[] = -2;
+            break;
+        case "Выраженное утомление":
+            $chartsOrthostatic[] = -1;
+            break;
+        case "Среднее утомление":
+            $chartsOrthostatic[] = 0;
+            break;
+        case "Легкое утомление":
+            $chartsOrthostatic[] = 1;
+            break;
+        case "Хорошее состояние":
+            $chartsOrthostatic[] = 2;
+            break;
+    }
+    switch (getRuffierProbe(intval($parameter->ruffier))){
+        case "Сердечная недостаточность высшей степени":
+            $chartsRuffierProbe[] = -2;
+            break;
+        case "Сердечная недостаточность средней степени":
+            $chartsRuffierProbe[] = -1;
+            break;
+        case "Хорошее сердце":
+            $chartsRuffierProbe[] = 0;
+            break;
+        case "Отличное сердце":
+            $chartsRuffierProbe[] = 1;
+            break;
+    }
+    switch (getStangeProbe(intval($parameter->stange))){
+        case "Отлично":
+            $chartsStange[] = 1;
+            break;
+        case "Хорошо":
+            $chartsStange[] = 0;
+            break;
+        case "Удовлетворительно":
+            $chartsStange[] = -1;
+            break;
+        case "Неудовлетворительно":
+            $chartsStange[] = -2;
+            break;
+    }
+    switch (getTappingTest(intval($parameter->tapping_test))){
+        case "Отлично":
+            $chartsTapping_test[] = 2;
+            break;
+        case "Хорошо":
+            $chartsTapping_test[] = 1;
+            break;
+        case "Нормально":
+            $chartsTapping_test[] = 0;
+            break;
+        case "Удовлетворительно":
+            $chartsTapping_test[] = -1;
+            break;
+        case "Неудовлетворительно":
+            $chartsTapping_test[] = -2;
+            break;
+    }
+}
+
+$dataChartsForDrawWeightAndHeight = array_map(null, $chartsDate, $chartsWeight, $chartsHeight);
+
+$dataChartsForDrawStats = array_map(null, $chartsDate, $chartsStateHealth, $chartsStateMood, $chartsStateSleep, $chartsStateAppetite, $chartsStateEfficiency);
+array_unshift($dataChartsForDrawStats, ['Дата', 'Состояние здоровья', 'Настроение', 'Сон', 'Аппетит', 'Работоспособность']);
+
+$dataChartsForDrawIndexes = array_map(null, $chartsDate, $chartsQuetelet, $chartsOrthostatic, $chartsRuffierProbe, $chartsStange, $chartsTapping_test);
+array_unshift($dataChartsForDrawIndexes, ['Дата', 'Кетле', 'Ортостатическая проба', 'Руфье', 'Штанге', 'Теппинг-тест']);
+
 ?>
 
 <!doctype html>
@@ -20,6 +183,7 @@ if($student->id_group !== null) {
     <link rel="shortcut icon" href="/images/ugatu_logo.png" type="image/x-icon">
     <script src="/frameworks/jquery.min.js"></script>
     <script src="/frameworks/semantic.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <title>Личный кабинет</title>
 </head>
 <style>
@@ -223,6 +387,9 @@ if($student->id_group !== null) {
                 </div>
                 <div class="ui segment" id="segmentCharts">
                     <h2 class="ui center aligned header" style="color: #db2828">Графики</h2>
+                    <div id="heightAndWeight"></div>
+                    <div id="stats"></div>
+                    <div id="indexes"></div>
                 </div>
             </div>
         </div>
@@ -562,8 +729,6 @@ if($student->id_group !== null) {
     </div>
 </div>
 
-
-
 <div class="ui modal horizontal flip tiny" id="modalAvatarReplace">
     <div class="header" style="color: #db2828">
         Смена фотографии
@@ -586,6 +751,54 @@ if($student->id_group !== null) {
 </div>
 
 </body>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['line']});
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChartHeightAndWeight);
+    google.charts.setOnLoadCallback(drawChartState);
+    google.charts.setOnLoadCallback(drawChartIndexes);
+
+    function drawChartHeightAndWeight() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Дата');
+        data.addColumn('number', 'Вес');
+        data.addColumn('number', 'Рост');
+
+        data.addRows(<? echo json_encode($dataChartsForDrawWeightAndHeight); ?>);
+
+        var options = {
+            chart: { title: 'График изменения роста и веса студента.'},
+            height: 500,
+            legend: { position: 'none'}
+        };
+
+        var chart = new google.charts.Line(document.getElementById('heightAndWeight'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+    function drawChartState() {
+        var data = google.visualization.arrayToDataTable(<? echo json_encode($dataChartsForDrawStats); ?>);
+        var options = {
+            title: 'Состояния студента.',
+            height: 500,
+        };
+        var chart = new google.charts.Bar(document.getElementById("stats"));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+
+    function drawChartIndexes() {
+        var data = google.visualization.arrayToDataTable(<? echo json_encode($dataChartsForDrawIndexes); ?>);
+        var options = {
+            title: 'Индексы студента.',
+            height: 500,
+        };
+        var chart = new google.charts.Bar(document.getElementById("indexes"));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+</script>
+
+
 <script>
     $("#formSendPhysicalParameters").submit(function () {
         $.ajax({
