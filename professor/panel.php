@@ -24,11 +24,15 @@ $countStudentsOfAllGroups = 0;
 <body style="background-image: url(/images/bg.jpg)">
 <div class="ui container">
     <div class="field">
-        <a href="/professor/lk.php" class="ui floated small blue labeled icon button">
+        <a href="/professor/lk.php" class="ui floated small blue labeled icon button" style="margin-bottom: 10px">
             <i class="arrow left icon"></i>Назад
         </a>
-        <button onclick="openModalWindowForAddGroup()" class="ui floated small green labeled icon button">
+        <button onclick="openModalWindowForAddGroup()" class="ui floated small green labeled icon button"
+                style="margin-bottom: 10px">
             <i class="plus circle icon"></i>Добавить группу
+        </button>
+        <button onclick="openModalWindowGuide()" class="ui floated small black labeled icon button">
+            <i class="info circle icon"></i>Руководство
         </button>
     </div>
     <div class="ui info message">
@@ -119,7 +123,7 @@ $countStudentsOfAllGroups = 0;
         <div class="ui warning message">
             <div class="header">Специализации отсутствуют:</div>
             <ul>
-                <li>Вы не можете создать группу, пока нет специализаций</li>
+                <li>Вы не можете добавить группу, пока нет специализаций</li>
             </ul>
         </div>
         <? } ?>
@@ -135,8 +139,8 @@ $countStudentsOfAllGroups = 0;
         </div>
 
     </div>
-    <div class="actions">
-        <button class="ui right labeled icon green button <? if(count($specializations) == null) echo "disabled"; ?>"
+    <div class="actions" <? if(count($specializations) == null) echo "hidden"; ?>>
+        <button class="ui right labeled icon green button"
         form="formAddGroup">
             Добавить
             <i class="plus circle icon"></i>
@@ -160,6 +164,59 @@ $countStudentsOfAllGroups = 0;
     </div>
 </div>
 
+<div class="ui large modal horizontal flip " id="modalGuide">
+    <h1 class="ui header" style="color: #db2828">Руководство</h1>
+    <div class="content">
+        <h3 class="ui header center aligned">Обозначение элементов интерфейса</h3>
+        <h2 class="ui header">
+            <i class="icon star blue"></i>
+            <div class="content">
+                <div class="sub header">
+                    Количество баллов студента группы, рассчитанные за выполнения нормативов из 100.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <i class="icon calendar outline blue"></i>
+            <div class="content">
+                <div class="sub header">
+                    Число посещений занятий студентом группы из общего числа занятий.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <i class="icon clone outline inverted" style="background: #a5673f; border-radius: 5px"></i>
+            <div class="content">
+                <div class="sub header">
+                    Кнопка редактирования/отправки данных на проверку преподавателю группы.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <div class="ui orange label" style="margin-left:0"><i class="users icon"></i> 3 </div>
+            <div class="ui orange label" style="margin-left:0"><i class="user icon"></i> 3 </div>
+            <div class="ui orange label" style="margin-left:0"><i class="calendar icon"></i> 3 </div>
+            <div class="ui orange label" style="margin-left:0"><i class="calendar check icon"></i> 3 </div>
+            <div class="content">
+                <div class="sub header" style="margin-top: 5px">
+                    Количество элементов в таблице/списке или общее количество.
+                </div>
+            </div>
+        </h2>
+
+        <h3 class="ui header center aligned">Указания</h3>
+        <div class="ui message">
+            <ul>
+                <li>Для перехода к созданной вами группе нажмите на ее название в таблице групп.</li>
+                <li>Если нужная для вас специализация отсутствует, то обратитесь
+                    к администратору (заведующему учебной частью), чтобы он добавил её.</li>
+                <li>Старайтесь не создавать занятия наперед, иначе студенты начнут отправлять занятия
+                    на последующие дни и так будет неудобно фиксировать посещения и проверять все данные.</li>
+                <li>Создавайте занятия строго в возрастающем порядке дат.</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 </body>
 <script>
@@ -220,9 +277,19 @@ $countStudentsOfAllGroups = 0;
         ;
     }
 
+
     function hideModalWindowForGroupRemove() {
         $('#modalGroupRemove')
             .modal('hide')
+        ;
+    }
+
+    function openModalWindowGuide() {
+        $('#modalGuide')
+            .modal({
+                inverted: true
+            })
+            .modal('show')
         ;
     }
 

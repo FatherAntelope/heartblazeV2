@@ -171,18 +171,6 @@
 <div class="ui segment tab blue" style="width: 80%" data-tab="2">
     <a href="/" class="ui labeled icon button blue" style="margin-bottom: 20px"><i class="icon arrow left"></i> Вход </a>
     <!--
-    * Сообщение об ошибке
-    -->
-    <div class="ui error message" style="display:none;" id="errorRegistration">
-        <i class="close icon"></i>
-        <div class="header">Ошибка регистрации</div>
-        <ul>
-            <li>Пользователь с данным логином уже зарегистрирован</li>
-            <li>Смените логин или обратитесь к администратору</li>
-        </ul>
-    </div>
-
-    <!--
     * Форма регистрации
     -->
     <form class="ui form" id="registrationPerson">
@@ -232,6 +220,18 @@
                 <label>Я преподаватель</label>
             </div>
         </div>
+        <!--
+        * Сообщение об ошибке
+        -->
+        <div class="ui error message" style="display:none;" id="errorRegistration">
+            <i class="close icon"></i>
+            <div class="header">Ошибка регистрации</div>
+            <ul>
+                <li>Пользователь с данным логином уже зарегистрирован</li>
+                <li>Смените логин или обратитесь к администратору</li>
+            </ul>
+        </div>
+
         <div class="required inline field">
             <div class="ui checkbox">
                 <input type="checkbox" required>
@@ -242,7 +242,10 @@
         * Кнопка, активирующая отправку POST запроса
         -->
         <button class="ui right floated labeled icon button green"><i class="right arrow icon"></i> Создать аккаунт </button>
+
+
     </form>
+
 </div>
 
 <!--
@@ -254,8 +257,9 @@
         Восстановление пароля
     </div>
     <div class="content">
-        <p>На указанную почту придет новый пароль и ссылка подтверждения для его смены</p>
+
         <form class="ui form">
+            <p>На указанную почту придет новый пароль и ссылка подтверждения для его смены</p>
             <div class="required field">
                 <label>Логин</label>
                 <div class="ui left icon input">
@@ -278,6 +282,9 @@
                 <li>Пользователя с данным логином или почтой не существует</li>
                 <li>Повторите ввод</li>
             </ul>
+        </div>
+        <div class="ui success message">
+            <div class="header">Сообщение с новым паролем отправлено на вашу почту!</div>
         </div>
     </div>
     <div class="actions">

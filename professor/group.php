@@ -12,10 +12,13 @@ $students_id = array();
 foreach ($students as $student) {
     $students_id[] = $student->id;
 }
+
 $lessons = R::findAll('lesson', ' id_group = ?', [$group_id]);
 
-$lessonsParticipation = R::findAll('lesson_participation', 'id_student = ?', [$student->id]);
-$normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
+$lessonsParticipation = R::findLike('lesson_participation', ['id_student' => $students_id]);
+$normativesTest = R::findLike('normative_test', ['id_student' => $students_id]);
+
+$arrSumStudentsVisits = array();
 
 ?>
 <!doctype html>
@@ -67,7 +70,16 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
         <div class="ui segment attached top">
             <div class="ui comments">
                 <? foreach ($students as $student) {?>
-                    <? $personStudent = R::load('person', $student->id_person); ?>
+                    <? $personStudent = R::load('person', $student->id_person);
+                        $studentLessonParticipation = R::findLike('lesson_participation', ['id_student' => $student->id]);
+                        $studentNormativeTest = R::findLike('normative_test', ['id_student' => $student->id]);
+                        $countStudentVisits = 0;
+                        foreach ($studentLessonParticipation as $item) {
+                            if($item->status == 1) {
+                                $countStudentVisits++;
+                            }
+                        }
+                    ?>
                     <div class="comment" id="<?echo 'row_student_id-' . $student->id; ?>">
                         <a class="avatar">
                             <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
@@ -76,9 +88,13 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
                             <label class="author" style="color: #db2828"><? echo $personStudent->surname . " " . $personStudent->name . " " . $personStudent->patronymic; ?></label>
                             <div class="metadata">
                                 <!--Посещаемость-->
-                                <div class="date"><i class="calendar outline blue icon"></i>"2 из 5"</div>
+                                <div class="date"><i class="calendar outline blue icon"></i>
+                                    <? echo $countStudentVisits." из ".count($lessons);?>
+                                </div>
                                 <!--Балл-->
-                                <div class="rating"><i class="star blue icon"></i>"35"</div>
+                                <div class="rating"><i class="star blue icon"></i>
+                                    <? if ($studentNormativeTest != null) echo getStudentScore($studentNormativeTest); else echo "0"; ?>
+                                </div>
                             </div>
                             <div class="text">Учится в <? echo $student->group_study; ?></div>
                             <div class="actions">
@@ -222,9 +238,17 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
         </div>
         <? } ?>
         <div class="ui success message" id="msgSuccessAddLesson" style="display: none">
-            <div class="header">Занятие успено добавлено!</div>
+            <div class="header">Занятие успешно добавлено! Обновите страницу или добавьте еще</div>
+        </div>
+        <div class="ui error message" id="msgErrorAddLesson" style="display: none">
+            <div class="header">Ошибка создания занятия:</div>
+            <ul>
+                <li>Вы не можете создать несколько занятия в один день!</li>
+                <li>Выберите другую дату, либо удалите старое занятие, если допустили ошибку в его создании</li>
+            </ul>
         </div>
     </div>
+
     <div class="actions">
         <button class="ui right labeled icon green button <? if(count($students) == 0) echo "disabled"; ?>" form="formAddLesson">
             Добавить
@@ -315,16 +339,21 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
                 <tbody>
                 <? foreach ($students as $student) {
                     $personStudent = R::load('person', $student->id_person);
+                    $stepVisits = 0;
                     ?>
                 <tr>
                     <td><? echo $personStudent->surname . " " . substr($personStudent->name, 0, 2) . ". " . substr($personStudent->patronymic, 0, 2).". (".$student->group_study.")"; ?></td>
-                    <?  foreach ($lessons as $lesson) {?>
+                    <?  foreach ($lessons as $lesson) {
+                        $studentVisit = R::findOne('lesson_participation', 'id_lesson = ? AND id_student = ?', [$lesson->id, $student->id]);
+                        ?>
                     <td>
+                        <? if($studentVisit->status == 1) { $arrSumStudentsVisits[$stepVisits++]++;?>
                         <i class="green plus circle icon"></i>
-                        /
+                        <? } elseif ($studentVisit->status == 3) { $stepVisits++?>
                         <i class="red minus circle icon"></i>
-                        /
+                        <? } else { $stepVisits++?>
                         <i class="brown question circle icon"></i>
+                        <? } ?>
                     </td>
                     <? } ?>
                 </tr>
@@ -334,14 +363,17 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
                 <tr>
                     <th>
                         <div class="ui orange label">
-                            <i class="users icon"></i>"22"
+                            <i class="users icon"></i> <? echo count($students); ?>
                         </div>
                     </th>
+                    <? for($i = 0; $i < count($lessons); $i++) {?>
                     <th>
                         <div class="ui brown label">
-                            <i class="calendar check icon"></i>"15"
+                            <i class="calendar check icon"></i>
+                            <? if($arrSumStudentsVisits[$i] != null) echo $arrSumStudentsVisits[$i]; else echo '0'; ?>
                         </div>
                     </th>
+                    <? } ?>
                 </tr>
                 </tfoot>
             </table>
@@ -428,7 +460,7 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
                     $personStudent = R::load('person', $students[$normativeTest->id_student]->id_person);?>
             <tr>
                 <td>
-                    <? echo date("d.m.Y", strtotime($lessons[ R::load('normative', $normativeTest->id_normative)->id_lesson]->date)); ?>
+                    <? echo date("d.m.Y", strtotime($lessons[R::load('normative', $normativeTest->id_normative)->id_lesson]->date)); ?>
                 </td>
                 <td><? echo $personStudent->surname . " " . substr($personStudent->name, 0, 2) . ". " . substr($personStudent->patronymic, 0, 2)."."; ?></td>
                 <td><? echo R::load('normative', $normativeTest->id_normative)->text; ?></td>
@@ -508,8 +540,6 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
                                     <i class="dropdown icon"></i>
                                     <div class="default text">Сделайте выбор</div>
                                     <div class="menu">
-                                        <div class="item" data-value="0">0</div>
-                                        <div class="item" data-value="1">1</div>
                                         <div class="item" data-value="2">2</div>
                                         <div class="item" data-value="3">3</div>
                                         <div class="item" data-value="4">4</div>
@@ -553,12 +583,11 @@ $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
             data: $(this).serialize(),
             success: function () {
                 document.getElementById("msgSuccessAddLesson").style.display = "block";
-                document.getElementById("formAddLesson").hidden = true;
-                setTimeout(function () {
-                     location.reload();
-                 }, 1100);
+                document.getElementById("msgErrorAddLesson").style.display = "none";
             },
             error: function () {
+                document.getElementById("msgSuccessAddLesson").style.display = "none";
+                document.getElementById("msgErrorAddLesson").style.display = "block";
             }
         });
         return false;

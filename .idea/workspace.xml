@@ -27,11 +27,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/queries/professor/sendRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queries/student/sendDataLesson.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/professor/group.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/group.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/professor/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/lk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queries/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/professor/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/panel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/professor/addLesson.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/professor/addLesson.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/lk.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/panel.php" afterDir="false" />
     </list>
@@ -105,7 +110,9 @@
       <workItem from="1605200834625" duration="21036000" />
       <workItem from="1605223174617" duration="142000" />
       <workItem from="1605286425025" duration="1677000" />
-      <workItem from="1605289304906" duration="10937000" />
+      <workItem from="1605289304906" duration="11467000" />
+      <workItem from="1605349958106" duration="5000" />
+      <workItem from="1605352884638" duration="30816000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -338,7 +345,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605288109792</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Добавлены выводы всех данных студентов, кроме посещений в ПУ группы преподавателя. Нужно добавить индивидуальный вывод данных студентов и их проверку за занятие. &#10;У студента в панели в ПУ добавлено отображение всех прогрессов. Нужно добавить индивидуальное заполнение данных по занятию.">
+      <created>1605300664692</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1605300664692</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,7 +394,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="replace index and registration" />
     <MESSAGE value="replace list students" />
     <MESSAGE value="Оптимизирован код аутентификации" />
     <MESSAGE value="Добавлен интерфейс панели студента, немного изменен интерфейс преподавателя (группы)" />
@@ -405,7 +418,8 @@
     <MESSAGE value="Выгружена конечная версия для работы в команде" />
     <MESSAGE value="Добавлено добавление занятий с нормативами и/или классикой. Также изменен интерфейс, добавлена выгрузка данных у струдента из БД. Запись НЕ РЕАЛИЗОВАНА. Изменена MySQL." />
     <MESSAGE value="Добавлены графики в личном кабинете студента" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлены графики в личном кабинете студента" />
+    <MESSAGE value="Добавлены выводы всех данных студентов, кроме посещений в ПУ группы преподавателя. Нужно добавить индивидуальный вывод данных студентов и их проверку за занятие. &#10;У студента в панели в ПУ добавлено отображение всех прогрессов. Нужно добавить индивидуальное заполнение данных по занятию." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлены выводы всех данных студентов, кроме посещений в ПУ группы преподавателя. Нужно добавить индивидуальный вывод данных студентов и их проверку за занятие. &#10;У студента в панели в ПУ добавлено отображение всех прогрессов. Нужно добавить индивидуальное заполнение данных по занятию." />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -432,10 +446,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604782508080" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1605288106303">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1605300660865">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605288106303" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605300660865" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1605175826979">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -468,10 +482,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="407" y="174" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1604492839107" />
-    <state x="585" y="343" key="NewPhpFileDialog" timestamp="1605204042489">
+    <state x="585" y="343" key="NewPhpFileDialog" timestamp="1605378407593">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="585" y="343" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1605204042489" />
+    <state x="585" y="343" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1605378407593" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1604839963692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -480,10 +494,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="326" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1604400872492" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605223302156">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605300670625">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605223302156" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605300670625" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605294215220">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -492,10 +506,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration/0.0.1536.824@0.0.1536.824" timestamp="1604300926764" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1605297615624">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1605376021759">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605297615624" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605376021759" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604476479816">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

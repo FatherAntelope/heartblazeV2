@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `lesson_participation`, `normative_test`,`normative`,  `lesson`,`student_data`,`student`,   `group`, `specialization`, `administrator`, `professor`, `person`;
+DROP TABLE IF EXISTS `lesson_participation`, `normative_test`, `normative`, `lesson`,`student_data`,`student`, `group`, `specialization`, `administrator`, `request`, `professor`, `person`;
 
 DROP TABLE IF EXISTS Person;
 CREATE TABLE Person
@@ -24,6 +24,16 @@ CREATE TABLE Professor
     status TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_person) REFERENCES Person(id) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS Request;
+CREATE TABLE Request
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    id_professor INT NOT NULL,
+    certificate MEDIUMBLOB NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_professor) REFERENCES Professor(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS Administrator;
@@ -135,8 +145,6 @@ CREATE TABLE Lesson_participation
     FOREIGN KEY (id_student) REFERENCES student(id) ON DELETE CASCADE,
     id_lesson INT NOT NULL,
     FOREIGN KEY (id_lesson) REFERENCES lesson(id) ON DELETE CASCADE,
-    grade INT NULL,
-    reply TEXT NULL,
     time_overall INT NULL,
     time_warmup INT NULL,
     time_main INT NULL,
@@ -148,6 +156,7 @@ CREATE TABLE Lesson_participation
     pulse_after_rest INT NULL,
     tracker_link TEXT NULL,
     distance INT NULL,
+    status INT NOT NULL,
     PRIMARY KEY (id)
 );
 

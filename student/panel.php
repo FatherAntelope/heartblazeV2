@@ -14,8 +14,13 @@ $professor =  R::load('person', $professorInfo->id_person);
 $lessonsParticipation = R::findAll('lesson_participation', 'id_student = ?', [$student->id]);
 $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
 
-$studentVisitsPercent = getStudentVisitsPercent($lessonsParticipation);
-$studentScore = getStudentScore($normativesTest);
+if($lessonsParticipation != null && $normativesTest != null) {
+    $studentVisitsPercent = getStudentVisitsPercent($lessonsParticipation);
+    $studentScore = getStudentScore($normativesTest);
+} else {
+    $studentVisitsPercent = 0;
+    $studentScore = 0;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -57,6 +62,10 @@ $studentScore = getStudentScore($normativesTest);
         <a href="#blockCharts" class="ui floated small teal labeled icon button">
             <i class="chart area icon"></i>К графикам
         </a>
+        <button onclick="openModalWindowGuide()"
+                class="ui floated small black labeled icon button">
+            <i class="info icon"></i>Руководство
+        </button>
     </div>
     <div class="ui segment">
         <h3 class="ui horizontal divider header"><i class="info red icon"></i>Преподаватель</h3>
@@ -93,7 +102,7 @@ $studentScore = getStudentScore($normativesTest);
         </div>
         <div class="ui progress indicating" data-percent="<? echo $studentScore;?>">
             <div class="bar"></div>
-            <div class="label"><? echo "Ваш балл ща нормативы - ".$studentScore; ?></div>
+            <div class="label"><? echo "Ваш балл за нормативы - ".$studentScore; ?></div>
         </div>
         <br>
     </div>
@@ -135,12 +144,12 @@ $studentScore = getStudentScore($normativesTest);
                         <i class="icon big check circle green"></i>
                     </td>
                 </tr>
-            <? } elseif ($lessonParticipation->status == 0) { ?>
+            <? } elseif ($lessonParticipation->status == 0 || $lessonParticipation->status == 2) { ?>
                 <tr class="warning">
                     <td><? echo date("d.m.Y", strtotime($dateLesson)); ?></td>
                     <td><? if($isNormative) echo "С нормативом"; else echo "Обычное"; ?></td>
                     <td>
-                        <? if($lessonParticipation->grade !== null) { ?>
+                        <? if($lessonParticipation->status == 2) { ?>
                             <i class="spinner loading big icon"></i>
                         <? } else { ?>
                             <i class="icon big circle warning"></i>
@@ -152,15 +161,15 @@ $studentScore = getStudentScore($normativesTest);
                         </button>
                     </td>
                 </tr>
-            <? } elseif ($lessonParticipation->status == 2) { ?>
+            <? } elseif ($lessonParticipation->status == 3) { ?>
                 <tr class="negative">
                     <td><? echo date("d.m.Y", strtotime($dateLesson)); ?></td>
                     <td><? if($isNormative) echo "С нормативом"; else echo "Обычное"; ?></td>
                     <td>
-                        <i class="icon big circle close"></i>
+                        <i class="icon big close"></i>
                     </td>
                     <td>
-                        <i class="icon big circle close"></i>
+                        <i class="icon big close"></i>
                     </td>
                 </tr>
             <? }
@@ -174,7 +183,6 @@ $studentScore = getStudentScore($normativesTest);
         </tr>
         </tfoot>
     </table>
-
 
     <div class="ui segment" id="blockCharts">
         <h3 class="ui horizontal divider header"><i class="chart area red icon"></i>Графики</h3>
@@ -234,6 +242,80 @@ $studentScore = getStudentScore($normativesTest);
     </div>
 </div>
 
+<div class="ui large modal horizontal flip " id="modalGuide">
+    <h1 class="ui header" style="color: #db2828">Руководство</h1>
+    <div class="content">
+        <h3 class="ui header center aligned">Обозначение элементов интерфейса</h3>
+        <h2 class="ui header">
+            <i class="icon check circle green"></i>
+            <div class="content">
+                <div class="sub header">
+                    Вы посетили занятие и ваши данные проверены преподавателем группы.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <i class="icon circle warning" style="color: #573a08"></i>
+            <div class="content">
+                <div class="sub header">
+                    Занятие только началось, вы еще не отправили ваши данные на проверку.
+                    Преподаватель пока не приступил фиксировать посещаемость студентов вашей группы.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <i class="icon close" style="color: #9f3a38"></i>
+            <div class="content">
+                <div class="sub header">
+                    Занятие закончилось, вы не отправили свои данные на проверку, а значит и не посетили занятие.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <i class="icon edit inverted" style="background: #2185d0; border-radius: 5px"></i>
+            <div class="content">
+                <div class="sub header">
+                    Кнопка редактирования/отправки данных на проверку преподавателю группы.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <div class="ui orange label" style="margin-left:0"><i class="list icon"></i> 3 </div>
+            <div class="content">
+                <div class="sub header" style="margin-top: 5px">
+                    Количество элементов в таблице/списке.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
+            <div class="content">
+                <div class="sub header">
+                    Прогрессбары (горизонтальные полосы) указывают ваш прогресс в выполнении всех занятий
+                    и в качестве их выполнений.
+                </div>
+            </div>
+        </h2>
+
+        <h3 class="ui header center aligned">Указания</h3>
+        <div class="ui message">
+            <ul>
+                <li>Не отвязывайтесь от преподавателя без видимой причины. Если вы сменили группу, университет,
+                    специализацию, то предупредите об этом вашего преподавателя и по его разрешению отвязывайтесь
+                    от группы. Можно также отвязаться, если вы привязались не к тому преподавателю.</li>
+                <li>Отправляйте данные в день появления задания за занятия. Если вовремя не отправить данные,
+                    то, в противном случае, преподаватель вас не отметит.</li>
+                <li>Даже если вы посетили занятие в очной форме, но не отправили свои данные,
+                    то преподаватель может вас не отметить.</li>
+                <li>Если вы посетили занятие и отправили все данные, но преподаватель вас не отметил,
+                    то обратитесь к нему по указанной почте, через старосту или по предпочитаемому самим
+                    преподавателем способом связи, а затем решите вашу проблему.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="ui large modal horizontal flip" id="modalParticipationData">
     <h1 class="ui header" style="color: #db2828">Данные занятий</h1>
     <div class="content">
@@ -261,8 +343,10 @@ $studentScore = getStudentScore($normativesTest);
                 </thead>
                 <tbody>
                 <?
+                $countVisits = 0;
                 foreach ($lessonsParticipation as $lessonParticipation) {
-                    if ($lessonParticipation->status == 1) {?>
+                    if ($lessonParticipation->status == 1) {
+                        $countVisits++; ?>
                     <tr>
                         <td>
                             <? echo date("d.m.Y", strtotime(R::load('lesson', $lessonParticipation->id_lesson)->date)); ?>
@@ -287,6 +371,13 @@ $studentScore = getStudentScore($normativesTest);
                 <? }
                 } ?>
                 </tbody>
+                <tfoot class="full-width">
+                <tr>
+                    <th colspan="12">
+                        <div class="ui orange label"><i class="list icon"></i> <? echo $countVisits; ?> </div>
+                    </th>
+                </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -450,6 +541,15 @@ $studentScore = getStudentScore($normativesTest);
 
     function openModalWindowNormativeData() {
         $('#modalNormativeData')
+            .modal({
+                inverted: true
+            })
+            .modal('show')
+        ;
+    }
+
+    function openModalWindowGuide() {
+        $('#modalGuide')
             .modal({
                 inverted: true
             })

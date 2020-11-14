@@ -218,8 +218,11 @@ if($allParameters != null) {
                          style="object-fit: cover; height: 200px; width: 200px;
                          border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                     <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
-                        <a href="/queries/exit.php" class="ui button"><i class="sign-out large icon"></i></a>
-                        <button class="ui button"  onclick="openModalWindowForAvatarReplace()" >
+                        <a href="/queries/exit.php" class="ui button hint" data-content="Выйти" data-position="top center">
+                            <i class="sign-out large icon"></i>
+                        </a>
+                        <button class="ui button hint" data-content="Сменить фотографию" data-position="top center"
+                                onclick="openModalWindowForAvatarReplace()" >
                             <i class="file large image icon"></i>
                         </button>
                     </div>
@@ -383,6 +386,10 @@ if($allParameters != null) {
                                     <i class="edit icon"></i>
                                     Отправить новые
                                 </div>
+                                <div class="ui right floated small teal labeled icon button" onclick="openModalWindowInfoFormulae()">
+                                    <i class="calculator icon"></i>
+                                    Формулы
+                                </div>
                             </th>
                         </tr>
                         </tfoot>
@@ -450,6 +457,85 @@ if($allParameters != null) {
     </div>
 </div>
 
+
+<!--
+*  Модальное окно с инфромацией о формулах физических расчетов
+-->
+<div class="ui modal horizontal flip" id="modalInfoFormulae">
+    <div class="header" style="color: #db2828">
+        Формулы расчета физических параметров
+    </div>
+    <div class="content">
+        <h4 class="ui header">
+            <i class="info blue icon"></i>
+            <div class="content">Что такое индекс Кетле?
+                <div class="sub header">
+                    Это индекс массы тела, с помощью которого можно определить степень ожирения
+                    и оценить возможный риск развития заболеваний, связанных с избыточной массой тела.
+                </div>
+            </div>
+        </h4>
+        <h4 class="ui header">
+            <i class="info blue icon"></i>
+            <div class="content">Как расчитать ортостатическую пробу?
+                <div class="sub header">
+                    Данный метод исследования и диагностирования состояния сердечно-сосудистой и нервной систем
+                    позволяет выявить нарушения в регуляции работы сердца.
+                    <br>
+                    Лежать спокойно в горизонтальном положении 5 минут, затем подсчитать ЧСС1 за минуту,
+                    после чего встать и вновь подсчитать ЧСС2 за минуту (ЧСС - частота сердечных сокращений).
+                    Затем находим разницу между двумя величинами ЧСС=(ЧСС2–ЧСС1).
+                </div>
+            </div>
+        </h4>
+        <h4 class="ui header">
+            <i class="info blue icon"></i>
+            <div class="content">Как расчитать пробу Руфье?
+                <div class="sub header">
+                    Предназначена для оценки работоспособности сердца при физической нагрузке.
+                    <br>
+                    После короткого отдыха в течение 5 минут в положении сидя подсчитать ЧСС за 10 секунд (Р0).
+                    Далее в течение 30 секунд выполнить 30 приседаний, после чего в положении сидя подсчитать ЧСС
+                    в течение первых (Р1) и последних (Р2) 10 с первой минуты восстановления.
+                    Полученные значения подставить в формулу: ПР = (6*(Р0+Р1+Р2) – 200)/10.
+                </div>
+            </div>
+        </h4>
+        <h4 class="ui header">
+            <i class="info blue icon"></i>
+            <div class="content">Как расчитать пробу Штанге?
+                <div class="sub header">
+                    Позволяет оценить функциональное состояние дыхательной и в определенной мере
+                    сердечно-сосудистой системы.
+                    <br>
+                    В положении сидя на стуле сделать спокойный вдох, затем глубокий выдох,
+                    затем глубокий вдох и задержать дыхание, зажав нос большим и указательным пальцами.
+                    По секундомеру (или секундной стрелке часов) фиксировать время задержки дыхания.
+                    Внести время в секундах.
+                </div>
+            </div>
+        </h4>
+        <h4 class="ui header">
+            <i class="info blue icon"></i>
+            <div class="content">Как расчитать теппинг-тест?
+                <div class="sub header">
+                    Методика экспресс-диагностики свойств нервной системы по психомоторным показателям
+                    <br>
+                    Взять лист бумаги А4, разделить карандашом на 4 равных прямоугольника. Сидя за столом
+                    по команде «старт» (родственника или друга) начинать с максимальной частотой ставить точки на бумаге
+                    в течение 10 секунд. После паузы в 20 секунд перенести руку на следующий квадрат,
+                    продолжая выполнять движения с максимальной частотой. После четырехкратного повторения
+                    по команде «стоп» работу прекратить. При подсчитывании точек, чтобы не ошибиться, карандаш вести
+                    от точки к точке, не отрывая его от бумаги. Внести сумму количества всех точек.
+                </div>
+            </div>
+        </h4>
+    </div>
+</div>
+
+
+
+
 <!--
 *  Модальное окно привязки к группе
 -->
@@ -492,7 +578,7 @@ if($allParameters != null) {
         </div>
 
     </div>
-    <div class="actions">
+    <div class="actions" id="actionReferenceGroup">
         <button class="ui right labeled icon green button
         <?if($student->group_study === null || $student->birth_date === null ) echo "disabled"?>"
         form="formReferenceGroup">
@@ -780,7 +866,8 @@ if($allParameters != null) {
             success: function () {
                 document.getElementById("msgSuccessReferenceGroup").style.display = "block";
                 document.getElementById("msgErrorReferenceGroup").style.display = "none";
-                document.getElementsByName("code_word")[0].value = "";
+                document.getElementById("actionReferenceGroup").hidden = true;
+                document.getElementById("formReferenceGroup").hidden = true;
                 setTimeout(function(){ location.reload() ;}, 1100);
             },
             error: function () {
@@ -869,12 +956,25 @@ if($allParameters != null) {
         })
     ;
 
+    $('.hint')
+        .popup()
+    ;
+
     $('.ui.dropdown')
         .dropdown()
     ;
 
     function openModalWindowForAvatarReplace() {
         $('#modalAvatarReplace')
+            .modal({
+                inverted: true
+            })
+            .modal('show')
+        ;
+    }
+
+    function openModalWindowInfoFormulae() {
+        $('#modalInfoFormulae')
             .modal({
                 inverted: true
             })

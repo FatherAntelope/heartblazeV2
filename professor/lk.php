@@ -40,13 +40,16 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                 <img class="ui image centered" src="/images/user2.jpg"
                      style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                 <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
-                    <a href="/queries/exit.php" class="ui button"><i class=" sign-out large icon"></i></a>
-                    <button class="ui button" onclick="openModalWindowForAvatarReplace()">
+                    <a href="/queries/exit.php" class="ui button hint" data-content="Выйти" data-position="top center">
+                        <i class=" sign-out large icon"></i>
+                    </a>
+                    <button class="ui button hint" data-content="Сменить фотографию" data-position="top center"
+                            onclick="openModalWindowForAvatarReplace()" >
                         <i class="file large image icon"></i>
                     </button>
                 </div>
             </div>
-            <? if ($professor->status == 0) { ?>
+            <? if ($professor->status == 0 || $professor->status == 2) { ?>
                 <div class="ui info message">
                     Для доступа к панели управления подтвердите личность преподавателя с помощью удостоверения
                 </div>
@@ -56,7 +59,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             * Кнопка для перехода в панель управления
             -->
             <a href="/professor/panel.php"
-               class="ui green button fluid <? if ($professor->status == 1/*потом сделать 0*/) echo "disabled" ?>">
+               class="ui green button fluid <? if ($professor->status == 0 || $professor->status == 2) echo "disabled" ?>">
                 Панель управления
             </a>
         </div>
@@ -105,8 +108,15 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     </tr>
                     <tr>
                         <td><b>Статус:</b></td>
-                        <td><a href="#" style="color: #db2828" onclick="openModalCheckProfessor()">Подтвердить</a> / <p
-                                    style="color: green">Подтвержден</p></td>
+                        <td>
+                            <? if($professor->status == 0) { ?>
+                                <a href="#" style="color: #db2828" onclick="openModalCheckProfessor()">Подтвердить</a>
+                            <? } elseif ($professor->status == 1) { ?>
+                                <p style="color: green">Подтвержден</p>
+                            <? } else { ?>
+                                <a href="#" style="color: saddlebrown" onclick="openModalCheckProfessor()">Ожидание</a>
+                            <? } ?>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -231,7 +241,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
         Подтвердить личность преподавателя
     </div>
     <div class="content">
-        <form class="ui form" <? if ($professor->job === null) echo "hidden" ?>>
+        <form class="ui form" <? if ($professor->job === null || $professor->status == 2) echo "hidden" ?>>
             <div class="required field">
                 <label>Ваше удостоверение</label>
                 <div class="ui left icon input">
@@ -249,6 +259,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             </div>
         <? } ?>
 
+        <? if($professor->status == 2) { ?>
         <div class="ui warning message">
             <div class="header">Вы уже отправили свои данные на проверку</div>
             <ul>
@@ -256,10 +267,11 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                 <li>Если администратор отклонит запрос, то ваш личный кабинет будет удален</li>
             </ul>
         </div>
+        <? } ?>
 
     </div>
-    <div class="actions">
-        <button class="ui right labeled icon green button <? if ($professor->job === null) echo "disabled" ?>">
+    <div class="actions" <? if ($professor->job === null || $professor->status == 2) echo "hidden" ?>>
+        <button class="ui right labeled icon green button">
             Отправить
             <i class="check icon"></i>
         </button>
@@ -357,6 +369,9 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
         .dropdown()
     ;
 
+    $('.hint')
+        .popup()
+    ;
 
     function openModalForReplacePersonalData() {
         $('#modalReplacePersonalData')
