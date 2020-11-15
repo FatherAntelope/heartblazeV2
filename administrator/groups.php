@@ -53,13 +53,13 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
                 R::load('professor', $group->id_professor)->id_person
             );
             ?>
-        <tr>
+        <tr id="<? echo  'gr_row_id-' . $group->id ;?>">
             <td><? echo $group->name; ?></td>
             <td><? echo R::findOne('specialization', 'id = ?', [$group->id_specialization])->name; ?></td>
             <td><? echo $professor->surname." ".$professor->name." ".$professor->patronymic; ?></td>
             <td>"720"</td>
             <td>
-                <button class="ui red icon button" onclick="openModalWindowForRemoveGroup()">
+                <button id="<? echo  'btn_gr_id-' . $group->id ;?>" class="ui red icon button" onclick="openModalWindowForRemoveGroup(this)">
                     <i class="icon trash" style="color: white"></i>
                 </button>
             </td>
@@ -88,7 +88,7 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="removeGroupAndHide()">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -96,8 +96,10 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
 </div>
 
 <script>
-    function openModalWindowForRemoveGroup() {
+    function openModalWindowForRemoveGroup(btn) {
+        var id = btn.id;
         $('#modalRemoveGroup')
+            .data('id', id)
             .modal({
                 inverted: true
             })
@@ -111,6 +113,25 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
             .modal('hide')
         ;
     }
+
+    function removeGroupAndHide() {
+        var id = $('#modalRemoveGroup').data('id').split('-')[1];
+        $.ajax({
+            url: "/queries/administrator/removeGroup.php",
+            method: "POST",
+            data: {'id': id},
+            success: function () {
+                hideModalWindowForRemoveGroup();
+                var rowId = 'gr_row_id-' + id;
+                $('#' + rowId).remove();
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
+    }
+
+
 </script>
 </body>
 </html>
