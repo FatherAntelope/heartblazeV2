@@ -88,14 +88,27 @@
         <tbody>
         <? foreach ($specializations as $specialization) {
             $countAllGroups += $countGroups = R::count('group', 'id_specialization = ?', [$specialization->id]);
-            //$countAllProfessors += $countProfessors = R::count('group', 'id_specialization = ?', [$specialization->id]);
-            //$countAllStudents += $countAllStudents = R::count('student', )
+            
+            // один препод может вести несколько групп, поэтому нужно брать уникальные
+            $groups = R::find('group', 'id_specialization = ?', [$specialization->id]);
+            $professorsIds = [];
+            $countStudents = 0;
+            foreach ($groups as $group) {
+                if (!in_array($group->idProfessor, $professorsIds)) {
+                    $professorsIds[] = $group->idProfessor;
+                }
+                // общее кол-во студентов, это сумма студентов во всех группах
+                $countStudents += R::count('student', 'id_group = ?', [$group->id]);
+            }
+            $countAllProfessors += $countProfessors = count($professorsIds);
+            $countAllStudents += $countStudents;
+            
             ?>
             <tr id="<? echo 'sp_row_id-' . $specialization->id; ?>">
                 <td><? echo $specialization->name; ?></td>
                 <td><? echo $countGroups; ?></td>
-                <td>"2"</td>
-                <td>"2"</td>
+                <td><? echo $countProfessors ;?></td>
+                <td><? echo $countStudents; ?></td>
                 <td>
                     <button id="<? echo 'sp_btn_id-' . $specialization->id; ?>" class="ui red icon button" onclick="openModalWindowForRemoveSpecialization(this)">
                         <i class="icon trash" style="color: white"></i>
