@@ -131,12 +131,12 @@
             </th>
             <th>
                 <div class="ui blue label">
-                    <i class="user icon"></i>"15"
+                    <i class="user icon"></i><? echo $countAllProfessors;?>
                 </div>
             </th>
             <th>
                 <div class="ui blue label">
-                    <i class="user icon"></i>"15"
+                    <i class="user icon"></i><? echo $countAllStudents;?>
                 </div>
             </th>
             <th></th>
