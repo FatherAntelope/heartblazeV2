@@ -14,13 +14,55 @@ $professor =  R::load('person', $professorInfo->id_person);
 $lessonsParticipation = R::findAll('lesson_participation', 'id_student = ?', [$student->id]);
 $normativesTest = R::findAll('normative_test','id_student = ?', [$student->id]);
 
-if($lessonsParticipation != null && $normativesTest != null) {
+if($lessonsParticipation != null) {
     $studentVisitsPercent = getStudentVisitsPercent($lessonsParticipation);
-    $studentScore = getStudentScore($normativesTest);
 } else {
     $studentVisitsPercent = 0;
+}
+
+if($normativesTest != null) {
+    $studentScore = getStudentScore($normativesTest);
+} else {
     $studentScore = 0;
 }
+
+
+$chartsLesson = array();
+$chartsTimeWarmup = array();
+$chartsTimeMain = array();
+$chartsTimeFinal = array();
+$chartsPulseBeforeWarmup = array();
+$chartsPulseAfterWarmup = array();
+$chartsPulseAfterMain = array();
+$chartsPulseAfterFinal = array();
+$chartsPulseAfterRest = array();
+$chartsPulseAfterDistance = array();
+
+foreach($lessonsParticipation as $parameter){
+
+    $dateParameter = R::load('lesson', $parameter->id_lesson);
+
+    $chartsDate[] = date("d.m.Y", strtotime(R::load('lesson', $parameter->id_lesson)->date));
+
+    $chartsTimeWarmup[] = intval($parameter->time_warmup);
+    $chartsTimeMain[] = intval($parameter->time_main);
+    $chartsTimeFinal[] = intval($parameter->time_final);
+
+    $chartsPulseBeforeWarmup[] = intval($parameter->pulse_before_warmup);
+    $chartsPulseAfterWarmup[] = intval($parameter->pulse_after_warmup);
+    $chartsPulseAfterMain[] = intval($parameter->pulse_after_main);
+    $chartsPulseAfterFinal[] = intval($parameter->pulse_after_final);
+    $chartsPulseAfterRest[] = intval($parameter->pulse_after_rest);
+
+    $chartsPulseAfterDistance[] = intval($parameter->distance);
+    //var_dump($chartsPulseAfterDistance);
+}
+$dataChartsForDrawTime = array_map(null, $chartsDate, $chartsTimeWarmup, $chartsTimeMain, $chartsTimeFinal);
+$dataChartsForDrawPulse = array_map(null, $chartsDate, $chartsPulseBeforeWarmup, $chartsPulseAfterWarmup, $chartsPulseAfterMain, $chartsPulseAfterFinal, $chartsPulseAfterRest);
+$dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDistance);
+
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -32,6 +74,7 @@ if($lessonsParticipation != null && $normativesTest != null) {
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css'>
     <link rel="stylesheet" href="/frameworks/semantic.min.css"/>
     <link rel="shortcut icon" href="/images/ugatu_logo.png" type="image/x-icon">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="/frameworks/jquery.min.js"></script>
     <script src="/frameworks/semantic.min.js"></script>
     <title>Панель управления</title>
@@ -186,6 +229,9 @@ if($lessonsParticipation != null && $normativesTest != null) {
 
     <div class="ui segment" id="blockCharts">
         <h3 class="ui horizontal divider header"><i class="chart area red icon"></i>Графики</h3>
+        <div id="chartTime"></div>
+        <div id="chartPulse"></div>
+        <div id="chartDist"></div>
     </div>
 </div>
 
@@ -591,4 +637,73 @@ if($lessonsParticipation != null && $normativesTest != null) {
         ;
     }
 </script>
+
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['line']});
+    google.charts.setOnLoadCallback(drawChartTime);
+    google.charts.setOnLoadCallback(drawChartPulse);
+    google.charts.setOnLoadCallback(drawChartDistance);
+
+    function drawChartTime() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Дата');
+        data.addColumn('number', 'Разминка');
+        data.addColumn('number', 'Основная часть');
+        data.addColumn('number', 'Заминка');
+
+        data.addRows(<? echo json_encode($dataChartsForDrawTime); ?>);
+
+        var options = {
+            chart: { title: 'Время тренировки.'},
+            height: 500,
+            legend: { position: 'none'}
+        };
+
+        var chart = new google.charts.Line(document.getElementById('chartTime'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+    function drawChartPulse() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Дата');
+        data.addColumn('number', 'До разминки');
+        data.addColumn('number', 'После разминки');
+        data.addColumn('number', 'После основной части');
+        data.addColumn('number', 'После заминки');
+        data.addColumn('number', 'После отдыха');
+
+        data.addRows(<? echo json_encode($dataChartsForDrawPulse); ?>);
+
+        var options = {
+            chart: { title: 'Пульс.'},
+            height: 500,
+            legend: { position: 'none'}
+        };
+
+        var chart = new google.charts.Line(document.getElementById('chartPulse'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+    function drawChartDistance() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Дата');
+        data.addColumn('number', 'Дистанция');
+
+        data.addRows(<? echo json_encode($dataChartsForDrawDistance); ?>);
+
+        var options = {
+            chart: { title: 'Дистанция.'},
+            height: 500,
+            legend: { position: 'none'}
+        };
+
+        var chart = new google.charts.Line(document.getElementById('chartDist'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+</script>
+
 </html>

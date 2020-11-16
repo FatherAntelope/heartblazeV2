@@ -87,6 +87,13 @@ function getStudentVisitsPercent($lessonsParticipation) {
     return $studentVisitsPercent;
 }
 
+function getImageSource($blob) {
+    $imgData = "\images\defaultuser.jpg";
+    if($blob !== null) {
+        $imgData = 'data:image/jpg;charset=utf-8;base64,'.base64_encode($blob);
+    }
+    return $imgData;
+}
 
 function getStudentScore($normativesTest) {
     $studentScore = 0;
