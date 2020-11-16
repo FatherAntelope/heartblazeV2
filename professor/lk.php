@@ -37,7 +37,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             <div class="ui segment inverted blue">
                 <div class="ui red left ribbon label"><?php echo $person->login; ?></div>
 
-                <img class="ui image centered" src="/images/user2.jpg"
+                <img class="ui image centered" src="<? echo getImageSource($person->photo);?>"
                      style="object-fit: cover; height: 200px; width: 200px; border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                 <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
                     <a href="/queries/exit.php" class="ui button hint" data-content="Выйти" data-position="top center">
@@ -241,14 +241,16 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
         Подтвердить личность преподавателя
     </div>
     <div class="content">
-        <form class="ui form" <? if ($professor->job === null || $professor->status == 2) echo "hidden" ?>>
+        <form class="ui form" id="formSendRequest"
+            <? if ($professor->job === null || $professor->status == 2) echo "hidden" ?> >
             <div class="required field">
                 <label>Ваше удостоверение</label>
                 <div class="ui left icon input">
-                    <input type="file" accept="image/*" required>
+                    <input type="file" accept="image/png,image/jpeg" name="professor_certificate" required>
                     <i class="image icon red"></i>
                 </div>
             </div>
+            <input type="hidden" name="professor_id" value="<? echo $professor->id; ?>">
         </form>
         <? if ($professor->job === null) { ?>
             <div class="ui error message">
@@ -268,10 +270,13 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             </ul>
         </div>
         <? } ?>
+        <div class="ui success message" id="msgSuccessSendRequest" style="display: none">
+            <div class="header">Ваши данные отправлены на проверку! Ожидайте результатов проверки</div>
+        </div>
 
     </div>
-    <div class="actions" <? if ($professor->job === null || $professor->status == 2) echo "hidden" ?>>
-        <button class="ui right labeled icon green button">
+    <div class="actions" <? if ($professor->job === null || $professor->status == 2) echo "hidden" ?> id="actionSendRequest">
+        <button class="ui right labeled icon green button" form="formSendRequest">
             Отправить
             <i class="check icon"></i>
         </button>
@@ -283,16 +288,16 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
         Смена фотографии
     </div>
     <div class="content">
-        <form class="ui form">
+        <form class="ui form" id="formReplacePersonalAvatar">
             <div class="ui left icon input fluid">
-                <input type="file" accept="image/png,image/jpeg" required>
+                <input type="file" accept="image/png,image/jpeg" name="person_photo" required>
                 <i class="image icon red"></i>
             </div>
             <input type="hidden" value="<? echo $person->id; ?>" name="person_id">
         </form>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" type="submit" form="formReplacePersonalAvatar">
             Сменить
             <i class="check icon"></i>
         </button>
@@ -317,10 +322,34 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
     $("#formReplacePersonalAvatar").submit(function () {
         $.ajax({
             url: "/queries/replaceAvatar.php",
+            contentType: false,
+            processData: false,
             method: "POST",
-            data: $(this).serialize(),
+            data: new FormData(this),
             success: function () {
                 location.reload();
+            },
+            error: function () {
+                //location.reload();
+            }
+        });
+        return false;
+    });
+
+    $("#formSendRequest").submit(function () {
+        $.ajax({
+            url: "/queries/professor/sendRequest.php",
+            contentType: false,
+            processData: false,
+            method: "POST",
+            data: new FormData(this),
+            success: function () {
+                document.getElementById("formSendRequest").hidden = true;
+                document.getElementById("actionSendRequest").hidden = true;
+                document.getElementById("msgSuccessSendRequest").style.display = "block";
+                setTimeout(function () {
+                    location.reload();
+                }, 1100);
             },
             error: function () {
                 location.reload();

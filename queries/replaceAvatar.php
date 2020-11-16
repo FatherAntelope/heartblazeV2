@@ -9,7 +9,6 @@ try {
         $changedData = str_replace($search, $replace, $imgData);
         $sql = sprintf("UPDATE person SET photo = '%s' WHERE person.id='%s'",$changedData, $_POST['person_id']);
         R::exec($sql);
-        R::store($person);
     }
 } catch (Exception $ex) {
     die(header("HTTP/1.1 401 Unauthorized "));

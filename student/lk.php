@@ -214,7 +214,7 @@ if($allParameters != null) {
                 <div class="ui segment inverted blue">
                     <div class="ui red left ribbon label"><?php echo $person->login; ?></div>
 
-                    <img class="ui image centered" src="/images/user2.jpg"
+                    <img class="ui image centered" src="<? echo getImageSource($person->photo);?>"
                          style="object-fit: cover; height: 200px; width: 200px;
                          border-radius: 54% 46% 47% 53% / 24% 55% 45% 76%;">
                     <div class="ui tiny icon buttons orange fluid" style="margin-top: 20px">
@@ -910,8 +910,10 @@ if($allParameters != null) {
     $("#formReplacePersonalAvatar").submit(function () {
         $.ajax({
             url: "/queries/replaceAvatar.php",
+            contentType: false,
+            processData: false,
             method: "POST",
-            data: $(this).serialize(),
+            data: new FormData(this),
             success: function () {
                 location.reload();
             },

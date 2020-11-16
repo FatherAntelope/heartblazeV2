@@ -26,42 +26,41 @@ if($normativesTest != null) {
     $studentScore = 0;
 }
 
+if($lessonsParticipation != null) {
+    $chartsLesson = array();
+    $chartsTimeWarmup = array();
+    $chartsTimeMain = array();
+    $chartsTimeFinal = array();
+    $chartsPulseBeforeWarmup = array();
+    $chartsPulseAfterWarmup = array();
+    $chartsPulseAfterMain = array();
+    $chartsPulseAfterFinal = array();
+    $chartsPulseAfterRest = array();
+    $chartsPulseAfterDistance = array();
 
-$chartsLesson = array();
-$chartsTimeWarmup = array();
-$chartsTimeMain = array();
-$chartsTimeFinal = array();
-$chartsPulseBeforeWarmup = array();
-$chartsPulseAfterWarmup = array();
-$chartsPulseAfterMain = array();
-$chartsPulseAfterFinal = array();
-$chartsPulseAfterRest = array();
-$chartsPulseAfterDistance = array();
+    foreach($lessonsParticipation as $parameter){
 
-foreach($lessonsParticipation as $parameter){
+        $dateParameter = R::load('lesson', $parameter->id_lesson);
 
-    $dateParameter = R::load('lesson', $parameter->id_lesson);
+        $chartsDate[] = date("d.m.Y", strtotime(R::load('lesson', $parameter->id_lesson)->date));
 
-    $chartsDate[] = date("d.m.Y", strtotime(R::load('lesson', $parameter->id_lesson)->date));
+        $chartsTimeWarmup[] = intval($parameter->time_warmup);
+        $chartsTimeMain[] = intval($parameter->time_main);
+        $chartsTimeFinal[] = intval($parameter->time_final);
 
-    $chartsTimeWarmup[] = intval($parameter->time_warmup);
-    $chartsTimeMain[] = intval($parameter->time_main);
-    $chartsTimeFinal[] = intval($parameter->time_final);
+        $chartsPulseBeforeWarmup[] = intval($parameter->pulse_before_warmup);
+        $chartsPulseAfterWarmup[] = intval($parameter->pulse_after_warmup);
+        $chartsPulseAfterMain[] = intval($parameter->pulse_after_main);
+        $chartsPulseAfterFinal[] = intval($parameter->pulse_after_final);
+        $chartsPulseAfterRest[] = intval($parameter->pulse_after_rest);
 
-    $chartsPulseBeforeWarmup[] = intval($parameter->pulse_before_warmup);
-    $chartsPulseAfterWarmup[] = intval($parameter->pulse_after_warmup);
-    $chartsPulseAfterMain[] = intval($parameter->pulse_after_main);
-    $chartsPulseAfterFinal[] = intval($parameter->pulse_after_final);
-    $chartsPulseAfterRest[] = intval($parameter->pulse_after_rest);
-
-    $chartsPulseAfterDistance[] = intval($parameter->distance);
-    //var_dump($chartsPulseAfterDistance);
+        $chartsPulseAfterDistance[] = intval($parameter->distance);
+        //var_dump($chartsPulseAfterDistance);
+    }
+    $dataChartsForDrawTime = array_map(null, $chartsDate, $chartsTimeWarmup, $chartsTimeMain, $chartsTimeFinal);
+    $dataChartsForDrawPulse = array_map(null, $chartsDate, $chartsPulseBeforeWarmup, $chartsPulseAfterWarmup, $chartsPulseAfterMain, $chartsPulseAfterFinal, $chartsPulseAfterRest);
+    $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDistance);
 }
-$dataChartsForDrawTime = array_map(null, $chartsDate, $chartsTimeWarmup, $chartsTimeMain, $chartsTimeFinal);
-$dataChartsForDrawPulse = array_map(null, $chartsDate, $chartsPulseBeforeWarmup, $chartsPulseAfterWarmup, $chartsPulseAfterMain, $chartsPulseAfterFinal, $chartsPulseAfterRest);
-$dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDistance);
-
-
 
 ?>
 <!doctype html>
@@ -115,7 +114,7 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
         <div class="ui comments">
             <div class="comment">
                 <a class="avatar">
-                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                    <img src="<? echo getImageSource( $professor->photo); ?>" style="object-fit: cover; height: 35px; width: 35px;">
                 </a>
                 <div class="content">
                     <label class="author" style="color: #db2828">

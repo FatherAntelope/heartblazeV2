@@ -82,7 +82,7 @@ $arrSumStudentsVisits = array();
                     ?>
                     <div class="comment" id="<?echo 'row_student_id-' . $student->id; ?>">
                         <a class="avatar">
-                            <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                            <img src="<? echo getImageSource($personStudent->photo); ?>" style="object-fit: cover; height: 35px; width: 35px;">
                         </a>
                         <div class="content">
                             <label class="author" style="color: #db2828"><? echo $personStudent->surname . " " . $personStudent->name . " " . $personStudent->patronymic; ?></label>
