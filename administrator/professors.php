@@ -1,6 +1,8 @@
 <?php
 require $_SERVER['DOCUMENT_ROOT']."/queries/functions.php";
-$person = getDataIsAuthAndEmptyPerson('2');
+require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
+
+$professors = R::findAll('professor', 'ORDER BY id ASC');
 
 ?>
 <!doctype html>
@@ -49,70 +51,61 @@ $person = getDataIsAuthAndEmptyPerson('2');
         </tr>
         </thead>
         <tbody>
-        <tr class="positive">
-            <td>
-                <div class="avatar circle">
-                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
-                </div>
-            </td>
-            <td>"Фамилия Имя Отчество"</td>
-            <td>"mail@mail.ru"</td>
-            <td>"1"</td>
-            <td>"2"</td>
-            <td>
-                Подтвержден
-            </td>
-            <td>
-                <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
-                    <i class="icon user close" style="color: white"></i>
-                </button>
-            </td>
-        </tr>
-        <tr class="negative">
-            <td>
-                <div class="avatar circle">
-                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
-                </div>
-            </td>
-            <td>"Фамилия Имя Отчество"</td>
-            <td>"mail@mail.ru"</td>
-            <td>-</td>
-            <td>-</td>
-            <td>
-                <a href="#" onclick="openModalWindowForCheckProfessor()">Ожидает</a>
 
-            </td>
-            <td>
-                <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
-                    <i class="icon user close" style="color: white"></i>
-                </button>
-            </td>
-        </tr>
-        <tr class="warning">
-            <td>
-                <div class="avatar circle">
-                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
-                </div>
-            </td>
-            <td>"Фамилия Имя Отчество"</td>
-            <td>"mail@mail.ru"</td>
-            <td>-</td>
-            <td>-</td>
-            <td>
-                Не подтвержден
-            </td>
-            <td>
-                <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
-                    <i class="icon user close" style="color: white"></i>
-                </button>
-            </td>
-        </tr>
+        <? foreach ($professors as $professor) {?>
+            <? 
+                $person = R::load('person', $professor->idPerson);
+                $groups = R::find('group', 'id_professor = ?', [$professor->id]);
+                
+                $studentsCount = 0;
+                foreach ($groups as $group) {
+                    $studentsCount += R::count('student', 'id_group = ?', [$group->id]);
+                }
+
+                $status = $professor->status;
+                // 2 - negative => ожидает
+                // 0 - warning => не под
+                // 1 - positive => под
+                $cssClass = "negative";
+                if ($status == 1) {
+                    $cssClass = "positive";
+                } 
+                if ($status == 0) {
+                    $cssClass = "warning";
+                }
+            ?>
+            <tr class="<? echo $cssClass; ?>" id="<? echo 'tr_pr_id-' . $professor->id; ?>">
+                <td>
+                    <div class="avatar circle">
+                        <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                    </div>
+                </td>
+                <td><? echo $person->surname . ' ' . $person->name . ' ' . $person->patronymic; ?></td>
+                <td><? echo $person->email; ?></td>
+                <td><? echo count($groups); ?></td>
+                <td><? echo $studentsCount; ?></td>
+                <td id="<? echo 'td_pr_id-' . $professor->id; ?>">
+                    <?if ($cssClass == "positive") {?>
+                        Подтвержден
+                    <?} elseif ($cssClass == "warning") {?>
+                        Не подтвержден
+                    <?} else {?>
+                        <a href="#" id="<? echo 'link_pr_id-' . $professor->id; ?>" onclick="openModalWindowForCheckProfessor(this)">Ожидает</a>
+                    <?}?>
+                </td>
+                <td>
+                    <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
+                        <i class="icon user close" style="color: white"></i>
+                    </button>
+                </td>
+            </tr>
+        <?}?>
         </tbody>
         <tfoot>
         <tr>
             <th colspan="7">
                 <div class="ui teal label">
-                    <i class="list icon"></i>"22"
+                    <i class="list icon"></i><? echo count($professors); ?>
                 </div>
             </th>
         </tr>
@@ -148,14 +141,15 @@ $person = getDataIsAuthAndEmptyPerson('2');
                 <li>Убедитесь, что удостоверение не было загружено с интернета</li>
             </ul>
         </div>
-        <img class="ui fluid image" src="/administrator/professors_id/example1.jpg">
+        <!-- ./queries/administator/uploadCertificate.php -->
+        <img id="certificate-img" class="ui fluid image" src="">
     </div>
     <div class="actions">
-        <button class="ui right labeled icon red button">
+        <button class="ui right labeled icon red button" onclick="hideModalWindowForCheckProfessor()">
             Отклонить
             <i class="close circle icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="confirm()">
             Подтвердить
             <i class="check circle icon"></i>
         </button>
@@ -179,14 +173,52 @@ $person = getDataIsAuthAndEmptyPerson('2');
         ;
     }
 
-    function openModalWindowForCheckProfessor() {
+    function openModalWindowForCheckProfessor(a) {
+        var id = a.id.split("-")[1];
+        $.ajax({
+            url: "/queries/administrator/uploadCertificate.php",
+            method: "POST",
+            data: {'id': id},
+            success: function (data) {
+                $('#certificate-img').attr('src', 'data:image/jpeg;charset=utf-8;base64,' + data);
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
         $('#modalCheckProfessor')
             .modal({
                 inverted: true
             })
+            .data('id', id)
             .modal('show')
         ;
     }
+
+    function hideModalWindowForCheckProfessor() {
+        $('#modalCheckProfessor')
+            .modal('hide')
+        ;
+    }
+
+
+    function confirm() {
+        var id = $('#modalCheckProfessor').data('id');
+        $.ajax({
+            url: "/queries/administrator/confirmCertificate.php",
+            method: "POST",
+            data: {'id': id},
+            success: function (data) {
+                $("#tr_pr_id-" + id).attr('class', 'positive');
+                $("#td_pr_id-" + id).text('Подтвержден');
+                hideModalWindowForCheckProfessor();
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
