@@ -61,7 +61,7 @@ $students = R::findAll('student');
         <tr id="<? echo 'row_student_id-' . $student->id; ?>">
             <td>
                 <div class="avatar circle">
-                    <img src="/images/user2.jpg" style="object-fit: cover; height: 35px; width: 35px;">
+                    <img src="<? echo 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($personStudent->photo); ?>" alt="no photo" style="object-fit: cover; height: 35px; width: 35px;">
                 </div>
             </td>
             <td><? echo $personStudent->surname." ".$personStudent->name." ".$personStudent->patronymic; ?></td>
