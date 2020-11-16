@@ -57,7 +57,7 @@ $groups = R::findAll('group', 'ORDER BY name ASC');
             <td><? echo $group->name; ?></td>
             <td><? echo R::findOne('specialization', 'id = ?', [$group->id_specialization])->name; ?></td>
             <td><? echo $professor->surname." ".$professor->name." ".$professor->patronymic; ?></td>
-            <td>"720"</td>
+            <td><? echo R::count('student', 'id_group = ?', [$group->id]); ?></td>
             <td>
                 <button id="<? echo  'btn_gr_id-' . $group->id ;?>" class="ui red icon button" onclick="openModalWindowForRemoveGroup(this)">
                     <i class="icon trash" style="color: white"></i>
