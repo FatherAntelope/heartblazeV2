@@ -77,7 +77,7 @@ $professors = R::findAll('professor', 'ORDER BY id ASC');
             <tr class="<? echo $cssClass; ?>" id="<? echo 'tr_pr_id-' . $professor->id; ?>">
                 <td>
                     <div class="avatar circle">
-                        <img src="<? echo 'data:image/jpeg;charset=utf-8;base64,' . base64_encode($person->photo); ?>" alt="no photo" style="object-fit: cover; height: 35px; width: 35px;">
+                        <img src="<? echo getImageSource($person->photo); ?>" alt="no photo" style="object-fit: cover; height: 35px; width: 35px;">
                     </div>
                 </td>
                 <td><? echo $person->surname . ' ' . $person->name . ' ' . $person->patronymic; ?></td>
