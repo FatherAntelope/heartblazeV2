@@ -189,7 +189,7 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
                 </tr>
             <? } elseif ($lessonParticipation->status == 0 || $lessonParticipation->status == 2) { ?>
                 <tr class="warning">
-                    <td><? echo date("d.m.Y", strtotime($dateLesson)); ?></td>
+                    <td id="<? echo 'td_date_lesson_participation_id-' . $lessonParticipation->idLesson; ?>"><? echo date("d.m.Y", strtotime($dateLesson)); ?></td>
                     <td><? if($isNormative) echo "С нормативом"; else echo "Обычное"; ?></td>
                     <td>
                         <? if($lessonParticipation->status == 2) { ?>
@@ -199,7 +199,7 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
                         <? } ?>
                     </td>
                     <td>
-                        <button class="ui blue icon button" onclick="openModalWindowForSendParticipationData()">
+                        <button id="<? echo 'btn_lesson_participation_id-' . $lessonParticipation->idLesson; ?>" class="ui blue icon button" onclick="openModalWindowForSendParticipationData(this)">
                             <i class="icon edit"></i>
                         </button>
                     </td>
@@ -450,39 +450,39 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
 </div>
 
 <div class="ui modal horizontal flip large" id="modalSendParticipationData">
-    <h1 class="ui header" style="color: #db2828">Отправка данных занятия за "Дата"</h1>
+    <h1 id="headerModalSendParticipationData" class="ui header" style="color: #db2828">Отправка данных занятия за "Дата"</h1>
     <div class="content">
-        <form class="ui form">
+        <form id="lesson-data" class="ui form">
                 <div class="required field">
                     <label>Пульс</label>
                     <div class="five fields">
                         <div class="field">
                             <div class="ui left icon input">
-                                <input type="number" placeholder="До разминки" required>
+                                <input type="number" placeholder="До разминки" name="pulse-before-warmup" required>
                                 <i class="heart icon red"></i>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
-                                <input type="number" placeholder="После разминки" required>
+                                <input type="number" placeholder="После разминки" name="pulse-after-warmup" required>
                                 <i class="heart icon red"></i>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
-                                <input type="number" placeholder="После основной" required>
+                                <input type="number" placeholder="После основной" name="pulse-after-main" required>
                                 <i class="heart icon red"></i>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
-                                <input type="number" placeholder="После заминки" required>
+                                <input type="number" placeholder="После заминки" name="pulse-after-final" required>
                                 <i class="heart icon red"></i>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
-                                <input type="number" placeholder="Ч/з 10 мин." required>
+                                <input type="number" placeholder="Ч/з 10 мин." name="pulse-after-rest" required>
                                 <i class="heart icon red"></i>
                             </div>
                         </div>
@@ -494,25 +494,25 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
                 <div class="four fields">
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="number" placeholder="Общее" required>
+                            <input type="number" placeholder="Общее" name="time-overall" required>
                             <i class="clock icon red"></i>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="number" placeholder="Основное" required>
+                            <input type="number" placeholder="Основное" name="time-main" required>
                             <i class="clock icon red"></i>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="number" placeholder="Разминка" required>
+                            <input type="number" placeholder="Разминка" name="time-warmup" required>
                             <i class="clock icon red"></i>
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="number" placeholder="Заминка" required>
+                            <input type="number" placeholder="Заминка" name="time-final" required>
                             <i class="clock icon red"></i>
                         </div>
                     </div>
@@ -523,40 +523,30 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
                 <div class="required field three wide">
                     <label>Дистанция</label>
                     <div class="ui left icon input">
-                        <input type="number" placeholder="В метрах" required>
+                        <input type="number" placeholder="В метрах" name="distance" required>
                         <i class="road icon red"></i>
                     </div>
                 </div>
                 <div class="required field thirteen wide">
                     <label>Ссылка на данные с трекера</label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Ссылка на Pacer или другое приложение" required>
+                        <input type="text" placeholder="Ссылка на Pacer или другое приложение" name="tracker-link" required>
                         <i class="linkify icon red"></i>
                     </div>
                 </div>
             </div>
+            
+            <input type="hidden" id="hidden-lesson-id" name="lesson-id">
+            <input type="hidden" id="hidden-student-id" name="student-id">
 
             <!--Если есть нормативы. Вместе с разделителем!-->
-            <div class="ui divider"></div>
-            <div class="required field three wide">
-                <label>"Норматив1"</label>
-                <div class="ui left icon input">
-                    <input type="number" placeholder="Значение" required>
-                    <i class="info icon red"></i>
-                </div>
-            </div>
-            <div class="required field three wide">
-                <label>"Норматив2"</label>
-                <div class="ui left icon input">
-                    <input type="number" placeholder="Значение" required>
-                    <i class="info icon red"></i>
-                </div>
-            </div>
+            <div id="norm-divider" class="ui divider"></div>
 
         </form>
     </div>
     <div class="actions">
-        <button class="ui right labeled icon green button">
+                
+        <button type="submit" form="lesson-data" class="ui right labeled icon green button">
             Отправить
             <i class="check icon"></i>
         </button>
@@ -579,6 +569,24 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
         });
         return false;
     });
+
+    $("#lesson-data").submit(function () {
+        var d = $('#lesson-data');
+        //console.log(d.html());
+        //console.log(d.serialize());
+        $.ajax({
+                url: "/queries/student/sendLessonParticipation.php",
+                method: "POST",
+                data: d.serialize(),
+                success: function () {
+                    console.log('susccess');
+                },
+                error: function () {
+                 }
+        });
+    });
+
+
 </script>
 
 
@@ -612,13 +620,51 @@ $dataChartsForDrawDistance = array_map(null, $chartsDate, $chartsPulseAfterDista
         ;
     }
 
-    function openModalWindowForSendParticipationData() {
+    var student_id = <? echo $student->id; ?>;
+    var id_lesson;
+
+    function openModalWindowForSendParticipationData(btn) {
+        id_lesson = btn.id.split('-')[1];
+        fillForm(id_lesson);  
         $('#modalSendParticipationData')
             .modal({
                 inverted: true
             })
             .modal('show')
         ;
+    
+    }
+
+    function fillForm(id_lesson) {
+        var date = $('#td_date_lesson_participation_id-' + id_lesson).text();
+        $('#headerModalSendParticipationData').text('Отправка данных занятия за ' + date);
+        $('.norm-fields').remove();
+        $('#hidden-lesson-id').attr('value', id_lesson);
+        $('#hidden-student-id').attr('value', student_id);
+        
+        $.ajax({
+            url: "/queries/student/getNormatives.php",
+            method: "POST",
+            data: {'id': id_lesson},
+            success: function (json) {
+                var normatives = JSON.parse(json); 
+                var normDivider = $('#norm-divider');
+                for (const [key, value] of Object.entries(normatives)) {
+                  normDivider.after(`
+                    <div class="required field three wide norm-fields">
+                        <label>${value['text']}</label>
+                        <div class="ui left icon input">
+                            <input type="number" placeholder="Значение" name="norm-${key}" required>
+                            <i class="info icon red"></i>
+                        </div>
+                    </div>
+                  `);
+                }
+
+            },
+            error: function () {
+            }
+        });
     }
 
     function openModalWindowForGroupLeaving() {
