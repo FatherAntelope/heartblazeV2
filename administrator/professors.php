@@ -94,7 +94,7 @@ $professors = R::findAll('professor', 'ORDER BY id ASC');
                     <?}?>
                 </td>
                 <td>
-                    <button class="ui red icon button" onclick="openModalWindowForRemoveProfessor()">
+                    <button id="<? echo 'btn_pr_id-' . $professor->id; ?>" class="ui red icon button" onclick="openModalWindowForRemoveProfessor(this)">
                         <i class="icon user close" style="color: white"></i>
                     </button>
                 </td>
@@ -122,7 +122,7 @@ $professors = R::findAll('professor', 'ORDER BY id ASC');
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="removeProfessor()">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -157,8 +157,10 @@ $professors = R::findAll('professor', 'ORDER BY id ASC');
 </div>
 
 <script>
-    function openModalWindowForRemoveProfessor() {
+    function openModalWindowForRemoveProfessor(btn) {
+        var id = btn.id.split('-')[1];
         $('#modalRemoveProfessor')
+            .data('id', id)
             .modal({
                 inverted: true
             })
@@ -171,6 +173,22 @@ $professors = R::findAll('professor', 'ORDER BY id ASC');
         $('#modalRemoveProfessor')
             .modal('hide')
         ;
+    }
+
+    function removeProfessor() {
+        var id = $('#modalRemoveProfessor').data('id');
+        $.ajax({
+            url: "/queries/administrator/removeProfessor.php",
+            method: "POST",
+            data: {'id': id},
+            success: function (data) {
+                $("#tr_pr_id-" + id).remove();                
+                hideModalWindowForRemoveProfessor();
+            },
+            error: function () {
+                console.log('ERROR');
+            }
+        });
     }
 
     function openModalWindowForCheckProfessor(a) {
@@ -200,7 +218,6 @@ $professors = R::findAll('professor', 'ORDER BY id ASC');
             .modal('hide')
         ;
     }
-
 
     function confirm() {
         var id = $('#modalCheckProfessor').data('id');
