@@ -7,9 +7,6 @@ $lesson_participation = R::findOne(
     [$_POST['lesson-id'], $_POST['student-id']]
 );
 
-//ChromePhp::log($_POST);
-//ChromePhp::log($lesson_participation);
-
 // set pulse
 $lesson_participation->pulseBeforeWarmup = $_POST['pulse-before-warmup'];
 $lesson_participation->pulseAfterWarmup = $_POST['pulse-after-warmup'];
@@ -40,8 +37,8 @@ foreach ($normatives as $normative) {
         'normative_test', ' id_student = ? AND id_normative = ? ',
         [$_POST['student-id'], $normative->id]
     );
-    $score = $_POST['norm-' . $normative->id];
-    $normative_test->score = $score;
+    $grade = $_POST['norm-' . $normative->id];
+    $normative_test->grade = $grade;
     R::store($normative_test);
 }
 
