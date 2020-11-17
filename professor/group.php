@@ -130,7 +130,7 @@ $arrSumStudentsVisits = array();
         </thead>
         <tbody class="center aligned">
         <? foreach ($lessons as $lesson) { ?>
-        <tr class="<? if($lesson->checked == false) echo "warning"; else echo "success";?>">
+        <tr id="<? echo 'tr_lesson_id-' . $lesson->id; ?>" class="<? if($lesson->checked == false) echo "warning"; else echo "success";?>">
             <td><? echo date("d.m.Y", strtotime($lesson->date)); ?></td>
             <td>
                 <? if($lesson->checked == false) {?>
@@ -143,7 +143,7 @@ $arrSumStudentsVisits = array();
             </td>
 
             <td>
-                <button class="ui red icon button" onclick="openModalWindowForRemoveLesson()">
+                <button id="<? echo 'btn_lessond_id-' . $lesson->id; ?>" class="ui red icon button" onclick="openModalWindowForRemoveLesson(this)">
                     <i class="icon trash" style="color: white"></i>
                 </button>
             </td>
@@ -185,7 +185,7 @@ $arrSumStudentsVisits = array();
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="removeLesson()">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -634,8 +634,10 @@ $arrSumStudentsVisits = array();
         });
     }
 
-    function openModalWindowForRemoveLesson() {
+    function openModalWindowForRemoveLesson(btn) {
+        var id = btn.id.split('-')[1];
         $('#modalRemoveLesson')
+            .data('id', id)
             .modal({
                 inverted: true
             })
@@ -648,6 +650,22 @@ $arrSumStudentsVisits = array();
         $('#modalRemoveLesson')
             .modal('hide')
         ;
+    }
+
+    function removeLesson() {
+        var id = $('#modalRemoveLesson').data('id');
+        $.ajax({
+            url: "/queries/professor/removeLesson.php",
+            method: "POST",
+            data: {'id': id},
+            success: function () {
+                $('#tr_lesson_id-' + id).remove();
+                hideModalWindowForRemoveLesson();
+            },
+            error: function () {
+                
+            }
+        });
     }
 
 
