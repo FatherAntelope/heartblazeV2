@@ -418,7 +418,7 @@ $arrSumStudentsVisits = array();
                 <tbody>
                 <?
                 foreach ($lessonsParticipation as $lessonParticipation) {
-                    if ($lessonParticipation->status == 1) {
+                    if ($lessonParticipation->status != 0) {
                         $personStudent = R::load('person', $students[$lessonParticipation->id_student]->id_person);?>
                 <tr>
                     <td><? echo date("d.m.Y", strtotime($lessons[$lessonParticipation->id_lesson]->date)); ?></td>
@@ -460,7 +460,7 @@ $arrSumStudentsVisits = array();
             <?
             $countNormTest = 0;
             foreach ($normativesTest as $normativeTest) {
-                if($normativeTest->score !== null) {
+                if($normativeTest->grade !== null) {
                     $personStudent = R::load('person', $students[$normativeTest->id_student]->id_person);?>
             <tr>
                 <td>
