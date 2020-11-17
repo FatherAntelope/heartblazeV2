@@ -8,8 +8,8 @@
     <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queries/professor/sendRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/professor/sendRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queries/replaceAvatar.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/replaceAvatar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/student/sendLessonParticipation.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/student/sendLessonParticipation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/panel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +84,9 @@
       <workItem from="1605289304906" duration="11467000" />
       <workItem from="1605349958106" duration="5000" />
       <workItem from="1605352884638" duration="31739000" />
-      <workItem from="1605523798464" duration="9529000" />
+      <workItem from="1605523798464" duration="10436000" />
+      <workItem from="1605595200165" duration="1333000" />
+      <workItem from="1605609192405" duration="974000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -345,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605533387873</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Убран баг с прогрузкой БД в отправках изображений">
+      <created>1605533517505</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1605533517505</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -432,7 +441,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Куки теперь хранит ID" />
     <MESSAGE value="Добавлена функция проверки авторизации" />
     <MESSAGE value="freeze перемещен" />
     <MESSAGE value="User сменен на Person&#10;Добавлено редактирование личных данных у студента и преподавателя&#10;Добавлен файл с функциями" />
@@ -457,7 +465,8 @@
     <MESSAGE value="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля." />
     <MESSAGE value="Добавлены графики, и функция декодировки изображения" />
     <MESSAGE value="Добавлены смены фотографий, отображение фотографий из БД и отправка заявок на подтверждение преподавателем" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлены смены фотографий, отображение фотографий из БД и отправка заявок на подтверждение преподавателем" />
+    <MESSAGE value="Убран баг с прогрузкой БД в отправках изображений" />
+    <option name="LAST_COMMIT_MESSAGE" value="Убран баг с прогрузкой БД в отправках изображений" />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -484,10 +493,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604782508080" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1605533386326">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1605533516422">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605533386326" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605533516422" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1605391375157">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -540,10 +549,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1605391375157" />
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605529349424">
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605609201405">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1605529349424" />
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1605609201405" />
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration" timestamp="1604300926764">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

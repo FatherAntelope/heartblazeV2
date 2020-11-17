@@ -1,7 +1,6 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/db/db.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/frameworks/ChromePhp.php";
 
 $lesson_participation = R::findOne(
     'lesson_participation', ' id_lesson = ? AND id_student = ? ', 

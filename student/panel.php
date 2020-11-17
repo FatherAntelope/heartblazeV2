@@ -20,7 +20,7 @@ if($lessonsParticipation != null) {
     $studentVisitsPercent = 0;
 }
 
-if($normativesTest != null) {
+if($normativesTest != null && $lessonsParticipation != null) {
     $studentScore = getStudentScore($normativesTest);
 } else {
     $studentScore = 0;
@@ -309,6 +309,15 @@ if($lessonsParticipation != null) {
             </div>
         </h2>
         <h2 class="ui header">
+            <i class="icon spinner loading" style="color: #573a08"></i>
+            <div class="content">
+                <div class="sub header">
+                    Занятие началось, вы отправили данные занятия, но преподаватель пока не проверил их.
+                    Ожидайте проверки.
+                </div>
+            </div>
+        </h2>
+        <h2 class="ui header">
             <i class="icon close" style="color: #9f3a38"></i>
             <div class="content">
                 <div class="sub header">
@@ -578,7 +587,7 @@ if($lessonsParticipation != null) {
                 method: "POST",
                 data: d.serialize(),
                 success: function () {
-                    console.log('susccess');
+                    location.href = "/student/panel.php";
                 },
                 error: function () {
                  }
