@@ -85,7 +85,7 @@ $arrSumStudentsVisits = array();
                             <img src="<? echo getImageSource($personStudent->photo); ?>" style="object-fit: cover; height: 35px; width: 35px;">
                         </a>
                         <div class="content">
-                            <label class="author" style="color: #db2828"><? echo $personStudent->surname . " " . $personStudent->name . " " . $personStudent->patronymic; ?></label>
+                            <label id="<? echo 'label_student_fio-' . $student->id; ?>" class="author" style="color: #db2828"><? echo $personStudent->surname . " " . $personStudent->name . " " . $personStudent->patronymic; ?></label>
                             <div class="metadata">
                                 <!--Посещаемость-->
                                 <div class="date"><i class="calendar outline blue icon"></i>
@@ -99,7 +99,7 @@ $arrSumStudentsVisits = array();
                             <div class="text">Учится в <? echo $student->group_study; ?></div>
                             <div class="actions">
                                 <a class="hide" id="<?echo 'link_student_id-' . $student->id; ?>" onclick="openModalWindowForStudentOfGroupRemove(this)"><i class="user close red icon"></i>Удалить студента</a>
-                                <a onclick="openModalWindowStudentCard()"><i class="id card orange icon"></i> Показать физические параметры </a>
+                                <a id="<? echo 'a_student_id-' . $student->id; ?>" onclick="openModalWindowStudentCard(this)"><i class="id card orange icon"></i> Показать физические параметры </a>
                             </div>
                         </div>
                     </div>
@@ -258,7 +258,7 @@ $arrSumStudentsVisits = array();
 </div>
 
 <div class="ui horizontal flip modal" id="modalStudentCard">
-    <h1 class="ui header" style="color: #db2828">
+    <h1 id="h1_student_fio" class="ui header" style="color: #db2828">
         "Фамилия И. О."
     </h1>
     <div class="content">
@@ -266,51 +266,55 @@ $arrSumStudentsVisits = array();
             <tbody class="center aligned">
             <tr>
                 <td><b>Вес:</b></td>
-                <td>"10"</td>
+                <td id="student-card-td-weight">"10"</td>
             </tr>
             <tr>
                 <td><b>Рост:</b></td>
-                <td>"100"</td>
+                <td id="student-card-td-height">"100"</td>
             </tr>
             <tr>
                 <td><b>Индекс Кетле:</b></td>
-                <td>"Истощение/Пониженный/Нормальный/Повышенный/Ожирение"</td>
+                <td id="student-card-td-quetelet">"Истощение/Пониженный/Нормальный/Повышенный/Ожирение"</td>
             </tr>
             <tr>
                 <td><b>Ортостатическая проба:</b></td>
-                <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                <td id="student-card-td-orthostatic">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
             </tr>
             <tr>
                 <td><b>Индекс Руффье:</b></td>
-                <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                <td id="student-card-td-ruffier">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
             </tr>
             <tr>
                 <td><b>Проба Штанге:</b></td>
-                <td>"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                <td id="student-card-td-stange">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+            </tr>
+            <tr>
+                <td><b>Теппинг тест:</b></td>
+                <td id="student-card-td-tapping_test">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
             </tr>
             <tr>
                 <td><b>Жалобы на здоровье:</b></td>
-                <td>"Отсутствуют/Перечисление"</td>
+                <td id="student-card-td-complaints">"Отсутствуют/Перечисление"</td>
             </tr>
             <tr>
                 <td><b>Самочувствие:</b></td>
-                <td>"Хорошее/Удовлетворительное/Плохое"</td>
+                <td id="student-card-td-state_of_health">"Хорошее/Удовлетворительное/Плохое"</td>
             </tr>
             <tr>
                 <td><b>Настроение:</b></td>
-                <td>"Хорошее/Удовлетворительное/Плохое"</td>
+                <td id="student-card-td-mood">"Хорошее/Удовлетворительное/Плохое"</td>
             </tr>
             <tr>
                 <td><b>Сон:</b></td>
-                <td>"Хороший/Плохой/Бессонница"</td>
+                <td id="student-card-td-sleep">"Хороший/Плохой/Бессонница"</td>
             </tr>
             <tr>
                 <td><b>Аппетит:</b></td>
-                <td>"Повышенный/Нормальный/Пониженный"</td>
+                <td id="student-card-td-appetite">"Повышенный/Нормальный/Пониженный"</td>
             </tr>
             <tr>
                 <td><b>Работоспособность:</b></td>
-                <td>"Повышенная/Обычная/Пониженная"</td>
+                <td id="student-card-td-efficiency">"Повышенная/Обычная/Пониженная"</td>
             </tr>
             </tbody>
         </table>
@@ -668,14 +672,44 @@ $arrSumStudentsVisits = array();
         });
     }
 
-
-    function openModalWindowStudentCard() {
+    function openModalWindowStudentCard(a) {
+        var student_id = a.id.split('-')[1];
+        fillStudentData(student_id);
         $('#modalStudentCard')
             .modal({
                 inverted: true
             })
             .modal('show')
         ;
+    }
+
+    function hideModalWindowStudentCard() {
+        $('#modalStudentCard')
+            .modal('hide')
+        ;
+    }
+
+    function fillStudentData(student_id) {
+       
+        $('#h1_student_fio').text(
+            $('#label_student_fio-' + student_id).text()
+        );
+
+        $.ajax({
+            url: "/queries/student/getStudentPhysicalData.php",
+            method: "POST",
+            data: {'id': student_id},
+            success: function (json) {
+                var data = JSON.parse(json);
+                for (const [key, value] of Object.entries(data)) {
+                    $(`#student-card-td-${key}`).text(value);
+                }
+            },
+            error: function () {
+               console.log('ERR');
+            }
+        });
+
     }
 
     function openModalWindowForAddLesson() {
