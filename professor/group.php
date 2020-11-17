@@ -131,10 +131,10 @@ $arrSumStudentsVisits = array();
         <tbody class="center aligned">
         <? foreach ($lessons as $lesson) { ?>
         <tr id="<? echo 'tr_lesson_id-' . $lesson->id; ?>" class="<? if($lesson->checked == false) echo "warning"; else echo "success";?>">
-            <td><? echo date("d.m.Y", strtotime($lesson->date)); ?></td>
+            <td id="<? echo 'td_lesson_date-' . $lesson->id; ?>"><? echo date("d.m.Y", strtotime($lesson->date)); ?></td>
             <td>
                 <? if($lesson->checked == false) {?>
-                <button class="ui orange icon button" onclick="openModalWindowForCheckDataStudents()">
+                <button id="<? echo 'btn_lesson_id-' . $lesson->id; ?>" class="ui orange icon button" onclick="openModalWindowForCheckDataStudents(this)">
                     <i class="icon checked calendar" style="color: white"></i>
                 </button>
                 <? } else { ?>
@@ -480,11 +480,11 @@ $arrSumStudentsVisits = array();
 
 
 <div class="ui modal horizontal flip large" id="modalCheckDataStudents">
-    <h1 class="ui header" style="color: #db2828">
+    <h1 id="h1_card_lesson_date" class="ui header" style="color: #db2828">
         Проверка данных студентов за занятие ("Дата")
     </h1>
-    <div class="content">
-        <form class="ui form">
+    <div class="content" id="check_inner">
+        <!-- <form class="ui form">
             <h3>"Фамилия И. О."</h3>
             <div style="overflow-x: scroll; margin-top: 15px">
                 <table class="ui sortable  celled table scrolling center aligned">
@@ -509,7 +509,6 @@ $arrSumStudentsVisits = array();
                     </thead>
                     <tbody>
                     <tr>
-
                         <td>"10000"</td>
                         <td>"58"</td>
                         <td>"58"</td>
@@ -563,15 +562,14 @@ $arrSumStudentsVisits = array();
                     </div>
                 </div>
             <div class="ui divider"></div>
-        </form>
-
+        </form> -->
     </div>
     <div class="actions">
         <button class="ui right labeled icon red button" onclick="hideModalWindowForCheckDataStudents()">
             Отклонить
             <i class="close icon"></i>
         </button>
-        <button class="ui right labeled icon green button">
+        <button class="ui right labeled icon green button" onclick="sendCheckData()">
             Подтвердить
             <i class="check icon"></i>
         </button>
@@ -596,6 +594,8 @@ $arrSumStudentsVisits = array();
         });
         return false;
     });
+
+
 </script>
 
 
@@ -740,7 +740,22 @@ $arrSumStudentsVisits = array();
         ;
     }
 
-    function openModalWindowForCheckDataStudents() {
+    var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutationRecord) {
+            var value = $('#modalCheckDataStudents').attr('style');
+            if (value == 'display: block !important;') {
+                fillForm();
+            }
+        });    
+    });
+
+    var target = document.getElementById('modalCheckDataStudents');
+    observer.observe(target, { attributes : true, attributeFilter : ['style'], attributeOldValue: false });
+
+    var lesson_id;
+
+    function openModalWindowForCheckDataStudents(btn) {
+        lesson_id = btn.id.split('-')[1];
         $('#modalCheckDataStudents')
             .modal({
                 inverted: true
@@ -748,6 +763,148 @@ $arrSumStudentsVisits = array();
             .modal('setting', 'closable', false)
             .modal('show')
         ;
+    }
+
+    function fillForm() {
+        $('#h1_card_lesson_date').text(
+            'Проверка данных студентов за занятие ' + $('#td_lesson_date-' + lesson_id).text()
+        );
+        $('#check_inner').html('');
+        $.ajax({
+            url: "/queries/professor/getLessonStudentsData.php",
+            method: "POST",
+            data: {'id': lesson_id},
+            success: function (json) {
+                var result = JSON.parse(json);
+                //console.log(result);
+                //console.log(result.length);
+                for (var i = 0; i < result.length; i++) {
+                    var data = result[i];
+                    var lp = data['lesson_participation'];
+                    var template = `
+                        <form class="ui form check_form" id="check_form_${lesson_id}x${data['student_id']}">
+                            <input type="hidden" name="lesson_id" value="${lesson_id}">
+                            <input type="hidden" name="student_id" value="${data['student_id']}">
+                            <h3>${data['fio']}</h3>
+                            <div style="overflow-x: scroll; margin-top: 15px">
+                                <table class="ui sortable  celled table scrolling center aligned">
+                                    <thead>
+                                    <tr>
+                                        <th rowspan="2">Дистанция (м.)</th>
+                                        <th colspan="4">Время (мин.)</th>
+                                        <th colspan="5">Пульс</th>
+                                        <th rowspan="2">Трекер</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Общее</th>
+                                        <th>Основное</th>
+                                        <th>Разминка</th>
+                                        <th>Заминка</th>
+                                        <th>До разминки</th>
+                                        <th>После разминки</th>
+                                        <th>После основной</th>
+                                        <th>После заминки</th>
+                                        <th>Ч/з 10 мин.</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>${lp['distance']}</td>
+                                        <td>${lp['time_overall']}</td>
+                                        <td>${lp['time_main']}</td>
+                                        <td>${lp['time_warmup']}</td>
+                                        <td>${lp['time_final']}</td>
+                                        <td>${lp['pulse_before_warmup']}</td>
+                                        <td>${lp['pulse_after_warmup']}</td>
+                                        <td>${lp['pulse_after_main']}</td>
+                                        <td>${lp['pulse_after_final']}</td>
+                                        <td>${lp['pulse_after_rest']}</td>
+                                        <td><a class="ui blue icon button small" href="${lp['tracker_link']}" target="blank"><i class="icon linkify"></i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    `;
+                    var template2Header = `
+                        <table class="ui sortable celled table scrolling center aligned">
+                                    <thead>
+                                    <tr>
+                                        <th>Норматив</th>
+                                        <th>Значение</th>
+                                        <th>Оценка</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                    `;
+                    var template2Footer = `
+                        </tbody>
+                                    </table>
+                                    <div class="field" style="margin-top: 10px">
+                                        <label>Присутствие</label>
+                                        <div class="ui checkbox">
+                                            <input type="checkbox" name="student_participation">
+                                            <label>Присутствовал (-ла)</label>
+                                        </div>
+                                    </div>
+                                <div class="ui divider"></div>
+                            </form>
+                    `;
+                    var template2 = '';
+                    var prepared = data['prepared'];
+                    for (var j = 0; j < prepared.length; j++) {
+                        var norm = prepared[j];
+                        var temp = `
+                                    <tr>
+                                        <td>${norm['normative_name']}</td>
+                                        <td>${norm['grade']}</td>
+                                        <input type="hidden" name="normative_test_${norm['normative_test_id']}" value="${norm['normative_test_id']}">
+                                        <td>
+                                            <div class="ui left icon input">
+                                                <div class="ui fluid selection dropdown">
+                                                    <input type="hidden" name="student_normative_score_${norm['normative_test_id']}">
+                                                    <i class="dropdown icon"></i>
+                                                    <div class="default text">Сделайте выбор</div>
+                                                    <div class="menu">
+                                                        <div class="item" data-value="2">2</div>
+                                                        <div class="item" data-value="3">3</div>
+                                                        <div class="item" data-value="4">4</div>
+                                                        <div class="item" data-value="5">5</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                            `;
+                            template2 += temp;
+                    }
+                    $('#check_inner').append(template + template2Header + template2 + template2Footer);
+
+                }
+            },
+            async: false
+        });
+
+        $('.ui.dropdown')
+            .dropdown()
+        ;
+ 
+    }
+
+    function sendCheckData() {
+        var forms = $('.check_form');
+        for (var k = 0; k < forms.length; k++) {
+            console.log($('#' + forms[k].id).serialize());
+            $.ajax({
+            url: "/queries/professor/sendCheckData.php",
+            method: "POST",
+            data: $('#' + forms[k].id).serialize(),
+            success: function () {
+                console.log('Saved');
+            }
+        });
+        }
+        hideModalWindowForCheckDataStudents();
     }
 
     function hideModalWindowForCheckDataStudents() {
