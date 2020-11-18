@@ -86,7 +86,11 @@
         </tr>
         </thead>
         <tbody>
-        <? foreach ($specializations as $specialization) {
+        <?
+        $countAllGroups = 0;
+        $countAllProfessors = 0;
+        $countAllStudents = 0;
+        foreach ($specializations as $specialization) {
             $countAllGroups += $countGroups = R::count('group', 'id_specialization = ?', [$specialization->id]);
             
             // один препод может вести несколько групп, поэтому нужно брать уникальные

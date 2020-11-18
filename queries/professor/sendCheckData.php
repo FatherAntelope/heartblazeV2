@@ -5,6 +5,10 @@ require $_SERVER['DOCUMENT_ROOT']."/db/db.php";
 $student_id = $_POST['student_id'];
 $lesson_id = $_POST['lesson_id'];
 
+$lesson = R::load('lesson', $_POST['lesson_id']);
+$lesson->checked = true;
+R::store($lesson);
+
 $lesson_participation = R::findOne(
     'lesson_participation', 'id_student = ? AND id_lesson = ?',
     [$student_id, $lesson_id]

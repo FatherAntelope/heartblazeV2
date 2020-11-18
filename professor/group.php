@@ -50,8 +50,8 @@ $arrSumStudentsVisits = array();
         <button onclick="openModalWindowAllDataStudents()" class="ui floated small brown labeled icon button">
             <i class="table icon"></i>Данные студентов
         </button>
-        <button  class="ui floated small teal labeled icon button">
-            <i class="excel file icon"></i>Экспортировать данные
+        <button  class="ui floated small teal labeled icon button disabled">
+            <i class="excel file icon"></i>Экспортировать данные (скоро)
         </button>
     </div>
 
@@ -130,7 +130,7 @@ $arrSumStudentsVisits = array();
         </thead>
         <tbody class="center aligned">
         <? foreach ($lessons as $lesson) { ?>
-        <tr id="<? echo 'tr_lesson_id-' . $lesson->id; ?>" class="<? if($lesson->checked == false) echo "warning"; else echo "success";?>">
+        <tr id="<? echo 'tr_lesson_id-' . $lesson->id; ?>" class="<? if($lesson->checked == false) echo "warning"; else echo "positive";?>">
             <td id="<? echo 'td_lesson_date-' . $lesson->id; ?>"><? echo date("d.m.Y", strtotime($lesson->date)); ?></td>
             <td>
                 <? if($lesson->checked == false) {?>
@@ -266,69 +266,69 @@ $arrSumStudentsVisits = array();
             <tbody class="center aligned">
             <tr>
                 <td><b>Вес:</b></td>
-                <td id="student-card-td-weight">"10"</td>
+                <td id="student-card-td-weight">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Рост:</b></td>
-                <td id="student-card-td-height">"100"</td>
+                <td id="student-card-td-height">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Индекс Кетле:</b></td>
-                <td id="student-card-td-quetelet">"Истощение/Пониженный/Нормальный/Повышенный/Ожирение"</td>
+                <td id="student-card-td-quetelet">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Ортостатическая проба:</b></td>
-                <td id="student-card-td-orthostatic">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                <td id="student-card-td-orthostatic">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Индекс Руффье:</b></td>
-                <td id="student-card-td-ruffier">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                <td id="student-card-td-ruffier">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Проба Штанге:</b></td>
-                <td id="student-card-td-stange">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                <td id="student-card-td-stange">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Теппинг тест:</b></td>
-                <td id="student-card-td-tapping_test">"Отлично/Хорошо/Удовлетворительно/Неудовлетворительно"</td>
+                <td id="student-card-td-tapping_test">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Жалобы на здоровье:</b></td>
-                <td id="student-card-td-complaints">"Отсутствуют/Перечисление"</td>
+                <td id="student-card-td-complaints">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Самочувствие:</b></td>
-                <td id="student-card-td-state_of_health">"Хорошее/Удовлетворительное/Плохое"</td>
+                <td id="student-card-td-state_of_health">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Настроение:</b></td>
-                <td id="student-card-td-mood">"Хорошее/Удовлетворительное/Плохое"</td>
+                <td id="student-card-td-mood">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Сон:</b></td>
-                <td id="student-card-td-sleep">"Хороший/Плохой/Бессонница"</td>
+                <td id="student-card-td-sleep">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Аппетит:</b></td>
-                <td id="student-card-td-appetite">"Повышенный/Нормальный/Пониженный"</td>
+                <td id="student-card-td-appetite">Не заполнено</td>
             </tr>
             <tr>
                 <td><b>Работоспособность:</b></td>
-                <td id="student-card-td-efficiency">"Повышенная/Обычная/Пониженная"</td>
+                <td id="student-card-td-efficiency">Не заполнено</td>
             </tr>
             </tbody>
         </table>
     </div>
-    <h3 class="ui header center aligned" style="color: #db2828">
-        Графики
-    </h3>
+<!--    <h3 class="ui header center aligned" style="color: #db2828">-->
+<!--        Графики-->
+<!--    </h3>-->
 </div>
 
 <div class="ui modal horizontal flip large" id="modalStudentsVisits">
     <h1 class="ui header" style="color: #db2828">
         Посещения занятий студентами
     </h1>
-    <div class="content">
+    <div class="content scrolling">
         <div style="overflow-x: scroll; margin-top: 15px">
             <table class="ui sortable  celled table scrolling ">
                 <thead>
@@ -390,7 +390,7 @@ $arrSumStudentsVisits = array();
     <h1 class="ui header" style="color: #db2828">
         Данные студентов за занятия
     </h1>
-    <div class="content">
+    <div class="content scrolling">
         <h4 class="ui header center aligned">Данные занятия</h4>
         <div style="overflow-x: scroll; margin-top: 15px">
             <table class="ui sortable  celled table scrolling center aligned">
@@ -418,7 +418,7 @@ $arrSumStudentsVisits = array();
                 <tbody>
                 <?
                 foreach ($lessonsParticipation as $lessonParticipation) {
-                    if ($lessonParticipation->status != 0) {
+                    if ($lessonParticipation->status == 1) {
                         $personStudent = R::load('person', $students[$lessonParticipation->id_student]->id_person);?>
                 <tr>
                     <td><? echo date("d.m.Y", strtotime($lessons[$lessonParticipation->id_lesson]->date)); ?></td>
@@ -434,7 +434,8 @@ $arrSumStudentsVisits = array();
                     <td><? echo $lessonParticipation->pulse_after_final; ?></td>
                     <td><? echo $lessonParticipation->pulse_after_rest; ?></td>
                     <td>
-                        <a class="ui blue icon button small" target="_blank"
+                        <a class="ui blue icon button small"
+                           target="_blank"
                            href="<? echo $lessonParticipation->tracker_link; ?>">
                             <i class="icon linkify"></i>
                         </a>
@@ -460,7 +461,7 @@ $arrSumStudentsVisits = array();
             <?
             $countNormTest = 0;
             foreach ($normativesTest as $normativeTest) {
-                if($normativeTest->grade !== null) {
+                if($normativeTest->score !== null) {
                     $personStudent = R::load('person', $students[$normativeTest->id_student]->id_person);?>
             <tr>
                 <td>
@@ -483,7 +484,7 @@ $arrSumStudentsVisits = array();
     <h1 id="h1_card_lesson_date" class="ui header" style="color: #db2828">
         Проверка данных студентов за занятие ("Дата")
     </h1>
-    <div class="content" id="check_inner">
+    <div class="scrolling content" id="check_inner">
         <!-- <form class="ui form">
             <h3>"Фамилия И. О."</h3>
             <div style="overflow-x: scroll; margin-top: 15px">
@@ -781,6 +782,10 @@ $arrSumStudentsVisits = array();
                 for (var i = 0; i < result.length; i++) {
                     var data = result[i];
                     var lp = data['lesson_participation'];
+                    var printDisabled = null;
+                    if(lp['tracker_link'] == null) {
+                        printDisabled = "disabled";
+                    }
                     var template = `
                         <form class="ui form check_form" id="check_form_${lesson_id}x${data['student_id']}">
                             <input type="hidden" name="lesson_id" value="${lesson_id}">
@@ -819,7 +824,7 @@ $arrSumStudentsVisits = array();
                                         <td>${lp['pulse_after_main']}</td>
                                         <td>${lp['pulse_after_final']}</td>
                                         <td>${lp['pulse_after_rest']}</td>
-                                        <td><a class="ui blue icon button small" href="${lp['tracker_link']}" target="blank"><i class="icon linkify"></i></a></td>
+                                        <td><a class="ui blue icon button small ${printDisabled}" href="${lp['tracker_link']}" target="blank"><i class="icon linkify"></i></a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -900,7 +905,7 @@ $arrSumStudentsVisits = array();
             method: "POST",
             data: $('#' + forms[k].id).serialize(),
             success: function () {
-                console.log('Saved');
+                location.reload();
             }
         });
         }

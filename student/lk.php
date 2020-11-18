@@ -7,6 +7,7 @@ if($student->id_group !== null) {
     $group = R::findOne('group', 'id = ?', [$student->id_group]);
 }
 $allParameters = R::findAll('student_data', 'id_student = ? ORDER BY date ASC', [$student->id]);
+
 if($allParameters != null) {
     $chartsDate = array();
     $chartsWeight = array();

@@ -7,9 +7,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/administrator/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/lk.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queries/student/sendLessonParticipation.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/student/sendLessonParticipation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/student/panel.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/panel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/professor/group.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries/professor/sendCheckData.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/professor/sendCheckData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/student/lk.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +88,8 @@
       <workItem from="1605352884638" duration="31739000" />
       <workItem from="1605523798464" duration="10436000" />
       <workItem from="1605595200165" duration="1333000" />
-      <workItem from="1605609192405" duration="974000" />
+      <workItem from="1605609192405" duration="1668000" />
+      <workItem from="1605692663482" duration="3841000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -354,7 +357,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605533517505</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля.">
+      <created>1605610194131</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1605610194131</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,11 +472,11 @@
     <MESSAGE value="Добавлено добавление занятий с нормативами и/или классикой. Также изменен интерфейс, добавлена выгрузка данных у струдента из БД. Запись НЕ РЕАЛИЗОВАНА. Изменена MySQL." />
     <MESSAGE value="Добавлены графики в личном кабинете студента" />
     <MESSAGE value="Добавлены выводы всех данных студентов, кроме посещений в ПУ группы преподавателя. Нужно добавить индивидуальный вывод данных студентов и их проверку за занятие. &#10;У студента в панели в ПУ добавлено отображение всех прогрессов. Нужно добавить индивидуальное заполнение данных по занятию." />
-    <MESSAGE value="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля." />
     <MESSAGE value="Добавлены графики, и функция декодировки изображения" />
     <MESSAGE value="Добавлены смены фотографий, отображение фотографий из БД и отправка заявок на подтверждение преподавателем" />
     <MESSAGE value="Убран баг с прогрузкой БД в отправках изображений" />
-    <option name="LAST_COMMIT_MESSAGE" value="Убран баг с прогрузкой БД в отправках изображений" />
+    <MESSAGE value="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля." />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -493,10 +503,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604782508080" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1605533516422">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1605610209209">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605533516422" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1605610209209" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1605391375157">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -541,26 +551,26 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="326" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1604400872492" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605527393733">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1605610233107">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605527393733" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1605610233107" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1605391375157">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1605391375157" />
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605609201405">
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605692724903">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1605609201405" />
+    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1605692724903" />
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration" timestamp="1604300926764">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration/0.0.1536.824@0.0.1536.824" timestamp="1604300926764" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1605376021759">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1605693576082">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605376021759" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605693576082" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605531663520">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
