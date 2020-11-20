@@ -113,7 +113,7 @@ $countStudentsOfAllGroups = 0;
             <div class="required field">
                 <label>Название группы</label>
                 <div class="ui left icon input">
-                    <input type="text" name="name_group" required>
+                    <input type="text" name="name_group" placeholder="На кириллице с цифрами" minlength="3" maxlength="30" onkeyup="Cyrillic(this)" required>
                     <i class="font icon red"></i>
                 </div>
             </div>
@@ -220,6 +220,14 @@ $countStudentsOfAllGroups = 0;
 
 </body>
 <script>
+    function Cyrillic(obj) {
+        if (/^[а-яА-Я0-9_]*?$/.test(obj.value))
+            obj.defaultValue = obj.value;
+        else
+            obj.value = obj.defaultValue;
+    }
+
+
     $("#formAddGroup").submit(function () {
         $.ajax({
             url: "/queries/professor/addGroup.php",

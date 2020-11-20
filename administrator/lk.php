@@ -189,7 +189,7 @@
             <div class="field required">
                 <label>Название специализации</label>
                 <div class="ui left icon input">
-                    <input type="text" name="nameSpecialization" placeholder="С заглавной буквы" required>
+                    <input type="text" name="nameSpecialization" minlength="2" maxlength="30" onkeyup="Cyrillic(this)" placeholder="С заглавной буквы" required>
                     <i class="font alternate red icon"></i>
                 </div>
             </div>
@@ -215,6 +215,13 @@
 
 </body>
 <script>
+    function Cyrillic(obj) {
+        if (/^[а-яА-Я ]*?$/.test(obj.value))
+            obj.defaultValue = obj.value;
+        else
+            obj.value = obj.defaultValue;
+    }
+
     $("#formAddSpecialization").submit(function () {
         $.ajax({
             url: "/queries/administrator/addSpecialization.php",

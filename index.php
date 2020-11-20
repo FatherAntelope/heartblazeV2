@@ -181,30 +181,30 @@
         <div class="three fields">
             <div class="required field">
                 <label>Фамилия</label>
-                <input type="text" placeholder="Ваша фамилия" name="person_last_name" required>
+                <input type="text" placeholder="На кириллице" name="person_last_name" onkeyup="Cyrillic(this)" maxlength="20" required>
             </div>
             <div class="required field">
                 <label>Имя</label>
-                <input type="text" placeholder="Ваше имя" name="person_first_name" required>
+                <input type="text" placeholder="На кириллице" name="person_first_name" onkeyup="Cyrillic(this)" maxlength="20" required>
             </div>
             <div class="field">
                 <label>Отчество</label>
-                <input type="text" placeholder="Ваше отчество" name="person_patronymic">
+                <input type="text" placeholder="На кириллице" name="person_patronymic" onkeyup="Cyrillic(this)" maxlength="40">
             </div>
         </div>
         <h4 class="ui dividing header" style="color: #db2828">Данные авторизации</h4>
         <div class="three fields">
             <div class="required field">
                 <label>Логин</label>
-                <input type="text" placeholder="Логин для входа" name="person_login" required>
+                <input type="text" placeholder="Латиница и символы" onkeyup="Latin(this)" name="person_login" maxlength="20" required>
             </div>
             <div class="required field">
                 <label>Пароль</label>
-                <input type="password" placeholder="Пароль для входа" name="person_password" required>
+                <input type="password" placeholder="Пароль для входа" name="person_password" minlength="6" maxlength="30" required>
             </div>
             <div class="required field">
                 <label>Почта</label>
-                <input type="email" placeholder="Ваша электронная почта" name="person_email" required>
+                <input type="email" placeholder="Ваша электронная почта" onkeyup="Latin(this)" name="person_email" required>
             </div>
         </div>
         <!--
@@ -311,6 +311,20 @@
 </body>
 
 <script>
+    function Latin(obj) {
+        if (/^[a-zA-Z0-9 ,@.\-:"()]*?$/.test(obj.value))
+            obj.defaultValue = obj.value;
+        else
+            obj.value = obj.defaultValue;
+    }
+
+    function Cyrillic(obj) {
+        if (/^[а-яА-Я]*?$/.test(obj.value))
+            obj.defaultValue = obj.value;
+        else
+            obj.value = obj.defaultValue;
+    }
+
     //скрипт скрытия сообщения об ошибке по нажатию на иконку крестика
     $('.message .close')
         .on('click', function() {

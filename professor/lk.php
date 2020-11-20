@@ -140,7 +140,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     <label>Фамилия</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ваша фамилия"
-                               value="<?php echo $person->surname; ?>" name="professor_surname" required>
+                               value="<?php echo $person->surname; ?>" onkeyup="Cyrillic(this)" maxlength="20" minlength="2" name="professor_surname" required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     <label>Имя</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ваше имя"
-                               value="<?php echo $person->name; ?>" name="professor_name" required>
+                               value="<?php echo $person->name; ?>" name="professor_name" onkeyup="Cyrillic(this)" maxlength="20" minlength="2"required>
                         <i class="font icon red"></i>
                     </div>
                 </div>
@@ -156,7 +156,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     <label>Отчество</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ваше отчество"
-                               value="<?php echo $person->patronymic; ?>" name="professor_patronymic">
+                               value="<?php echo $person->patronymic; ?>" onkeyup="Cyrillic(this)" maxlength="40" name="professor_patronymic">
                         <i class="font icon red"></i>
                     </div>
                 </div>
@@ -166,7 +166,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
                     <label>Должность</label>
                     <div class="ui left icon input">
                         <input type="text" placeholder="Ученая степень или звание"
-                               value="<?php echo $professor->job; ?>" name="professor_job" required>
+                               value="<?php echo $professor->job; ?>" name="professor_job" onkeyup="CyrillicTwo(this)" maxlength="20" minlength="2" required>
                         <i class="users icon red"></i>
                     </div>
                 </div>
@@ -209,7 +209,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
             <div class="required field">
                 <label>Повтор пароля</label>
                 <div class="ui left icon input">
-                    <input type="password" placeholder="Повторите новый пароль" name="person_repeat_password" required>
+                    <input type="password" placeholder="Повторите новый пароль" maxlength="20" minlength="6" name="person_repeat_password" required>
                     <i class="lock icon red"></i>
                 </div>
             </div>
@@ -305,6 +305,29 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
 </div>
 </body>
 <script>
+    function Latin(obj) {
+        if (/^[a-zA-Z0-9 ,@.\-:"()]*?$/.test(obj.value))
+            obj.defaultValue = obj.value;
+        else
+            obj.value = obj.defaultValue;
+    }
+
+    function Cyrillic(obj) {
+        if (/^[а-яА-Я]*?$/.test(obj.value))
+            obj.defaultValue = obj.value;
+        else
+            obj.value = obj.defaultValue;
+    }
+
+    function CyrillicTwo(obj) {
+        if (/^[а-яА-Я.]*?$/.test(obj.value))
+            obj.defaultValue = obj.value;
+        else
+            obj.value = obj.defaultValue;
+    }
+
+
+
     $("#formReplacePersonalData").submit(function () {
         $.ajax({
             url: "/queries/professor/replacePersonalData.php",

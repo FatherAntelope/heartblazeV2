@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS `lesson_participation`, `normative_test`, `normative`, `lesson`,`student_data`,`student`, `group`, `specialization`, `administrator`, `request`, `professor`, `person`;
 
-DROP TABLE IF EXISTS Person;
-CREATE TABLE Person
+DROP TABLE IF EXISTS person;
+CREATE TABLE person
 (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NULL,
@@ -15,59 +15,59 @@ CREATE TABLE Person
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS Professor;
-CREATE TABLE Professor
+DROP TABLE IF EXISTS professor;
+CREATE TABLE professor
 (
 	id INT NOT NULL AUTO_INCREMENT,
     id_person INT NOT NULL,
     job VARCHAR(50) NULL,
     status TINYINT(1) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_person) REFERENCES Person(id) ON DELETE CASCADE
+    FOREIGN KEY (id_person) REFERENCES person(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS Request;
-CREATE TABLE Request
+DROP TABLE IF EXISTS request;
+CREATE TABLE request
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_professor INT NOT NULL,
     certificate MEDIUMBLOB NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_professor) REFERENCES Professor(id) ON DELETE CASCADE
+    FOREIGN KEY (id_professor) REFERENCES professor(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS Administrator;
-CREATE TABLE Administrator
+DROP TABLE IF EXISTS administrator;
+CREATE TABLE administrator
 (
     id INT NOT NULL AUTO_INCREMENT,
 	id_person INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_person) REFERENCES Person(id) ON DELETE CASCADE
+    FOREIGN KEY (id_person) REFERENCES person(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS Specialization;
-CREATE TABLE Specialization
+DROP TABLE IF EXISTS specialization;
+CREATE TABLE specialization
 (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS `Group`;
-CREATE TABLE `Group`
+DROP TABLE IF EXISTS `group`;
+CREATE TABLE `group`
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_professor INT NOT NULL,
     id_specialization INT NOT NULL,
-    FOREIGN KEY (id_professor) REFERENCES Professor(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_professor) REFERENCES professor(id) ON DELETE CASCADE,
     FOREIGN KEY (id_specialization) REFERENCES specialization(id) ON DELETE CASCADE,
     name VARCHAR(50) NOT NULL,
     code_word VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS Student;
-CREATE TABLE Student
+DROP TABLE IF EXISTS student;
+CREATE TABLE student
 (
 	id INT NOT NULL AUTO_INCREMENT,
     id_person INT NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE Student
     id_group INT NULL,
     group_study VARCHAR(10) NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_person) REFERENCES Person(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_person) REFERENCES person(id) ON DELETE CASCADE,
     FOREIGN KEY (id_group) REFERENCES `group`(id) ON DELETE SET NULL
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE student_data
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_student INT NOT NULL,
-    FOREIGN KEY (id_student) REFERENCES Student(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_student) REFERENCES student(id) ON DELETE CASCADE,
     `date` DATETIME NULL,
     weight INT NULL,
     height INT NULL,
@@ -103,8 +103,8 @@ CREATE TABLE student_data
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS Lesson;
-CREATE TABLE Lesson
+DROP TABLE IF EXISTS lesson;
+CREATE TABLE lesson
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_group INT NOT NULL,
@@ -114,8 +114,8 @@ CREATE TABLE Lesson
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS Normative;
-CREATE TABLE Normative
+DROP TABLE IF EXISTS normative;
+CREATE TABLE normative
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_lesson INT NOT NULL,
@@ -124,8 +124,8 @@ CREATE TABLE Normative
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS Normative_test;
-CREATE TABLE Normative_test
+DROP TABLE IF EXISTS normative_test;
+CREATE TABLE normative_test
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_normative INT NOT NULL,
@@ -137,8 +137,8 @@ CREATE TABLE Normative_test
     PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS Lesson_participation;
-CREATE TABLE Lesson_participation
+DROP TABLE IF EXISTS lesson_participation;
+CREATE TABLE lesson_participation
 (
     id INT NOT NULL AUTO_INCREMENT,
     id_student INT NOT NULL,
