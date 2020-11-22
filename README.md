@@ -48,22 +48,38 @@
 > Располагает в себе файлы запросов на сервер или в базу данных
 #### ![#f03c15](https://placehold.it/15/177245/000000?text=+) `administrator`
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `addSpecialization.php`
+>> Запрос на добавление специализации
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `confirmCertificate.php`
+>> Запрос на проверку документа/заявки преподавателя на подтверждение личности
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `removeGroup.php`
+>> Запрос на удаление группы преподавателя
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `removeProfessor.php`
+>> Запрос на удаление учетной записи преподавателя
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `removeSpecialization.php`
+>> Запрос на удаление специализации
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `removeStudent.php`
+>> Запрос на удаление учетной записи студента
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `uploadCertificate.php`
+>> Запрос на выгрузку документа преподавателя
 #### ![#f03c15](https://placehold.it/15/177245/000000?text=+) `professor`
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `addGroup.php`
+>> Запрос на добавление группы
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `addLesson.php`
+>> Запрос на добавление занятия
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `getLessonStudentsData.php`
+>> Запрос на получение данных студентов по группе
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `removeGroup.php`
+>> Запрос на удаление группы
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `removeLesson.php`
+>> Запрос на удаление занятие
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `removeStudent.php`
+>> Запрос на удаление студента из группы
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `replacePersonalData.php`
+>> Запрос на смену персональных данных преподавателя
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `sendCheckData.php`
+>> Запрос на проверку данных студентов за занятие
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `sendRequest.php`
+>> Запрос на подтверждение личности преподавателя
 #### ![#f03c15](https://placehold.it/15/177245/000000?text=+) `student`
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `getNormatives.php`
 >> Запрос на получение нормативов студента
