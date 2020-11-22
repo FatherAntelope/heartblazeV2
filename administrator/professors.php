@@ -115,7 +115,7 @@ $professors = R::findAll('professor', 'ORDER BY id ASC');
 
 <div class="ui modal horizontal flip tiny" id="modalRemoveProfessor">
     <h2 class="ui header center aligned">
-        Вы уверены, что хотите удалить учетную запись данного преаодавателя? Все его данные будут безвозвратно удалены!
+        Вы уверены, что хотите удалить учетную запись данного преподавателя? Все его данные будут безвозвратно удалены!
     </h2>
     <div class="actions">
         <button class="ui right labeled icon red button" onclick="hideModalWindowForRemoveProfessor()">

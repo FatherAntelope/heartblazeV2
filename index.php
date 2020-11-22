@@ -258,24 +258,24 @@
     </div>
     <div class="content">
 
-        <form class="ui form">
+        <form class="ui form" id="recoveryPassword">
             <p>На указанную почту придет новый пароль и ссылка подтверждения для его смены</p>
             <div class="required field">
                 <label>Логин</label>
                 <div class="ui left icon input">
-                    <input type="text" placeholder="Логин для проверки" required>
+                    <input type="text" placeholder="Логин для проверки" name="person_login" required>
                     <i class="user icon red"></i>
                 </div>
             </div>
             <div class="required field">
                 <label>Почта</label>
                 <div class="ui left icon input">
-                    <input type="email" placeholder="Почта" required>
+                    <input type="email" placeholder="Почта" name="person_mail" required>
                     <i class="mail icon red"></i>
                 </div>
             </div>
         </form>
-        <div class="ui error message">
+        <div class="ui error message" id="msgErrorSendMail" style="display: none">
             <i class="close icon"></i>
             <div class="header">Ошибка восстановления пароля</div>
             <ul>
@@ -283,15 +283,15 @@
                 <li>Повторите ввод</li>
             </ul>
         </div>
-        <div class="ui success message">
+        <div class="ui success message" id="msgSuccessSendMail" style="display: none">
             <div class="header">Сообщение с новым паролем отправлено на вашу почту!</div>
         </div>
     </div>
-    <div class="actions">
-        <div class="ui right labeled icon blue button">
+    <div class="actions" id="actionSendMail">
+        <button type="submit" class="ui right labeled icon blue button" form="recoveryPassword">
             Отправить сообщение
             <i class="mail icon"></i>
-        </div>
+        </button>
     </div>
 </div>
 
@@ -394,6 +394,26 @@
             error: function () {
                 //запрос вернул ошибку, сменим стиль блока (блока ошибки), то есть отобразим его
                 document.getElementById("errorRegistration").style.display = "block";
+            }
+        });
+        return false;
+    });
+
+    $("#recoveryPassword").submit(function () {
+        $.ajax({
+            url: "/queries/sendMsgToMailForRecoveryPass.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                //openDimmerWindowForShowSuccessRegistration();
+                document.getElementById("msgSuccessSendMail").style.display = "block";
+                document.getElementById("msgErrorSendMail").style.display = "none";
+                document.getElementById("recoveryPassword").hidden = true;
+                document.getElementById("actionSendMail").hidden = true;
+            },
+            error: function () {
+                //запрос вернул ошибку, сменим стиль блока (блока ошибки), то есть отобразим его
+                document.getElementById("msgErrorSendMail").style.display = "block";
             }
         });
         return false;

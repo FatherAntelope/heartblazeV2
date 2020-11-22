@@ -860,7 +860,7 @@ if($allParameters != null) {
     }
 
     function CyrillicTwo(obj) {
-        if (/^[а-яА-Я0-9.,-]*?$/.test(obj.value))
+        if (/^[а-яА-Я0-9 .,-]*?$/.test(obj.value))
             obj.defaultValue = obj.value;
         else
             obj.value = obj.defaultValue;
