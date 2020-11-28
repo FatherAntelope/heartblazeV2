@@ -6,8 +6,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля.">
+      <change afterPath="$PROJECT_DIR$/queries/professor/addStudentAdjustment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/administrator/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/administrator/lk.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/professor/group.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/professor/lk.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/lk.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +99,9 @@
       <workItem from="1605701731709" duration="748000" />
       <workItem from="1605903867668" duration="6443000" />
       <workItem from="1606071436597" duration="4062000" />
-      <workItem from="1606076309103" duration="3545000" />
+      <workItem from="1606076309103" duration="4444000" />
+      <workItem from="1606310887283" duration="1208000" />
+      <workItem from="1606562008837" duration="5443000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -397,7 +404,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606079492592</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="Обновлен README.md">
+      <created>1606079921122</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1606079921122</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -484,7 +498,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Исправлен баг с перенаправлением по личному кабинету" />
     <MESSAGE value="Добавлено динамическое добавление специализации" />
     <MESSAGE value="Добавлено: редактирование данных в личном кабинете у преподавателя и студента (кроме аватарки); SQL файл с новыми изменениями; добавлены запрросы; изменен интерфейс модальных окон у студента." />
     <MESSAGE value="Добавлены страницы ошибок, а также реализованы добавления групп и копирование ключевых слов&#10;В некоторых местах добавлены проверки на уникальность" />
@@ -509,7 +522,8 @@
     <MESSAGE value="Добавлены простые проверки на дурака и исправлены ошибки в SQL запросах" />
     <MESSAGE value="Добавлена отправка сообщения на почту с новым паролем БЕЗ ССЫЛКИ ВОССТАНОВЛЕНИЯ. Исправлены грамматические ошибки" />
     <MESSAGE value="Добавлен README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлен README.md" />
+    <MESSAGE value="Обновлен README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновлен README.md" />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -536,10 +550,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604782508080" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1606079491355">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1606079920220">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606079491355" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606079920220" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1605391375157">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -572,10 +586,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="407" y="174" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1604492839107" />
-    <state x="585" y="343" key="NewPhpFileDialog" timestamp="1606071977067">
+    <state x="585" y="343" key="NewPhpFileDialog" timestamp="1606566152591">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="585" y="343" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1606071977067" />
+    <state x="585" y="343" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1606566152591" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1604839963692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -584,10 +598,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="326" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1604400872492" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606079496921">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606079924635">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606079496921" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606079924635" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1605702482046">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -600,10 +614,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="578" y="270" key="com.jetbrains.plugins.remotesdk.ui.RemoteMappingsConfiguration/0.0.1536.824@0.0.1536.824" timestamp="1604300926764" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1605693576082">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1606311803162">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605693576082" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1606311803162" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605906853821">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

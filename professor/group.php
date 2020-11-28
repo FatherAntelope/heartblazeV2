@@ -44,16 +44,16 @@ $arrSumStudentsVisits = array();
         <button onclick="openModalWindowForAddLesson()" class="ui floated small green labeled icon button">
             <i class="plus circle icon"></i>Добавить занятие
         </button>
+        <button onclick="openModalWindowForAddStudentAdjustment()" class="ui floated small yellow labeled icon button">
+            <i class="check circle icon"></i>Добавить отработку
+        </button>
         <button onclick="openModalWindowStudentsVisits()" class="ui floated small orange labeled icon button">
             <i class="table icon"></i>Посещения
         </button>
         <button onclick="openModalWindowAllDataStudents()" class="ui floated small brown labeled icon button">
             <i class="table icon"></i>Данные студентов
         </button>
-        <button  class="ui floated small teal labeled icon button disabled">
-            <i class="excel file icon"></i>Экспортировать данные (скоро)
-        </button>
-    </div>
+            </div>
 
     <? if (count($students) == 0) { ?>
         <div class="ui info message">
@@ -65,7 +65,7 @@ $arrSumStudentsVisits = array();
         </div>
     <?} else {?>
         <h3 class="ui top attached header center aligned red" style="margin-top: 20px">
-        Список студентов
+        Список студентов (<? echo $group->name; ?>)
         </h3>
         <div class="ui segment attached top">
             <div class="ui comments">
@@ -194,7 +194,7 @@ $arrSumStudentsVisits = array();
 
 <div class="ui modal horizontal flip tiny" id="modalAddLesson">
     <h1 class="ui header" style="color: #db2828">
-        Добавить занятие
+        Добавление занятия
     </h1>
     <div class="content">
         <form class="ui form" id="formAddLesson" <? if(count($students) == 0) echo "hidden"; ?> >
@@ -257,8 +257,77 @@ $arrSumStudentsVisits = array();
     </div>
 </div>
 
+
+<div class="ui modal horizontal flip tiny" id="modalAddStudentAdjustment">
+    <h1 class="ui header" style="color: #db2828">
+        Добавление отработки студента
+    </h1>
+    <div class="content">
+        <form class="ui form" id="formAddStudentAdjustment" <? if(count($students) == 0 || count($lessons) == 0) echo "hidden"; ?> >
+            <div class="field required">
+                <label>Дата занятия</label>
+                <div class="ui left icon input">
+                    <select class="ui dropdown fluid" name="lesson_id" required>
+                        <option value="">Выберите дату</option>
+                        <? foreach ($lessons as $lesson) {
+                            if($lesson->checked == 1) {
+                            ?>
+                            <option value="<? echo $lesson->id; ?>"><? echo date("d.m.Y", strtotime($lesson->date)); ?></option>
+                        <? } }?>
+                    </select>
+                </div>
+            </div>
+            <div class="field required">
+                <label>Студент</label>
+                <div class="ui left icon input">
+                    <select class="ui dropdown fluid" name="student_id" required>
+                        <option value="">Выберите студента</option>
+                        <? foreach ($students as $student) {
+                            $personStudent = R::load('person', $student->id_person);
+                            if(R::count('lesson_participation', 'id_student = ? AND status = 3', [$student->id]) > 0) {
+                            ?>
+                            <option value="<? echo $student->id; ?>"><? echo $personStudent->surname . " " . substr($personStudent->name, 0, 2) . ". " . substr($personStudent->patronymic, 0, 2)."."; ?></option>
+                        <? } } ?>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <? if(count($students) == 0 || count($lessons) == 0)  {?>
+            <div class="ui warning message">
+                <div class="header">Студенты или занятия отсутствуют:</div>
+                <ul>
+                    <li>Вы не можете создавать отработки, пока нет студентов или занятий</li>
+                </ul>
+            </div>
+        <? } ?>
+
+        <div class="ui error message" id="msgErrorAddStudentAdjustment" style="display: none">
+            <div class="header">Ошибка добавления отработки:</div>
+            <ul>
+                <li>Студент посетил занятие в заданную дату</li>
+            </ul>
+        </div>
+        <div class="ui success message" id="msgSuccessAddStudentAdjustment" style="display: none">
+            <div class="header">Отработка успешно добавлена! Обновите страницу или добавьте еще</div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="ui right labeled icon green button <? if(count($students) == 0 || count($lessons) == 0) echo "disabled"; ?>" form="formAddStudentAdjustment">
+            Добавить
+            <i class="plus circle icon"></i>
+        </button>
+    </div>
+</div>
+
+
+
+
+
+
+
 <div class="ui horizontal flip modal" id="modalStudentCard">
-    <h1 id="h1_student_fio" class="ui header" style="color: #db2828">
+    <h1 id="h1_student_fio" class="ui header center aligned" style="color: #db2828">
         "Фамилия И. О."
     </h1>
     <div class="content">
@@ -476,6 +545,12 @@ $arrSumStudentsVisits = array();
             } ?>
             </tbody>
         </table>
+
+    </div>
+    <div class="actions">
+        <button  class="ui floated small teal labeled icon button disabled">
+            <i class="excel file icon"></i>Экспортировать данные (скоро)
+        </button>
     </div>
 </div>
 
@@ -591,6 +666,23 @@ $arrSumStudentsVisits = array();
             error: function () {
                 document.getElementById("msgSuccessAddLesson").style.display = "none";
                 document.getElementById("msgErrorAddLesson").style.display = "block";
+            }
+        });
+        return false;
+    });
+
+    $("#formAddStudentAdjustment").submit(function () {
+        $.ajax({
+            url: "/queries/professor/addStudentAdjustment.php",
+            method: "POST",
+            data: $(this).serialize(),
+            success: function () {
+                document.getElementById("msgSuccessAddStudentAdjustment").style.display = "block";
+                document.getElementById("msgErrorAddStudentAdjustment").style.display = "none";
+            },
+            error: function () {
+                document.getElementById("msgSuccessAddStudentAdjustment").style.display = "none";
+                document.getElementById("msgErrorAddStudentAdjustment").style.display = "block";
             }
         });
         return false;
@@ -715,6 +807,15 @@ $arrSumStudentsVisits = array();
 
     function openModalWindowForAddLesson() {
         $('#modalAddLesson')
+            .modal({
+                inverted: true
+            })
+            .modal('show')
+        ;
+    }
+
+    function openModalWindowForAddStudentAdjustment() {
+        $('#modalAddStudentAdjustment')
             .modal({
                 inverted: true
             })
@@ -865,17 +966,13 @@ $arrSumStudentsVisits = array();
                                         <input type="hidden" name="normative_test_${norm['normative_test_id']}" value="${norm['normative_test_id']}">
                                         <td>
                                             <div class="ui left icon input">
-                                                <div class="ui fluid selection dropdown">
-                                                    <input type="hidden" name="student_normative_score_${norm['normative_test_id']}">
-                                                    <i class="dropdown icon"></i>
-                                                    <div class="default text">Сделайте выбор</div>
-                                                    <div class="menu">
-                                                        <div class="item" data-value="2">2</div>
-                                                        <div class="item" data-value="3">3</div>
-                                                        <div class="item" data-value="4">4</div>
-                                                        <div class="item" data-value="5">5</div>
-                                                    </div>
-                                                </div>
+                                                <select class="ui dropdown" name="student_normative_score_${norm['normative_test_id']}" required>
+                                                    <option value="">Сделайте выбор</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
                                             </div>
                                         </td>
                                     </tr>

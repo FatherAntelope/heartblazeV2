@@ -65,6 +65,8 @@
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `addGroup.php`
 >> Запрос на добавление группы
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `addLesson.php`
+>> Запрос на добавление отработки студента
+> ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `addStudentAdjustment.php`
 >> Запрос на добавление занятия
 > ##### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `getLessonStudentsData.php`
 >> Запрос на получение данных студентов по группе

@@ -320,7 +320,7 @@ $professor = R::findOne('professor', 'id_person = ?', [$person->id]);
     }
 
     function CyrillicTwo(obj) {
-        if (/^[а-яА-Я.]*?$/.test(obj.value))
+        if (/^[а-яА-Я. ]*?$/.test(obj.value))
             obj.defaultValue = obj.value;
         else
             obj.value = obj.defaultValue;

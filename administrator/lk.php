@@ -216,7 +216,7 @@
 </body>
 <script>
     function Cyrillic(obj) {
-        if (/^[а-яА-Я ]*?$/.test(obj.value))
+        if (/^[А-Я]{1}[а-я ]*?$/.test(obj.value))
             obj.defaultValue = obj.value;
         else
             obj.value = obj.defaultValue;
