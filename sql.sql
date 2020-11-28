@@ -160,3 +160,14 @@ CREATE TABLE lesson_participation
     PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS recovery;
+CREATE TABLE recovery
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    id_person INT NOT NULL,
+    FOREIGN KEY (id_person) REFERENCES person(id) ON DELETE CASCADE,
+    `password` VARCHAR(255) NOT NULL,
+    recovery_key VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+

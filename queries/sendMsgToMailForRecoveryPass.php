@@ -10,7 +10,28 @@ if(R::count('person', 'email = ? AND login = ?', [$_POST['person_mail'], $_POST[
         ), 1
     ));
 
-    $link = null;
+    $key = md5(microtime());
+    $person = R::findOne('person', 'email = ? AND login = ?', [$_POST['person_mail'], $_POST['person_login']]);
+
+
+    $recovery = R::findOne('recovery', 'id_person = ?', [$person->id]);
+
+    if(count($recovery) == 0) {
+        $recoveryNew = R::dispense('recovery');
+        $recoveryNew->id_person = $person->id;
+        $recoveryNew->password = password_hash($password, PASSWORD_DEFAULT);
+        $recoveryNew->recovery_key = $key;
+        R::store($recoveryNew);
+    } else {
+        $recovery->id_person = $person->id;
+        $recovery->password = password_hash($password, PASSWORD_DEFAULT);
+        $recovery->recovery_key = $key;
+        R::store($recovery);
+    }
+
+
+
+    $link = $_SERVER['HTTP_HOST']."/recoveryPassword.php?person=".$person->id."&key=".$key;
 
     $headers  = "Content-type: text/html; charset=windows-1251 \r\n";
     $headers .= "From: help@heartblaze.online\r\n";
