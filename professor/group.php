@@ -13,7 +13,8 @@ foreach ($students as $student) {
     $students_id[] = $student->id;
 }
 
-$lessons = R::findAll('lesson', ' id_group = ?', [$group_id]);
+//Убрать сортировку, если будут проблемы
+$lessons = R::findAll('lesson', ' id_group = ? ORDER BY date ASC', [$group_id]);
 
 $lessonsParticipation = R::findLike('lesson_participation', ['id_student' => $students_id]);
 $normativesTest = R::findLike('normative_test', ['id_student' => $students_id]);

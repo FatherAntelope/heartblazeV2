@@ -10,9 +10,6 @@ if($recoveryPassword != null) {
     R::store($person);
     R::trash($recoveryPassword);
 }
-
-
-
 ?>
 <!doctype html>
 <html lang="ru">

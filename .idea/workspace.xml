@@ -6,11 +6,266 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9eac3012-f6fc-4c72-b664-30dc2c0039ce" name="Default Changelist" comment="Добавлены руководства, отображаются статистики студентов. В модальных окнах отображаются сообщения после некоторых событий там, где этого не хватало. На кнопках выхода и смены аватарки появляются подсказки. Исправлены баги с отображением данных и отправки заданий студентам. Обновлена БД, добавлена таблица заявок, убраны лишние поля.">
-      <change afterPath="$PROJECT_DIR$/recoveryPassword.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Autoloader.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/APC.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/CacheBase.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/DiscISAM.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/ICache.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/Igbinary.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/Memcache.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/Memory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/MemoryGZip.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/MemorySerialized.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/PHPTemp.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/SQLite.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/SQLite3.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorage/Wincache.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CachedObjectStorageFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CalcEngine/CyclicReferenceStack.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/CalcEngine/Logger.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Database.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/DateTime.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Engineering.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Exception.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/ExceptionHandler.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Financial.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/FormulaParser.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/FormulaToken.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Function.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Functions.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Logical.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/LookupRef.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/MathTrig.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Statistical.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/TextData.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/Token/Stack.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Calculation/functionlist.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Cell.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Cell/AdvancedValueBinder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Cell/DataType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Cell/DataValidation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Cell/DefaultValueBinder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Cell/Hyperlink.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Cell/IValueBinder.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Axis.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/DataSeries.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/DataSeriesValues.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Exception.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/GridLines.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Layout.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Legend.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/PlotArea.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Properties.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Renderer/PHP Charting Libraries.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Renderer/jpgraph.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Chart/Title.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Comment.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/DocumentProperties.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/DocumentSecurity.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Exception.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/HashTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Helper/HTML.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/IComparable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/IOFactory.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/NamedRange.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Abstract.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/CSV.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/DefaultReadFilter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel2003XML.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel2007.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel2007/Chart.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel2007/Theme.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/Color.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/Color/BIFF5.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/Color/BIFF8.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/Color/BuiltIn.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/ErrorCode.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/Escher.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/MD5.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/RC4.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/Style/Border.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Excel5/Style/FillPattern.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Exception.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/Gnumeric.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/HTML.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/IReadFilter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/IReader.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/OOCalc.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Reader/SYLK.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/ReferenceHelper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/RichText.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/RichText/ITextElement.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/RichText/Run.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/RichText/TextElement.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Settings.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/CodePage.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Date.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Drawing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher/DgContainer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher/DgContainer/SpgrContainer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher/DgContainer/SpgrContainer/SpContainer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher/DggContainer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher/DggContainer/BstoreContainer.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher/DggContainer/BstoreContainer/BSE.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Escher/DggContainer/BstoreContainer/BSE/Blip.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Excel5.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/File.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/Font.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/CHANGELOG.TXT" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/CholeskyDecomposition.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/EigenvalueDecomposition.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/LUDecomposition.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/Matrix.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/QRDecomposition.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/SingularValueDecomposition.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/utils/Error.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/JAMA/utils/Maths.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/OLE.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/OLE/ChainedBlockStream.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/OLE/PPS.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/OLE/PPS/File.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/OLE/PPS/Root.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/OLERead.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/PCLZip/gnu-lgpl.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/PCLZip/pclzip.lib.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/PCLZip/readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/PasswordHasher.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/String.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/TimeZone.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/XMLWriter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/ZipArchive.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/ZipStreamWrapper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/trend/bestFitClass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/trend/exponentialBestFitClass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/trend/linearBestFitClass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/trend/logarithmicBestFitClass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/trend/polynomialBestFitClass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/trend/powerBestFitClass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Shared/trend/trendClass.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Alignment.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Border.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Borders.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Color.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Conditional.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Fill.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Font.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/NumberFormat.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Protection.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Style/Supervisor.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/AutoFilter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/AutoFilter/Column.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/AutoFilter/Column/Rule.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/BaseDrawing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/CellIterator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/Column.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/ColumnCellIterator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/ColumnDimension.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/ColumnIterator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/Dimension.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/Drawing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/Drawing/Shadow.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/HeaderFooter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/HeaderFooterDrawing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/MemoryDrawing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/PageMargins.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/PageSetup.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/Protection.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/Row.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/RowCellIterator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/RowDimension.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/RowIterator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Worksheet/SheetView.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/WorksheetIterator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Abstract.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/CSV.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Chart.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Comments.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/ContentTypes.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/DocProps.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Drawing.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Rels.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/RelsRibbon.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/RelsVBA.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/StringTable.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Style.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Theme.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Workbook.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/Worksheet.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel2007/WriterPart.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5/BIFFwriter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5/Escher.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5/Font.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5/Parser.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5/Workbook.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5/Worksheet.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Excel5/Xf.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/Exception.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/HTML.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/IWriter.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/Cell/Comment.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/Content.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/Meta.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/MetaInf.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/Mimetype.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/Settings.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/Styles.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/Thumbnails.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/OpenDocument/WriterPart.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/PDF.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/PDF/Core.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/PDF/DomPDF.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/PDF/mPDF.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/Writer/PDF/tcPDF.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/bg/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/cs/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/cs/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/da/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/da/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/de/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/de/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/en/uk/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/es/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/es/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/fi/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/fi/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/fr/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/fr/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/hu/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/hu/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/it/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/it/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/nl/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/nl/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/no/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/no/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/pl/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/pl/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/pt/br/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/pt/br/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/pt/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/pt/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/ru/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/ru/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/sv/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/sv/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/tr/config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frameworks/PHPExcel/locale/tr/functions" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queries/professor/dataes.xls" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/queries/professor/getExcelDataStudents.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/db/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/queries/sendMsgToMailForRecoveryPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/queries/sendMsgToMailForRecoveryPass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/professor/group.php" beforeDir="false" afterPath="$PROJECT_DIR$/professor/group.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recoveryPassword.php" beforeDir="false" afterPath="$PROJECT_DIR$/recoveryPassword.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +354,7 @@
       <workItem from="1606071436597" duration="4062000" />
       <workItem from="1606076309103" duration="4444000" />
       <workItem from="1606310887283" duration="1208000" />
-      <workItem from="1606562008837" duration="12043000" />
+      <workItem from="1606562008837" duration="23766000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1604298128542</created>
@@ -416,7 +671,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606567535430</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Добавлена таблица, которая будет хранить пароли для восстановления. Также добавлена функция смены пароля. Теперь отправляется ссылка для его восстановления.">
+      <created>1606574340195</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1606574340195</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -503,7 +765,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Добавлено: редактирование данных в личном кабинете у преподавателя и студента (кроме аватарки); SQL файл с новыми изменениями; добавлены запрросы; изменен интерфейс модальных окон у студента." />
     <MESSAGE value="Добавлены страницы ошибок, а также реализованы добавления групп и копирование ключевых слов&#10;В некоторых местах добавлены проверки на уникальность" />
     <MESSAGE value="Добавлена привязка по ключевому слову к группе" />
     <MESSAGE value="Добавлена привязка по ключевому слову к группе. На время выключен htaccess" />
@@ -528,7 +789,8 @@
     <MESSAGE value="Добавлен README.md" />
     <MESSAGE value="Обновлен README.md" />
     <MESSAGE value="Добавлено добавление отработок студента" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлено добавление отработок студента" />
+    <MESSAGE value="Добавлена таблица, которая будет хранить пароли для восстановления. Также добавлена функция смены пароля. Теперь отправляется ссылка для его восстановления." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена таблица, которая будет хранить пароли для восстановления. Также добавлена функция смены пароля. Теперь отправляется ссылка для его восстановления." />
   </component>
   <component name="WindowStateProjectService">
     <state x="349" y="86" key="#CLI_Interpreters" timestamp="1604301336108">
@@ -547,6 +809,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" width="1089" height="727" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1604513511537" />
+    <state x="534" y="214" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606578987640">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="534" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1606578987640" />
     <state x="482" y="235" key="#com.jetbrains.php.debug.validation.PhpWebServerValidationDialog#" timestamp="1604302570717">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -555,10 +821,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="516" y="267" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1536.824@0.0.1536.824" timestamp="1604782508080" />
-    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1606567533539">
+    <state x="0" y="0" key="CommitChangelistDialog2" timestamp="1606574336818">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606567533539" />
+    <state x="0" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1606574336818" />
     <state x="93" y="93" width="1350" height="638" key="DiffContextDialog" timestamp="1605391375157">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -591,10 +857,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="407" y="174" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1604492839107" />
-    <state x="585" y="343" key="NewPhpFileDialog" timestamp="1606569483521">
+    <state x="585" y="343" key="NewPhpFileDialog" timestamp="1606578277572">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="585" y="343" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1606569483521" />
+    <state x="585" y="343" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1606578277572" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1604839963692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -603,10 +869,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="618" y="326" key="VCS.ChangelistChooser/0.0.1536.824@0.0.1536.824" timestamp="1604400872492" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606567547563">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1606574344259">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606567547563" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1606574344259" />
     <state x="93" y="93" width="1350" height="638" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1605702482046">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
